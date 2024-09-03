@@ -3396,7 +3396,6 @@ namespace KurulumWeb.Controllers
 
             Install install_query = new Install();
             bool deger = false;
-           
             deger = a.ConfigAzure(secilen_gsm, secilen_operator, serino, ViewBag); //Seçilen GSM no a göre Config mesajları gönderiliyor.
 
             if (deger == true) //Config metodundan dönen değer true ise yani işlem yapılmış ise
