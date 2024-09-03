@@ -25,7 +25,7 @@ namespace KurulumWeb.Controllers
 
         private RiconApps_FASEntities1 ctx = new RiconApps_FASEntities1();
         private string secilen_operator;
-        private string mustafa1;
+        private string mustafa2;
 
         //private Methods m = new Methods();
 
