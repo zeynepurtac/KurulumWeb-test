@@ -1,0 +1,976 @@
+﻿@using KurulumWeb.Resources
+@model KurulumWeb.Models.OrangeDataModel
+@{
+    ViewBag.Title = "EditRiconOrange";
+    Layout = "~/Views/Shared/RiconAdminLayoutPage.cshtml";
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<style>
+    .table td {
+        padding: 0em;
+    }
+
+    .edit-icon {
+        font-size: 18px;
+        color: #007bff; /* Düzenleme ikonunun rengini özelleştirebilirsiniz */
+        cursor: pointer; /* İkona tıklanabilir bir imleç ekler */
+    }
+
+    #responsive-datatable tbody tr:hover {
+        font-weight: bold; /* Satırın üzerine gelindiğinde yazıları kalın yapın */
+    }
+
+    #dataTableModal .modal-dialog {
+        max-width: none;
+        width: 100%;
+        height: 80%;
+    }
+
+    #dataTableModal .modal-content {
+        height: 100%;
+    }
+
+    #dataTableModal .modal-body {
+        max-height: 100%;
+        overflow-y: auto;
+        color: #000000;
+    }
+
+
+    #responsive-datatable_wrapper {
+        /* DataTable'ın genel konteynerını hedefle */
+        font-size: 12px; /* Punto boyutunu ayarlayın */
+    }
+
+    #responsive-datatable {
+        /* DataTable'ın içerik konteynerını hedefle */
+        line-height: 1.5; /* Satır yüksekliğini ayarlayın */
+    }
+
+        #responsive-datatable tbody td {
+            /* DataTable satır hücrelerini hedefle */
+            padding: 1px 5px; /* Hücre içi padding değerlerini ayarlayın */
+        }
+
+        /* DataTable içindeki çift sıra numaralarını beyaz, tek sıra numaralarını gri yap */
+        #responsive-datatable tbody tr:nth-child(even) {
+            background-color: white;
+        }
+
+        #responsive-datatable tbody tr:nth-child(odd) {
+            background-color: lightgrey;
+        }
+
+        /* DataTable içindeki satırlara hover özelliği ekleyin */
+        #responsive-datatable thead th {
+            padding: 1px; /* Başlık hücreleri içi padding değerini ayarlayın */
+        }
+
+        /* DataTable içindeki sütun başlıklarını daha sıkı bir hizalamaya sahip yapın */
+        #responsive-datatable thead th {
+            white-space: nowrap; /* Başlıkların fazla boşluk kullanmasını önleyin */
+        }
+
+        /* DataTable içindeki sütun başlıklarını birbirine yakınlaştırın */
+        #responsive-datatable thead th {
+            padding: 8px; /* Başlık hücreleri içi padding değerini ayarlayın */
+            text-align: left; /* Başlık metnini ortala */
+        }
+
+    .btn-sm {
+        padding: 1px 1px;
+        font-size: 10px;
+    }
+
+    .page-header {
+        margin: -3rem -15rem 1.5rem;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Gsmno').select2({
+            minimumInputLength: 3,
+            ajax: {
+                url: "/Home/GetFilteredGSMOrange",
+                dataType: "JSON",
+                quietMillis: 100,
+                data: function (params) {
+                    return {
+                        selectedValue: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    // Verileri seçeneklere dönüştür
+                    var options = [];
+                    if (data) {
+                        $.each(data, function (index, item) {
+                            options.push({
+                                id: item.Value,
+                                text: item.Text
+                            });
+                        });
+                    }
+                    return {
+                        results: options
+                    };
+                }
+            }
+        })
+            .on('select2:select', function (e) {
+            var selectedValue = e.params.data.id;
+            getAndFillOrangeData(selectedValue);
+        });
+
+        // Seçilen GSM numarasına ait verileri almak için bu fonksiyonu kullanın
+        function getAndFillOrangeData(gsmNo) {
+            $.ajax({
+                url: '/Home/GetOrangeData',
+                type: 'GET',
+                data: {Gsmno: gsmNo },
+                dataType: 'json',
+                success: function (data) {
+                    $('#GSM_No1').val(data.GSM_No1);
+                    $('#Ricon_SN').val(data.Ricon_SN);
+                    $('#APN1_Name').val(data.APN1_Name);
+                    $('#APN1_Username').val(data.APN1_Username);
+                    $('#APN1_Password').val(data.APN1_Password);
+                    $('#WAN_ip').val(data.WAN_ip);
+                    $('#vlanid_TG').val(data.vlanid_TG);
+                    $('#lan_ip_TG').val(data.lan_ip_TG);
+                    $('#lan_subnet_TG').val(data.lan_subnet_TG);
+                    $('#lan_subnetmask_TG').val(data.lan_subnetmask_TG);
+                    $('#vlanid_Servizi').val(data.vlanid_Servizi);
+                    $('#lan_ip_Servizi').val(data.lan_ip_Servizi);
+                    $('#lan_subnet_Servizi').val(data.lan_subnet_Servizi);
+                    $('#lan_subnetmask_Servizi').val(data.lan_subnetmask_Servizi);
+                    $('#Tunnel_dc1_r1').val(data.Tunnel_dc1_r1);
+                    $('#Tunnel_dc2_r1').val(data.Tunnel_dc2_r1);
+                    $('#Tunnel_ig_r1').val(data.Tunnel_ig_r1);
+                    $('#Tg_dhcp_start').val(data.Tg_dhcp_start);
+                    $('#Tg_dhcp_end').val(data.Tg_dhcp_end);
+                    $('#Ser_dhcp_start').val(data.Ser_dhcp_start);
+                    $('#Ser_dhcp_end').val(data.Ser_dhcp_end);
+                    //$('#Company_ID').val(data.Company_ID);
+
+                },
+                error: function () {
+                    console.log('Error receiving data.');
+                }
+            });
+        }
+        $('#btnAdd').click(function () {
+            // Modal açıldığında hata etiketlerini ve input değerlerini temizle
+            $('.modal-body .Error').text('');
+            $('.modal-body input[type="text"]').val('');
+            $('#addModal').modal('show');
+        });
+
+        $('#closeAddModal').click(function () {
+            // Modal kapatıldığında hata etiketlerini ve input değerlerini temizle
+            $('.modal-body .Error').text('');
+            $('.modal-body input[type="text"]').val('');
+            $('#addModal').modal('hide');
+        });
+        $('#addModal').on('hidden.bs.modal', function () {
+            // Modal kapatıldığında input alanlarını temizle
+            $('.modal-body input[type="text"]').val('');
+        });
+
+            $('#btnAdd').click(function () {
+        $('#addModal').modal('show');
+    });
+
+      // btnSave düğmesine tıklanınca yeni veriyi kaydet
+        $('#btnSave').click(function () {
+            // Hata etiketlerini temizle
+            $('.modal-body .Error').text('');
+
+            // Boş alan kontrolü
+            var firstEmptyField;
+            $('.modal-body input[type="text"]').each(function () {
+                var input = $(this);
+                var inputValue = input.val().trim();
+                var errorLabel = input.siblings('.Error');
+                // Skip validation for RiconSn when it's empty
+                if (input.attr('id') === 'newRiconSn' && inputValue === '') {
+                    return;
+                }
+
+                if (inputValue === '') {
+                    // İlk boş alanı bulundu
+                    errorLabel.text('Bu alan boş olamaz.');
+                    if (!firstEmptyField) {
+                        firstEmptyField = input;
+                    }
+                }
+            });
+
+            if (firstEmptyField) {
+                // İlk boş alan varsa işlemi durdur
+                $('#addModal').animate({
+                    scrollTop: firstEmptyField.offset().top - $('#addModal .modal-content').offset().top
+                }, 1000); // 1000 milliseconds (1 second) animation time, adjust as needed
+
+                return;
+            }
+
+            // Buraya kadar geldiyse işlemi devam ettir, modalı kapatabilirsiniz
+            var closeModalButton = $('#closeModal');
+            closeModalButton.click();
+
+    // Form verilerini al
+    var newGsmNo1 = $('#newGsmNo1').val();
+    var newRiconSn = $('#newRiconSn').val();
+    var newApn1Name = $('#newApn1Name').val();
+    var newApn1UserName = $('#newApn1UserName').val();
+    var newApn1Password = $('#newApn1Password').val();
+    var newWAN_ip = $('#newWAN_ip').val();
+    var newvlanid_TG = $('#newvlanid_TG').val();
+    var newlan_ip_TG = $('#newlan_ip_TG').val();
+    var newlan_subnet_TG = $('#newlan_subnet_TG').val();
+    var newlan_subnetmask_TG = $('#newlan_subnetmask_TG').val();
+    var newvlanid_Servizi = $('#newvlanid_Servizi').val();
+    var newlan_ip_Servizi = $('#newlan_ip_Servizi').val();
+    var newlan_subnet_Servizi = $('#newlan_subnet_Servizi').val();
+    var newlan_subnetmask_Servizi = $('#newlan_subnetmask_Servizi').val();
+    var newTunnel_dc1_r1 = $('#newTunnel_dc1_r1').val();
+    var newTunnel_dc2_r1 = $('#newTunnel_dc2_r1').val();
+    var newTunnel_ig_r1 = $('#newTunnel_ig_r1').val();
+
+    var newTg_dhcp_start = $('#newTg_dhcp_start').val();
+    var newTg_dhcp_end = $('#newTg_dhcp_end').val();
+    var newSer_dhcp_start = $('#newSer_dhcp_start').val();
+    var newSer_dhcp_end = $('#newSer_dhcp_end').val();
+
+    $.ajax({
+        url: '@Url.Action("SaveNewOrange", "Home")', // Formun verilerini işleyecek eylem URL'sini buraya ekleyin
+        type: 'POST',
+        data: {
+            GSM_No1: newGsmNo1,
+            Ricon_SN: newRiconSn,
+            APN1_Name: newApn1Name,
+            Apn1_Username: newApn1UserName,
+            Apn1_Password: newApn1Password,
+            WAN_ip: newWAN_ip,
+            vlanid_TG: newvlanid_TG,
+            Lan_Ip_TG: newlan_ip_TG,
+            Lan_Subnet_TG: newlan_subnet_TG,
+            Lan_Subnetmask_TG: newlan_subnetmask_TG,
+            vlanid_Servizi: newvlanid_Servizi,
+            Lan_Ip_Servizi: newlan_ip_Servizi,
+            Lan_Subnet_Servizi: newlan_subnet_Servizi,
+            Lan_SubnetMask_Servizi: newlan_subnetmask_Servizi,
+            Tunnel_dc1_r1: newTunnel_dc1_r1,
+            Tunnel_dc2_r1: newTunnel_dc2_r1,
+            Tunnel_ig_r1: newTunnel_ig_r1,
+            Tg_dhcp_start: newTg_dhcp_start,
+            Tg_dhcp_end: newTg_dhcp_end,
+            Ser_dhcp_start: newSer_dhcp_start,
+            Ser_dhcp_end: newSer_dhcp_end,
+
+        },
+        success: function (data) {
+            if (data.success) {
+                showModal('@Resources.L299', data.message);
+            } else {
+                showModal('Hata', data.message);
+            }
+        },
+        error: function () {
+            console.log('Error saving new data.');
+        }
+    });
+
+    // Modal'ı kapat
+    $('#addModal').modal('hide');
+});
+
+    $('#btnDelete').click(function () {
+        var selectedGsmNo = $('#Gsmno').val();
+        if (selectedGsmNo) {
+            $('#deleteConfirmationModal').modal('show');
+        }
+    });
+
+    $('#btnConfirmDelete').click(function () {
+        var selectedGsmNo = $('#Gsmno').val();
+        if (selectedGsmNo) {
+            $.ajax({
+                url: '@Url.Action("DeleteOrange", "Home")',
+                type: 'POST',
+                data: { Gsmno: selectedGsmNo },
+                success: function (data) {
+                    if (data.success) {
+                        showModal('@Resources.L299', data.message);
+                    } else {
+                        showModal('Hata', data.message);
+                    }
+                },
+                error: function () {
+                    console.log('There was an error in the deletion process.');
+                }
+            });
+        }
+        $('#deleteConfirmationModal').modal('hide');
+    });
+
+    function showModal(title, message) {
+        var modal = $('#customModal');
+        modal.find('.modal-title').text(title);
+        modal.find('.modal-body').text(message);
+        modal.modal('show');
+
+        modal.on('hidden.bs.modal', function () {
+            location.reload();
+        });
+    }
+    function showModal(title, message) {
+        var modal = $('#customModal1');
+        modal.find('.modal-title').text(title);
+        modal.find('.modal-body').text(message);
+        modal.modal('show');
+
+        modal.on('hidden.bs.modal', function () {
+            location.reload();
+        });
+    }
+    });
+    $(document).ready(function () {
+        var table; // DataTable referansı
+
+        // Modal'ı açma işlevi
+        $("#open").click(function () {
+            // Modal'ı aç
+            $("#dataTableModal").modal("show");
+
+            if (!table) {
+                // DataTable'ı yalnızca bir kez başlatın
+                table = $('#responsive-datatable').DataTable({
+                    // DataTable yapılandırma seçenekleri burada
+                    columns: [
+                        { data: "Orange_ID", visible: false, orderable: true },
+                        { data: "Ricon_SN" },
+                        { data: "GSM_No1"},
+                        { data: "APN1_Name" },
+                        { data: "APN1_Username" },
+                        { data: "APN1_Password" },
+                        { data: "WAN_ip" },
+                        { data: "vlanid_TG" },
+                        { data: "lan_ip_TG" },
+                        { data: "lan_subnet_TG" },
+                        { data: "lan_subnetmask_TG" },
+                        { data: "vlanid_Servizi" },
+                        { data: "lan_ip_Servizi" },
+                        { data: "lan_subnet_Servizi" },
+                        { data: "lan_subnetmask_Servizi" },
+                        { data: "Tunnel_dc1_r1" },
+                        { data: "Tunnel_dc2_r1" },
+                        { data: "Tunnel_ig_r1" },
+                        { data: "Tg_dhcp_start" },
+                        { data: "Tg_dhcp_end" },
+                        { data: "Ser_dhcp_start" },
+                        { data: "Ser_dhcp_end" },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                // Düğmeleri oluşturun
+                                var editButton = '<button class="btn btn-sm btn-primary edit-button" data-row-id="' + row.Orange_ID + '"><i class="fas fa-edit"></i></button>';
+                                var saveButton = '<button class="btn btn-sm btn-success save-button" style="display: none;" data-row-id="' + row.Orange_ID + '"><i class="fas fa-check"></i></button>';
+                                var cancelButton = '<button class="btn btn-sm btn-danger cancel-button" style="display: none;" data-row-id="' + row.Orange_ID + '"><i class="fas fa-times"></i></button>';
+                                var deleteButton = '<button class="btn btn-sm btn-danger delete-button" data-row-id="' + row.Orange_ID + '"><i class="fas fa-trash"></i></button>';
+
+                                // Tüm düğmeleri birleştirin
+                                var buttons = editButton + " " + saveButton + " " + cancelButton + " " + deleteButton;
+
+                                return buttons;
+                            }
+                        }
+                    ],
+                    pageLength: 20, // Sayfa uzunluğunu 20 olarak ayarlayın
+                    lengthMenu: [20, 25, 50, 100],
+                    rowCallback: function (row, data, index) {
+                        // Sıra numarasına göre arka plan rengini ayarlayın
+                        if (index % 2 === 0) {
+                            $(row).css('background-color', 'white'); // Çift sıra numaraları için beyaz arka plan
+                        } else {
+                            $(row).css('background-color', 'lightgrey'); // Tek sıra numaraları için gri arka plan
+                        }
+                    },
+                    order: [[0, 'desc']] // ID'ye göre azalan sıralama
+
+                });
+                $("#dataTableModal").on('shown.bs.modal', function () {
+                    // DataTable içindeki arama input'unun değerini temizle
+                    $('#responsive-datatable_filter input').val('');
+
+                    // DataTable filtresini temizle
+                    table.search('').draw();
+                    table.order([]).draw();s
+                });
+            }
+
+            $.ajax({
+                url: "/Home/DeviceOrangeData",
+                method: "GET",
+                success: function (data) {
+                    table.clear().rows.add(data).draw();
+                     // Tablonun satır yüksekliğini düşür
+                $('#responsive-datatable tbody tr').css('height', '20px');
+                },
+                error: function (error) {
+                    // Hata işleme kodu burada
+                }
+            });
+        });
+
+        // Edit düğmesine tıklanınca
+        $('#responsive-datatable').on('click', '.edit-button', function () {
+            var row = $(this).closest('tr');
+
+            // Düzenlenen satırı düzenleme moduna geçir
+            row.find(".edit-button").hide();
+            row.find(".save-button, .cancel-button").show();
+            row.find("td:not(:last-child)").attr("contenteditable", "true").addClass("edit-mode");
+
+            // Orijinal değerleri sakla
+            row.find("td:not(:last-child)").each(function () {
+                var originalValue = $(this).text();
+                $(this).data('original-value', originalValue);
+            });
+        });
+
+        // Save düğmesine tıklanınca
+        $('#responsive-datatable').on('click', '.save-button', function () {
+            var row = $(this).closest('tr');
+            var orangeID = $(this).data('row-id');
+
+            // Verileri topla
+            var riconSN = row.find("td:eq(0)").text();
+            var gsmNo1 = row.find("td:eq(1)").text();
+            var apn1Name = row.find("td:eq(2)").text();
+            var apn1Username = row.find("td:eq(3)").text();
+            var apn1Password = row.find("td:eq(4)").text();
+            var wanIP = row.find("td:eq(5)").text();
+            var vlanidTG = row.find("td:eq(6)").text();
+            var lanIPTG = row.find("td:eq(7)").text();
+            var lanSubnetTG = row.find("td:eq(8)").text();
+            var lanSubnetMaskTG = row.find("td:eq(9)").text();
+            var vlanidServizi = row.find("td:eq(10)").text();
+            var lanIPServizi = row.find("td:eq(11)").text();
+            var lanSubnetServizi = row.find("td:eq(12)").text();
+            var lanSubnetMaskServizi = row.find("td:eq(13)").text();
+            var tunnelDc1R1 = row.find("td:eq(14)").text();
+            var tunnelDc2R1 = row.find("td:eq(15)").text();
+            var tunnelIgR1 = row.find("td:eq(16)").text();
+            var tgDhcpStart = row.find("td:eq(17)").text();
+            var tgDhcpEnd = row.find("td:eq(18)").text();
+            var serDhcpStart = row.find("td:eq(19)").text();
+            var serDhcpEnd = row.find("td:eq(20)").text();
+
+            // AJAX isteği gönder
+            $.ajax({
+                url: "/Home/SaveOrange",
+                type: "POST",
+                data: {
+                    Orange_ID: orangeID,
+                    Ricon_SN: riconSN,
+                    GSM_No1: gsmNo1,
+                    APN1_Name: apn1Name,
+                    APN1_Username: apn1Username,
+                    APN1_Password: apn1Password,
+                    WAN_ip: wanIP,
+                    vlanid_TG: vlanidTG,
+                    lan_ip_TG: lanIPTG,
+                    lan_subnet_TG: lanSubnetTG,
+                    lan_subnetmask_TG: lanSubnetMaskTG,
+                    vlanid_Servizi: vlanidServizi,
+                    lan_ip_Servizi: lanIPServizi,
+                    lan_subnet_Servizi: lanSubnetServizi,
+                    lan_subnetmask_Servizi: lanSubnetMaskServizi,
+                    Tunnel_dc1_r1: tunnelDc1R1,
+                    Tunnel_dc2_r1: tunnelDc2R1,
+                    Tunnel_ig_r1: tunnelIgR1,
+                    Tg_dhcp_start: tgDhcpStart,
+                    Tg_dhcp_end: tgDhcpEnd,
+                    Ser_dhcp_start: serDhcpStart,
+                    Ser_dhcp_end: serDhcpEnd
+                },
+                success: function (result) {
+                    // Başarılı bir yanıt aldığınızda burada işlemler yapabilirsiniz
+
+                    // Düzenleme modunu kapat
+                    row.find(".save-button, .cancel-button").hide();
+                    row.find(".edit-button").show();
+                    row.find("td:not(:last-child)").attr("contenteditable", "false").removeClass("edit-mode");
+
+                    // Başarılı kaydetme modalını aç
+                    $('#customModal2').modal('show');
+                },
+                error: function (error) {
+                    // Hata işleme kodu burada
+                }
+            });
+        });
+
+        // Cancel düğmesine tıklanınca
+        $('#responsive-datatable').on('click', '.cancel-button', function () {
+            var row = $(this).closest('tr');
+
+            // Değişiklikleri iptal et
+            row.find("td:not(:last-child)").each(function () {
+                var originalValue = $(this).data('original-value');
+                $(this).text(originalValue);
+            });
+
+            // Düzenleme modunu kapat
+            row.find(".save-button, .cancel-button").hide();
+            row.find(".edit-button").show();
+            row.find("td:not(:last-child)").attr("contenteditable", "false").removeClass("edit-mode");
+        });
+
+
+        var orangeID; // orangeID değişkenini burada tanımlayın
+        var row; // row değişkenini burada tanımlayın
+
+        // Delete düğmesine tıklanınca
+        $('#responsive-datatable').on('click', '.delete-button', function () {
+            row = $(this).closest('tr');
+            orangeID = $(this).data('row-id');
+            $('#deleteConfirmationModal').modal('show');
+        });
+
+        // Onayla düğmesine tıklanınca
+        $('#btnConfirmDelete').click(function () {
+            $.ajax({
+                url: "/Home/DelOrange", // DelOrange işleminin bulunduğu controller ve action'ın yolu
+                type: "POST", // HTTP isteği türü (POST)
+                data: { Orange_ID: orangeID },
+                success: function (result) {
+                    row.remove();
+                    $('#deleteConfirmationModal').modal('hide');
+
+                    // Başarılı silme modalını aç
+                    $('#deleteSuccessModal').modal('show');
+                },
+                error: function () {
+                    console.log('Silme işleminde hata oluştu.');
+                    $('#deleteConfirmationModal').modal('hide');
+                }
+            });
+        });
+
+        // Başarılı silme modalını kapatma kodu
+        $('#closeDeleteSuccessModalButton').click(function () {
+            $('#deleteSuccessModal').modal('hide');
+        });
+    });
+</script>
+<div class="modal fade" id="dataTableModal" tabindex="-1" role="dialog" aria-labelledby="dataTableModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataTableModalLabel">@Resources.L350</h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red"> <i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body modal-fullscreen-xl-down">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap border-bottom" id="responsive-datatable">
+                        <thead>
+                            <tr>
+                                <th data-orderable="false">Orange ID</th>
+                                <th>Ricon SN</th>
+                                <th>GSM No1</th>
+                                <th>APN1 Name</th>
+                                <th>APN1 Username</th>
+                                <th>APN1 Password</th>
+                                <th>WAN ip</th>
+                                <th>vlanid TG</th>
+                                <th>lan ip TG</th>
+                                <th>lan subnet TG</th>
+                                <th>lan subnetmask TG</th>
+                                <th>vlanid Servizi</th>
+                                <th>lan ip Servizi</th>
+                                <th>lan subnet Servizi</th>
+                                <th>lan subnetmask Servizi</th>
+                                <th>Tunnel dc1 r1</th>
+                                <th>Tunnel dc2 r1</th>
+                                <th>Tunnel ig r1</th>
+                                <th>Tg dhcp start</th>
+                                <th>Tg dhcp end</th>
+                                <th>Ser dhcp start</th>
+                                <th>Ser dhcp end</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- DataTable satırları burada doldurulacak -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                @*<input type="file" id="fileInput" style="display: none;">
+                    <button type="button" class="btn btn-primary" id="downloadButton1">@Resources.L348</button>*@
+                @*<button type="button" class="btn btn-primary" style="display:none;" id="downloadButton1">@Resources.L348</button>*@
+                <button type="button" class="btn close-button btn-secondary" data-bs-dismiss="modal">@Resources.L261</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addModal" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">@Resources.L321</h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red">   <i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <label for="newGsmNo1">GSM NO1:</label>
+                <input type="text" id="newGsmNo1" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newRiconSn">Ricon SN:</label>
+                <input type="text" id="newRiconSn" class="form-control">
+            </div>
+            <div class="modal-body">
+                <label for="newApn1Name">APN1 Name:</label>
+                <input type="text" id="newApn1Name" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newApn1UserName">APN1 Username:</label>
+                <input type="text" id="newApn1UserName" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newApn1Password">APN1 Password:</label>
+                <input type="text" id="newApn1Password" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newWAN_ip">WAN Ip:</label>
+                <input type="text" id="newWAN_ip" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newvlanid_TG">vLan ID TG:</label>
+                <input type="text" id="newvlanid_TG" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newlan_ip_TG">Lan IP TG:</label>
+                <input type="text" id="newlan_ip_TG" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newlan_subnet_TG">Lan Subnet TG:</label>
+                <input type="text" id="newlan_subnet_TG" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newlan_subnetmask_TG">Lan Subnetmask TG:</label>
+                <input type="text" id="newlan_subnetmask_TG" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newvlanid_Servizi">vLan ID Servizi:</label>
+                <input type="text" id="newvlanid_Servizi" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newlan_ip_Servizi">Lan IP Servizi:</label>
+                <input type="text" id="newlan_ip_Servizi" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newlan_subnet_Servizi">Lan Subnet Servizi:</label>
+                <input type="text" id="newlan_subnet_Servizi" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+
+            <div class="modal-body">
+                <label for="newlan_subnetmask_Servizi">Lan SubnetMask Servizi:</label>
+                <input type="text" id="newlan_subnetmask_Servizi" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newTunnel_dc1_r1">Tunnel dc1 r1:</label>
+                <input type="text" id="newTunnel_dc1_r1" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newTunnel_dc2_r1">Tunnel dc2 r1:</label>
+                <input type="text" id="newTunnel_dc2_r1" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newTunnel_ig_r1">Tunnel ig r1:</label>
+                <input type="text" id="newTunnel_ig_r1" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+
+            <div class="modal-body">
+                <label for="newTg_dhcp_start">Tg DHCP Start:</label>
+                <input type="text" id="newTg_dhcp_start" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newTg_dhcp_end">Tg DHCP End:</label>
+                <input type="text" id="newTg_dhcp_end" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newSer_dhcp_start">Ser DHCP Start:</label>
+                <input type="text" id="newSer_dhcp_start" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newSer_dhcp_end">Ser DHCP End:</label>
+                <input type="text" id="newSer_dhcp_end" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSave">@Resources.L294</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeAddModal">@Resources.L264</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">@Resources.L292</h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red">   <i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                @Resources.L322
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnConfirmDelete">@Resources.L279</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeDeleteModal">@Resources.L280</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="customModal" tabindex="-1" role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customModalLabel"></h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red">   <i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCustomModal">@Resources.L261</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="customModal2" tabindex="-1" role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customModalLabel">@Resources.L336</h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red">   <i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">@Resources.L330</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCustomModal2">@Resources.L261</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="customModal1" tabindex="-1" role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customModalLabel"></h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red">   <i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCustomModal1">@Resources.L261</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="deleteSuccessModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">@Resources.L336</h4>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeDeleteSuccessModal" style="color:red"><i class="fas fa-times"></i></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                @Resources.L329
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn close-button btn-secondary" data-bs-dismiss="modal">@Resources.L261</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--#region Gövde-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+            </div>
+            <!-- PAGE-HEADER END -->
+            <!-- ROW-2 -->
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title text-center text-blue" style="font-size:22px">@Resources.L325</h3>
+                        </div>
+                        <div class="card-header" style="border:none;margin-block-end:-5em;">
+                            <img style="transform:scale(0.4);margin-block-start:-7em;" src="~/Content/Sisal-S9922M44.png" />
+                        </div>
+                        <span>
+                            <input id="open" style="margin-bottom: 10px; margin-inline-start: 4%" class="text-white btn btn-open-modal btn-primary  btn info" type="button" value="@Resources.L304">
+                        </span>
+                        <div class="card-body">
+                            @using (Html.BeginForm("EditRiconOrange", "Home", FormMethod.Post))
+                            {
+
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(m => m.Orange_ID)
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="Gsmno">GSM NO:</label>
+                                    @Html.DropDownListFor(model => model.Gsmno, ViewBag.Gsmno as SelectList, Resources.L316, new { @class = "dropdown form-control select2", id = "Gsmno" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="GSM_No1">Gsm No1:</label>
+                                    @Html.TextBoxFor(model => model.GSM_No1, new { @class = "form-control", id = "GSM_No1" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="Ricon_SN">Ricon SN:</label>
+                                    @Html.TextBoxFor(model => model.Ricon_SN, new { @class = "form-control", Value = Model.Ricon_SN, id = "Ricon_SN" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="APN1_Name">APN1 Name:</label>
+                                    @Html.TextBoxFor(model => model.APN1_Name, new { @class = "form-control", id = "APN1_Name" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="APN1_Username">APN1 Username:</label>
+                                    @Html.TextBoxFor(model => model.APN1_Username, new { @class = "form-control", id = "APN1_Username" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="APN1_Password">APN1 Password:</label>
+                                    @Html.TextBoxFor(model => model.APN1_Password, new { @class = "form-control", id = "APN1_Password" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="WAN_ip">Wan IP:</label>
+                                    @Html.TextBoxFor(model => model.WAN_ip, new { @class = "form-control", id = "WAN_ip" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="vlanid_TG">vLan ID TG:</label>
+                                    @Html.TextBoxFor(model => model.vlanid_TG, new { @class = "form-control", id = "vlanid_TG" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="lan_ip_TG">Lan IP TG:</label>
+                                    @Html.TextBoxFor(model => model.lan_ip_TG, new { @class = "form-control", id = "lan_ip_TG" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="lan_subnet_TG">Lan Subnet TG:</label>
+                                    @Html.TextBoxFor(model => model.lan_subnet_TG, new { @class = "form-control", id = "lan_subnet_TG" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="lan_subnetmask_TG">Lan SubnetMask TG:</label>
+                                    @Html.TextBoxFor(model => model.lan_subnetmask_TG, new { @class = "form-control", id = "lan_subnetmask_TG" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="vlanid_Servizi">vLan ID Servizi:</label>
+                                    @Html.TextBoxFor(model => model.vlanid_Servizi, new { @class = "form-control", id = "vlanid_Servizi" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="lan_ip_Servizi">Lan IP Servizi:</label>
+                                    @Html.TextBoxFor(model => model.lan_ip_Servizi, new { @class = "form-control", id = "lan_ip_Servizi" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="lan_subnet_Servizi">Lan Subnet Servizi:</label>
+                                    @Html.TextBoxFor(model => model.lan_subnet_Servizi, new { @class = "form-control", id = "lan_subnet_Servizi" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="lan_subnetmask_Servizi">Lan SubnetMask Servizi:</label>
+                                    @Html.TextBoxFor(model => model.lan_subnetmask_Servizi, new { @class = "form-control", id = "lan_subnetmask_Servizi" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="Tunnel_dc1_r1">Tunnel dc1 r1:</label>
+                                    @Html.TextBoxFor(model => model.Tunnel_dc1_r1, new { @class = "form-control", id = "Tunnel_dc1_r1" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="Tunnel_dc2_r1">Tunnel dc2 r1:</label>
+                                    @Html.TextBoxFor(model => model.Tunnel_dc2_r1, new { @class = "form-control", id = "Tunnel_dc2_r1" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="Tunnel_ig_r1">Tunnel ig r1:</label>
+                                    @Html.TextBoxFor(model => model.Tunnel_ig_r1, new { @class = "form-control", id = "Tunnel_ig_r1" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="Tg_dhcp_start">Tg DHCP Start:</label>
+                                    @Html.TextBoxFor(model => model.Tg_dhcp_start, new { @class = "form-control", id = "Tg_dhcp_start" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="Tg_dhcp_end">Tg DHCP End:</label>
+                                    @Html.TextBoxFor(model => model.Tg_dhcp_end, new { @class = "form-control", id = "Tg_dhcp_end" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="Ser_dhcp_start">Ser DHCP Start:</label>
+                                    @Html.TextBoxFor(model => model.Ser_dhcp_start, new { @class = "form-control", id = "Ser_dhcp_start" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="Ser_dhcp_end">Ser Tg DHCP End</label>
+                                    @Html.TextBoxFor(model => model.Ser_dhcp_end, new { @class = "form-control", id = "Ser_dhcp_end" })
+                                </div>
+
+                                <button type="submit" class="btn btn-outline-success">@Resources.L271</button>
+                                <button type="button" class="btn btn-outline-primary" id="btnAdd">@Resources.L277</button>
+                                <button type="button" class="btn btn-outline-danger" id="btnDelete">@Resources.L278</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- ROW-2 END -->
+            </div>
+            <!-- CONTAINER END -->
+        </div>
+    </div>
+    <!--#endregion-->
+</div>
+<script>
+    document.getElementById("closeAddModal").addEventListener("click", function () {
+        $('#addModal').modal('hide');
+    });
+
+    document.getElementById("closeDeleteModal").addEventListener("click", function () {
+        $('#deleteConfirmationModal').modal('hide');
+    });
+
+    document.getElementById("closeCustomModal").addEventListener("click", function () {
+        $('#customModal').modal('hide');
+    });
+    document.getElementById("closeCustomModal1").addEventListener("click", function () {
+        $('#customModal1').modal('hide');
+    });
+    document.getElementById("closeCustomModal2").addEventListener("click", function () {
+        $('#customModal2').modal('hide');
+    });
+</script>

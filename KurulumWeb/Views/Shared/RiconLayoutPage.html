@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricon Kurulum</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @*@Html.ActionLink("Ricon", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "background-image:url('~/Content/Ricon_Vector_Logo_2018.png')" })*@
+
+                <div>
+                    <img alt="Ricon" style="height:10%; width:30%; margin-top:2%" src="@Url.Content("~/Content/Ricon_Vector_Logo_2018.png")">
+                </div>
+          
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <img class="img-responsive" id="meb" src="~/Content/ricon9922XLikiliKirmizi.png" />
+    <div class="container body-content">
+
+   
+
+
+        @RenderBody()
+
+    </div>
+    <style>
+        #meb {
+            margin-left: 8%;
+         
+        }
+
+        body {
+            margin-left: 30%;
+            position: center;
+        }
+
+        #btngiris {
+            margin-left: 10%;
+            margin-right: 30%;
+        }
+
+        @@media screen and (max-width: 1024px) and (min-width:768px) {
+            body {
+                margin-left: 30%;
+                position: center;
+            }
+
+            #btngiris {
+                margin-left: 20%;
+                margin-right: 30%;
+            }
+
+            #meb {
+                margin-left: 5%;
+            }
+        }
+
+        @@media screen and (max-width: 768px) and (min-width:414px) {
+            body {
+                margin-left: 27%;
+                position: center;
+            }
+
+            #btngiris {
+                margin-left: 20%;
+                margin-right: 30%;
+            }
+
+            #meb {
+                margin-left: 5%;
+            }
+        }
+
+        @@media screen and (max-width: 414px) and (min-width:375px) {
+            body {
+                margin-left: 10%;
+                position: center;
+            }
+
+            #btngiris {
+                margin-left: 30%;
+                margin-right: 30%;
+            }
+
+            #meb {
+                margin-left: 5%;
+            }
+        }
+
+        @@media screen and (max-width: 375px) and (min-width:320px) {
+            body {
+                margin-left: 7%;
+                position: center;
+            }
+
+            #btngiris {
+                margin-left: 33%;
+                margin-right: 30%;
+            }
+
+            #meb {
+                margin-left: 4%;
+            }
+
+            #frm {
+                margin-left: 2%;
+            }
+        }
+    </style>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        $("#btn1").click(function () {
+            $("#btn1").hide(1000);
+            $("l1").hide(1000);
+        });
+        $("#btn1").click(function () {
+            $("#l1").text("");
+        });
+
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script>
+
+        $('.select2').select2();
+
+
+    </script>
+</body>
+</html>

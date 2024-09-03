@@ -1,0 +1,153 @@
+﻿@model KurulumWeb.Models.Login
+@using KurulumWeb.Resources
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/LoginLayout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- CONTAINER OPEN -->
+<div class="container-login100">
+    <div class="wrap-login100 p-6">
+        <div class="d-flex country ms-8">
+            <a class="nav-link icon ms-9 text-center" data-bs-target="#country-selector"
+               data-bs-toggle="modal">
+                <i class="fa fa-language" style="margin-inline-start:1.5em;transform:scale(1.5)" id="languageIcon"></i><span class="fs-16 ms-2 d-none d-xl-block"></span>
+            </a>
+        </div>
+        <form method="post" class="login100-form validate-form">
+            <span class="login100-form-title pb-2">
+                <img src="~/assets/images/brand/Ricon_Vector_Logo_2018.png" alt="Avatar" class="login100-form-btn" style="transform:scale(0.9);height:70px;">
+            </span>
+            <div class="panel panel-primary">
+                <div class="tab-menu-heading">
+                    <div class="tabs-menu1">
+                        <!-- Tabs -->
+                        <ul class="nav panel-tabs">
+                            <li class="mx-0"><a></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body tabs-menu-body p-0 pt-5">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab5">
+                            <div class="wrap-input100 validate-input input-group " data-bs-validate="Valid email is required: ex@abc.xyz">
+                                <a class="input-group-text bg-white text-muted">
+                                    <i class="ion-person text-muted" aria-hidden="true"></i>
+                                </a>
+                                @Html.TextBoxFor(x => x.UserName, new { @class = "input100 border-start-0 form-control ms-0 inn" })
+                                @*<input class="input100 border-start-0 form-control ms-0" type="email" placeholder="Email">*@
+                            </div>
+                            <div class="wrap-input100 validate-input input-group" id="Password-toggle">
+                                <a class="input-group-text bg-white text-muted">
+                                    <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
+                                </a>
+                                @Html.TextBoxFor(x => x.Password, new { @class = "input100 border-start-0 form-control ms-0", type = "password" })
+                                @*<input class="input100 border-start-0 form-control ms-0" type="password" placeholder="Password">*@
+                            </div>
+                            <div class="container-login100-form-btn">
+                                <label style="color:red;">@ViewBag.LoginError</label>
+                                <button type="submit" class="login100-form-btn btn-primary" id="btngiris">@Resources.L102</button>
+                                <br />
+                                @*<label id="text">@Resources.L103</label>*@
+                            </div>
+                            <br />
+                            <div>
+                                <label>
+                                    <input type="checkbox" value="">
+                                    @Resources.L272
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@using (Html.BeginForm("SetCulture", "Login"))
+{
+    @Html.Hidden("cultureText")
+    <div class="modal fade" id="country-selector">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content country-select-modal">
+                <div class="modal-header">
+                    <h6 class="modal-title">Choose Country</h6>
+                    <button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal" type="button">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="row p-3">
+                        <li class="col-lg-6 mb-2">
+                            <a href="#" class="btn btn-country btn-lg btn-block" onclick="changeLanguage('en-GB')">
+                                <span class="country-selector">
+                                    <img class="me-3 language" src="../assets/images/flags-img/en.png" id="langEng" data-name="İngilizce" alt="">
+                                </span>English
+                            </a>
+                        </li>
+                        <li class="col-lg-6 mb-2">
+                            <a href="#" onclick="changeLanguage('it-IT')" class="btn btn-country btn-lg btn-block">
+                                <span class="country-selector">
+                                    <img class="me-3 language" src="../assets/images/flags-img/italya.png" id="langIta" data-name="İtaliano" alt="">
+                                </span>Italiano
+                            </a>
+                        </li>
+                        <li class="col-lg-6 mb-2">
+                            <a href="#" onclick="changeLanguage('fr-FR')" class="btn btn-country btn-lg btn-block">
+                                <span class="country-selector">
+                                    <img class="me-3 language" src="../assets/images/flags-img/fransa.png" id="langFra" data-name="Français" alt="">
+                                </span>French
+                            </a>
+                        </li>
+                        <li class="col-lg-6 mb-2">
+                            <a href="#" onclick="changeLanguage('de-DE')" class="btn btn-country btn-lg btn-block">
+                                <span class="country-selector">
+                                    <img class="me-3 language" src="../assets/images/flags-img/almanya.png" id="langDe" data-name="Germain" alt="">
+                                </span>Deutsch
+                            </a>
+                        </li>
+                        <li class="col-lg-6 mb-2">
+                            <a href="#" onclick="changeLanguage('tr-TR')" class="btn btn-country btn-lg btn-block">
+                                <span class="country-selector">
+                                    <img class="me-3 language" src="../assets/images/flags-img/aa.png" id="langTr" data-name="Turkey" alt="">
+                                </span>Türkçe
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<!--#region Dil JS-->
+@*<script>
+        $(document).ready(function () {
+            var culture = '@culture';
+            setFlag(culture);
+            // Başlangıç dilini sistemin diline ayarla
+            changeLanguage(culture);
+        });
+
+        function changeLanguage(langType) {
+            var culture = '@culture';
+            if (culture !== langType) {
+                $("#cultureText").val(langType);
+                $("#langEng").parents("form").submit();
+            }
+        }
+    </script>*@
+
+<!--#endregion-->
+<!--#region Dil MouseOver-->
+<script>
+    var languageIcon = document.getElementById("languageIcon");
+    var spanElement = document.querySelector(".fs-16.ms-2.d-none.d-xl-block");
+
+    languageIcon.addEventListener("mouseover", function () {
+        spanElement.textContent = "Choose Country";
+    });
+</script>
+<!--#endregion-->

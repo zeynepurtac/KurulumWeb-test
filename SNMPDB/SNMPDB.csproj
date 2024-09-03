@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{45A3DE7B-C689-4F0B-8635-87ECA9C15680}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SNMPDB</RootNamespace>
+    <AssemblyName>SNMPDB</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Company.cs">
+      <DependentUpon>RiconApps_FAS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Device.cs">
+      <DependentUpon>RiconApps_FAS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Groups.cs">
+      <DependentUpon>RiconApps_FAS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GsmNumber.cs">
+      <DependentUpon>RiconApps_FAS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Install.cs">
+      <DependentUpon>RiconApps_FAS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Operator.cs">
+      <DependentUpon>RiconApps_FAS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReConfig.cs">
+      <DependentUpon>RiconApps_FAS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RiconAppsDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RiconAppsDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RiconAppsDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RiconAppsDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RiconAppsDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RiconAppsDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="RiconApps_FAS.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RiconApps_FAS.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RiconApps_FAS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RiconApps_FAS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RiconApps_FAS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RiconApps_FAS.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="RMSC.cs">
+      <DependentUpon>RiconApps_FAS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SIMCards2.cs">
+      <DependentUpon>RiconAppsDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SIMCards3.cs">
+      <DependentUpon>RiconAppsDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sites.cs">
+      <DependentUpon>RiconApps_FAS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>RiconAppsDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>RiconAppsDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>RiconAppsDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table.cs">
+      <DependentUpon>RiconAppsDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Inwi.cs">
+      <DependentUpon>RiconApps_FAS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Orange.cs">
+      <DependentUpon>RiconApps_FAS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserLogin.cs">
+      <DependentUpon>RiconApps_FAS.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+    <EntityDeploy Include="RiconAppsDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RiconAppsDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="RiconAppsDB.edmx.diagram">
+      <DependentUpon>RiconAppsDB.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="RiconApps_FAS.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RiconApps_FAS.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="RiconApps_FAS.edmx.diagram">
+      <DependentUpon>RiconApps_FAS.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RiconAppsDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RiconAppsDB.edmx</DependentUpon>
+      <LastGenOutput>RiconAppsDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="RiconAppsDB.edmx.sql" />
+    <Content Include="RiconAppsDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RiconAppsDB.edmx</DependentUpon>
+      <LastGenOutput>RiconAppsDB.cs</LastGenOutput>
+    </Content>
+    <Content Include="RiconApps_FAS.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RiconApps_FAS.edmx</DependentUpon>
+      <LastGenOutput>RiconApps_FAS.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="RiconApps_FAS.edmx.sql" />
+    <Content Include="RiconApps_FAS.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RiconApps_FAS.edmx</DependentUpon>
+      <LastGenOutput>RiconApps_FAS.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

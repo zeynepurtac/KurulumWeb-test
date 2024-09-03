@@ -1,0 +1,270 @@
+﻿@using KurulumWeb.Resources
+@model KurulumWeb.Models.AllModel
+@{
+    ViewBag.Title = "EditRiconLocation";
+    // Layout = "~/Views/Shared/EditRiconLocationLayout.cshtml";
+
+    Layout = "~/Views/Shared/RiconAdminLayoutPage.cshtml"; 
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#SiteName').select2({
+
+            minimumInputLength: 3,
+            ajax: {
+                url: "/Home/GetFilteredLocationList",
+                dataType: "JSON",
+                quietMillis: 100,
+                data: function (params) {
+                    return {
+                        selectedValue: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    // Verileri seçeneklere dönüştür
+                    var options = [];
+                    if (data) {
+                        $.each(data, function (index, item) {
+                            options.push({
+                                id: item.Value,
+                                text: item.Text
+                            });
+                        });
+                    }
+
+                    return {
+                        results: options
+                    };
+                }
+            }
+        })
+            .on('select2:select', function (e) {
+                var selectedValue = e.params.data.id;
+                getAndFillSiteData(selectedValue);
+            });
+
+        function getAndFillSiteData(siteName) {
+            $.ajax({
+                url: '/Home/GetSiteData',
+                type: 'GET',
+                data: { SiteName: siteName },  // Değişiklik burada
+                dataType: 'json',
+                success: function (data) {
+                    $('#Site_Name').val(data.Site_Name);
+                    $('#Company_ID').val(data.Company_ID);
+                    // Diğer alanlar buraya eklenmeli
+                },
+                error: function () {
+                    console.log('Error receiving data.');
+                }
+            });
+        }
+
+        $('#btnAdd').click(function () {
+            $('#addModal').modal('show');
+        });
+
+          $('#btnSave').click(function () {
+            var newSiteName = $('#newSiteName').val();
+
+            $.ajax({
+                url: '@Url.Action("SaveNewSite", "Home")',
+                type: 'POST',
+                data: { NewSiteName: newSiteName },
+                success: function (data) {
+                    if (data.success) {
+                        showModal('@Resources.L299', data.message);
+                    } else {
+                        showModal('Hata', data.message);
+                    }
+                },
+                error: function () {
+                    console.log('Error registering new site.');
+                }
+            });
+              $('#addModal').modal('hide');
+        });
+
+        $('#btnDelete').click(function () {
+            var selectedSiteName = $('#SiteName').val();
+            if (selectedSiteName) {
+                $('#deleteConfirmationModal').modal('show');
+            }
+        });
+
+        $('#btnConfirmDelete').click(function () {
+            var selectedSiteName = $('#SiteName').val();
+            if (selectedSiteName) {
+                $.ajax({
+                    url: '@Url.Action("DeleteSite", "Home")',
+                    type: 'POST',
+                    data: { SiteName: selectedSiteName },
+                    success: function (data) {
+                        if (data.success) {
+                            showModal('@Resources.L299', data.message);
+                        } else {
+                            showModal('Hata', data.message);
+                        }
+                    },
+                    error: function () {
+                        console.log('There was an error in the deletion process.');
+                    }
+                });
+            }
+            $('#deleteConfirmationModal').modal('hide');
+        });
+
+        function showModal(title, message) {
+            var modal = $('#customModal');
+            modal.find('.modal-title').text(title);
+            modal.find('.modal-body').text(message);
+            modal.modal('show');
+
+            modal.on('hidden.bs.modal', function () {
+                location.reload();
+            });
+        }
+        function showModal(title, message) {
+            var modal = $('#customModal1');
+            modal.find('.modal-title').text(title);
+            modal.find('.modal-body').text(message);
+            modal.modal('show');
+
+            modal.on('hidden.bs.modal', function () {
+                location.reload();
+            });
+        }
+    });
+</script>
+<div class="modal fade" id="addModal" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">@Resources.L296</h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <label for="newSiteName">@Resources.L295</label>
+                <input type="text" id="newSiteName" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSave">@Resources.L294</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeAddModal">@Resources.L264</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">@Resources.L292</h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red">   <i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                @Resources.L293
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnConfirmDelete">@Resources.L279</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeDeleteModal">@Resources.L280</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="customModal" tabindex="-1" role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customModalLabel"></h5>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCustomModal">@Resources.L261</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="customModal1" tabindex="-1" role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customModalLabel"></h5>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCustomModal1">@Resources.L261</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--#region Gövde-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+            </div>
+            <!-- PAGE-HEADER END -->
+            <!-- ROW-2 -->
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title text-center text-blue" style="font-size:22px">@Resources.L328</h3>
+                        </div>
+                        <div class="card-header" style="border:none;margin-block-end:-7em;">
+                            <img style="transform: scale(0.4); margin-block-start: -6.99em;" src="~/Content/Sisal-S9922M44.png" />
+                        </div>
+                        <div class="card-body">
+                            @using (Html.BeginForm("EditRiconLocation", "Home", FormMethod.Post))
+                            {
+                                {
+                                    @Html.ValidationSummary(true)
+                                    @Html.HiddenFor(m => m.ID)
+                                    <div class="form-group">
+                                        <label style="color: #6BD7C7" for="SiteName">SITE NAME:</label>
+                                        @Html.DropDownListFor(model => model.SiteName, ViewBag.SiteName as SelectList, @Resources.L274, new { @class = " dropdown form-control select2", id = "SiteName", required = "required" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="color: #6BD7C7" for="Site_Name">Site Name:</label>
+                                        @Html.TextBoxFor(model => model.Site_Name, new { @class = "form-control", id = "Site_Name", required = "required" })
+                                    </div>
+
+                                    <button type="submit" class="btn btn-outline-success">@Resources.L271</button>
+
+                                    <button type="button" class="btn btn-outline-primary" id="btnAdd">@Resources.L277</button>
+
+                                    <button type="button" class="btn btn-outline-danger" id="btnDelete">@Resources.L278</button>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ROW-2 END -->
+            <!-- Modal -->
+        </div>
+        <!--CONTAINER END-->
+    </div>
+</div>
+<!--#endregion-->
+<script>
+    document.getElementById("closeAddModal").addEventListener("click", function () {
+        $('#addModal').modal('hide');
+    });
+
+    document.getElementById("closeDeleteModal").addEventListener("click", function () {
+        $('#deleteConfirmationModal').modal('hide');
+    });
+
+    document.getElementById("closeCustomModal").addEventListener("click", function () {
+        $('#customModal').modal('hide');
+    });
+    document.getElementById("closeCustomModal1").addEventListener("click", function () {
+        $('#customModal1').modal('hide');
+    });
+</script>

@@ -1,0 +1,116 @@
+﻿@model KurulumWeb.Models.KurulumViewModel
+@{
+    ViewBag.Title = "Innova";
+    Layout = "~/Views/Shared/InnovaLayout.cshtml";
+}
+
+
+<br />
+<br />
+<br />
+<br />
+<div>
+    @using (Html.BeginForm())
+    {
+        <div class="col-md-12" id="frm">
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    <div class="col-md-12" id="frm1">
+                        <label class="control-label col-md-2">GSM No</label>
+                        @Html.DropDownListFor(m => m.SelectedGsmID1, Model.GsmNo1, "GSM No Seçiniz", new { @class = "dropdown form-control select2" })
+                        <br />
+                        <br />
+                        <label class="control-label col-md-2">Ricon S/N</label>
+                        @Html.DropDownListFor(x => x.SelectedSeriNoID, Model.SeriNo, "Ricon Seri No Seçiniz", new { @class = "dropdown form-control select2" })
+                    </div>
+                    <label style="color:red;" id="l1">@ViewBag.Sonuc</label>
+                </div>
+
+                <div class="col-md-5">
+                    <br />
+                    <button type="submit" name="action" id="btn1" class="btn btn-success">Kuruluma Başla</button>
+
+                </div>
+
+            </div>
+        </div>
+      // <button type="submit" name="action_imp" id="btn2" class="btn btn-success">IMPORT</button>
+    }
+    <br />
+    <br />
+    <br />
+    <label id="text">Kurulum da kullandığınız GSM hat numarasını seçerek,"Kuruluma Başla" butonuna basarak direktifleri izleyiniz.</label>
+</div>
+<style>
+    #text {
+        color: #47a447;
+        margin-left: -17%;
+    }
+
+    #btn1 {
+        margin-left: 50%;
+    }
+
+    #frm {
+        margin-left: -15%;
+    }
+
+    #l1 {
+        margin-left: 10%;
+    }
+
+
+    @@media screen and (max-width: 1024px) and (min-width:768px) {
+        body {
+            margin-left: 30%;
+            position: center;
+        }
+
+        #l1 {
+            margin-top: 7%;
+            margin-left: -10%;
+        }
+    }
+
+    @@media screen and (max-width: 768px) and (min-width:414px) {
+        body {
+            margin-left: 27%;
+            position: center;
+        }
+
+        #btn1 {
+            margin-left: 15%;
+            margin-right: 30%;
+        }
+
+        #l1 {
+            margin-left: -0.5%;
+        }
+    }
+
+    @@media screen and (max-width: 414px) and (min-width:375px) {
+        #frm1 {
+            margin-left: 2%;
+        }
+
+        #l1 {
+            margin-left: 2%;
+        }
+
+        #text {
+            margin-left: 1px;
+        }
+    }
+
+    @@media screen and (max-width: 375px) and (min-width:320px) {
+
+        #btn1 {
+            margin-left: -0.01vh;
+        }
+
+        #text {
+            margin-left: 2%;
+        }
+    }
+</style>

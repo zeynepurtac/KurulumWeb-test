@@ -1,0 +1,803 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="L100" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="L101" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="L102" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="L103" xml:space="preserve">
+    <value>Please login with your username and password.</value>
+  </data>
+  <data name="L104" xml:space="preserve">
+    <value>SIM1</value>
+  </data>
+  <data name="L105" xml:space="preserve">
+    <value>SIM2</value>
+  </data>
+  <data name="L106" xml:space="preserve">
+    <value>Ricon S/N</value>
+  </data>
+  <data name="L107" xml:space="preserve">
+    <value>POS ID</value>
+  </data>
+  <data name="L108" xml:space="preserve">
+    <value>Select POS ID</value>
+  </data>
+  <data name="L109" xml:space="preserve">
+    <value>Terminal ID/SN</value>
+  </data>
+  <data name="L110" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="L111" xml:space="preserve">
+    <value>Select GSM Number 1</value>
+  </data>
+  <data name="L112" xml:space="preserve">
+    <value>Select GSM Number 2</value>
+  </data>
+  <data name="L113" xml:space="preserve">
+    <value>Select Ricon Serial Number</value>
+  </data>
+  <data name="L114" xml:space="preserve">
+    <value>Select Terminal ID</value>
+  </data>
+  <data name="L115" xml:space="preserve">
+    <value>Please fill all required fields and click "Start" button</value>
+  </data>
+  <data name="L116" xml:space="preserve">
+    <value>Wrong username or password</value>
+  </data>
+  <data name="L117" xml:space="preserve">
+    <value>Please select the Gsm Number 1</value>
+  </data>
+  <data name="L118" xml:space="preserve">
+    <value>Please select the Gsm Number 2</value>
+  </data>
+  <data name="L119" xml:space="preserve">
+    <value>Please select the Site ID</value>
+  </data>
+  <data name="L120" xml:space="preserve">
+    <value>Please select the Ricon S/N</value>
+  </data>
+  <data name="L121" xml:space="preserve">
+    <value>Please select the Terminal ID</value>
+  </data>
+  <data name="L122" xml:space="preserve">
+    <value>Please select the all information from list</value>
+  </data>
+  <data name="L123" xml:space="preserve">
+    <value>Warning!!!The installation process has already been performed with the GSM number you have chosen.</value>
+  </data>
+  <data name="L124" xml:space="preserve">
+    <value>The installation process has been completed successfully, your device is rebooting. Please check the led indicators of the device. You can do your tests after reboot.</value>
+  </data>
+  <data name="L125" xml:space="preserve">
+    <value>The installation process is not completed.</value>
+  </data>
+  <data name="L126" xml:space="preserve">
+    <value>Live Project Status</value>
+  </data>
+  <data name="L127" xml:space="preserve">
+    <value>Device Status</value>
+  </data>
+  <data name="L128" xml:space="preserve">
+    <value>Installation Status</value>
+  </data>
+  <data name="L129" xml:space="preserve">
+    <value>Install Date Time</value>
+  </data>
+  <data name="L130" xml:space="preserve">
+    <value>Ricon Serial Number</value>
+  </data>
+  <data name="L131" xml:space="preserve">
+    <value>Engineer</value>
+  </data>
+  <data name="L132" xml:space="preserve">
+    <value>Site Name</value>
+  </data>
+  <data name="L133" xml:space="preserve">
+    <value>Terminal Serial Number</value>
+  </data>
+  <data name="L134" xml:space="preserve">
+    <value>Installed</value>
+  </data>
+  <data name="L135" xml:space="preserve">
+    <value>Not Installed</value>
+  </data>
+  <data name="L136" xml:space="preserve">
+    <value>Ricon Devices</value>
+  </data>
+  <data name="L137" xml:space="preserve">
+    <value>Installed Device</value>
+  </data>
+  <data name="L138" xml:space="preserve">
+    <value>Remaining Device</value>
+  </data>
+  <data name="L139" xml:space="preserve">
+    <value>value</value>
+  </data>
+  <data name="L140" xml:space="preserve">
+    <value>GSM No1</value>
+  </data>
+  <data name="L141" xml:space="preserve">
+    <value>GSM No2</value>
+  </data>
+  <data name="L142" xml:space="preserve">
+    <value>Site</value>
+  </data>
+  <data name="L143" xml:space="preserve">
+    <value>Print chart</value>
+  </data>
+  <data name="L144" xml:space="preserve">
+    <value>Download PDF document</value>
+  </data>
+  <data name="L145" xml:space="preserve">
+    <value>Download PNG document</value>
+  </data>
+  <data name="L200" xml:space="preserve">
+    <value>Error!</value>
+  </data>
+  <data name="L201" xml:space="preserve">
+    <value>Warning!</value>
+  </data>
+  <data name="L203" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="L204" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="L205" xml:space="preserve">
+    <value>You have chosen SIM 2</value>
+  </data>
+  <data name="L210" xml:space="preserve">
+    <value>The Ricon router you are about to activate is previously used on another site. The old site name and parameters will be deleted / updated with the new current site settings. Please confirm?</value>
+  </data>
+  <data name="L211" xml:space="preserve">
+    <value>Currently selected Ricon Serial Number and POS ID are individually existing in the installation database. The selected parameters are not correct. 
+Firstly ensure that Ricon S/N and POS ID with the field engineer. If no change please contact your supervisor or change the Ricon device with a different Serial Number to proceed.  
+Please return the Ricon device to the warehouse for RMA purposes. Do not use this device for any other installation.</value>
+  </data>
+  <data name="L212" xml:space="preserve">
+    <value>This site you are currently activating has been activated with another Ricon device previously. The Ricon serial number associated with this POS ID will be updated with the replacement. Confirm? Note: Log into the RMSC and update the status of the Replacement Recon device to: Replaced / Faulty</value>
+  </data>
+  <data name="L220" xml:space="preserve">
+    <value>Ipsec Phase12 Policy UNDELIVERED   
+Installation can not be performed due to an abnormal situation. Please check and confirm the following items carefully with the site technician:
+A. Make sure the device is powered-on and the status LEDs are flashing in orange. 
+B. Check the 2 Data antennas connectors if connected to the correct SMA connectors:
+Antenna 1 (The Antenna with 2.5mt. cable) must be connected to Port 4G-1
+Antenna 2 (The Antenna with 2.5mt. cable) must be connected to Port 4G-2
+C. Please check the TIM SIM Card is installed on SIM1 Tray
+D. Please check the WINDTre SIM Card is installed on SIM2 Tray
+E. Please check if the RF Status LED in front of the Ricon Router is flashing or fixed
+F. Please ensure that both antenna cables are untied and there is at least 50cm distance from each antennas. 
+G. Please double check the Ricon Serial number provided by the field technician is correct.
+H. If all above items are checked and confirmed; ask the field technician to press and hold the reset button on the rear side of the Ricon Router with a tiny tool for at least 20 seconds and release the button after 20 seconds. (The Ricon device must be powered on already while performing this action)
+I. Please wait at least 2 minutes and confirm the status LEDs on the front side of the Ricon router are flashing continuously.
+J. Repeat the activation task on RiconApps. 
+K. If the installation returns with an error second time, please contact with your supervisor.</value>
+  </data>
+  <data name="L221" xml:space="preserve">
+    <value>Ipsec Phase12 Policy Sent Succesfully</value>
+  </data>
+  <data name="L222" xml:space="preserve">
+    <value>Ipsec Phase22 Policy UNDELIVERED 
+Installation can not be performed due to an abnormal situation. Please check and confirm the following items carefully with the site technician:
+A. Make sure the device is powered-on and the status LEDs are flashing in orange. 
+B. Check the 2 Data antennas connectors if connected to the correct SMA connectors:
+Antenna 1 (The Antenna with 2.5mt. cable) must be connected to Port 4G-1
+Antenna 2 (The Antenna with 2.5mt. cable) must be connected to Port 4G-2
+C. Please check the TIM SIM Card is installed on SIM1 Tray
+D. Please check the WINDTre SIM Card is installed on SIM2 Tray
+E. Please check if the RF Status LED in front of the Ricon Router is flashing or fixed
+F. Please ensure that both antenna cables are untied and there is at least 50cm distance from each antennas. 
+G. Please double check the Ricon Serial number provided by the field technician is correct.
+H. If all above items are checked and confirmed; ask the field technician to press and hold the reset button on the rear side of the Ricon Router with a tiny tool for at least 20 seconds and release the button after 20 seconds. (The Ricon device must be powered on already while performing this action)
+I. Please wait at least 2 minutes and confirm the status LEDs on the front side of the Ricon router are flashing continuously.
+J. Repeat the activation task on RiconApps. 
+K. If the installation returns with an error second time, please contact with your supervisor.</value>
+  </data>
+  <data name="L223" xml:space="preserve">
+    <value>Ipsec Phase22 Policy Sent Succesfully</value>
+  </data>
+  <data name="L224" xml:space="preserve">
+    <value>Lan Settings UNDELIVERED
+Installation can not be performed due to an abnormal situation. Please check and confirm the following items carefully with the site technician:
+A. Make sure the device is powered-on and the status LEDs are flashing in orange. 
+B. Check the 2 Data antennas connectors if connected to the correct SMA connectors:
+Antenna 1 (The Antenna with 2.5mt. cable) must be connected to Port 4G-1
+Antenna 2 (The Antenna with 2.5mt. cable) must be connected to Port 4G-2
+C. Please check the TIM SIM Card is installed on SIM1 Tray
+D. Please check the WINDTre SIM Card is installed on SIM2 Tray
+E. Please check if the RF Status LED in front of the Ricon Router is flashing or fixed
+F. Please ensure that both antenna cables are untied and there is at least 50cm distance from each antennas. 
+G. Please double check the Ricon Serial number provided by the field technician is correct.
+H. If all above items are checked and confirmed; ask the field technician to press and hold the reset button on the rear side of the Ricon Router with a tiny tool for at least 20 seconds and release the button after 20 seconds. (The Ricon device must be powered on already while performing this action)
+I. Please wait at least 2 minutes and confirm the status LEDs on the front side of the Ricon router are flashing continuously.
+J. Repeat the activation task on RiconApps. 
+K. If the installation returns with an error second time, please contact with your supervisor.</value>
+  </data>
+  <data name="L225" xml:space="preserve">
+    <value>Lan Settings Sent Succesfully</value>
+  </data>
+  <data name="L226" xml:space="preserve">
+    <value>SIM1 UNDELIVERED  
+Installation can not be performed due to an abnormal situation. Please check and confirm the following items carefully with the site technician:
+A. Make sure the device is powered-on and the status LEDs are flashing in orange. 
+B. Check the 2 Data antennas connectors if connected to the correct SMA connectors:
+Antenna 1 (The Antenna with 2.5mt. cable) must be connected to Port 4G-1
+Antenna 2 (The Antenna with 2.5mt. cable) must be connected to Port 4G-2
+C. Please check the TIM SIM Card is installed on SIM1 Tray
+D. Please check the WINDTre SIM Card is installed on SIM2 Tray
+E. Please check if the RF Status LED in front of the Ricon Router is flashing or fixed
+F. Please ensure that both antenna cables are untied and there is at least 50cm distance from each antennas. 
+G. Please double check the Ricon Serial number provided by the field technician is correct.
+H. If all above items are checked and confirmed; ask the field technician to press and hold the reset button on the rear side of the Ricon Router with a tiny tool for at least 20 seconds and release the button after 20 seconds. (The Ricon device must be powered on already while performing this action)
+I. Please wait at least 2 minutes and confirm the status LEDs on the front side of the Ricon router are flashing continuously.
+J. Repeat the activation task on RiconApps. 
+K. If the installation returns with an error second time, please contact with your supervisor.</value>
+  </data>
+  <data name="L227" xml:space="preserve">
+    <value>SIM1 Sent Succesfully</value>
+  </data>
+  <data name="L228" xml:space="preserve">
+    <value>SIM2 UNDELIVERED
+Installation can not be performed due to an abnormal situation. Please check and confirm the following items carefully with the site technician:
+A. Make sure the device is powered-on and the status LEDs are flashing in orange. 
+B. Check the 2 Data antennas connectors if connected to the correct SMA connectors:
+Antenna 1 (The Antenna with 2.5mt. cable) must be connected to Port 4G-1
+Antenna 2 (The Antenna with 2.5mt. cable) must be connected to Port 4G-2
+C. Please check the TIM SIM Card is installed on SIM1 Tray
+D. Please check the WINDTre SIM Card is installed on SIM2 Tray
+E. Please check if the RF Status LED in front of the Ricon Router is flashing or fixed
+F. Please ensure that both antenna cables are untied and there is at least 50cm distance from each antennas. 
+G. Please double check the Ricon Serial number provided by the field technician is correct.
+H. If all above items are checked and confirmed; ask the field technician to press and hold the reset button on the rear side of the Ricon Router with a tiny tool for at least 20 seconds and release the button after 20 seconds. (The Ricon device must be powered on already while performing this action)
+I. Please wait at least 2 minutes and confirm the status LEDs on the front side of the Ricon router are flashing continuously.
+J. Repeat the activation task on RiconApps. 
+K. If the installation returns with an error second time, please contact with your supervisor.</value>
+  </data>
+  <data name="L229" xml:space="preserve">
+    <value>SIM2 Sent Succesfully</value>
+  </data>
+  <data name="L230" xml:space="preserve">
+    <value>linkbackup UNDELIVERED 
+Installation can not be performed due to an abnormal situation. Please check and confirm the following items carefully with the site technician:
+A. Make sure the device is powered-on and the status LEDs are flashing in orange. 
+B. Check the 2 Data antennas connectors if connected to the correct SMA connectors:
+Antenna 1 (The Antenna with 2.5mt. cable) must be connected to Port 4G-1
+Antenna 2 (The Antenna with 2.5mt. cable) must be connected to Port 4G-2
+C. Please check the TIM SIM Card is installed on SIM1 Tray
+D. Please check the WINDTre SIM Card is installed on SIM2 Tray
+E. Please check if the RF Status LED in front of the Ricon Router is flashing or fixed
+F. Please ensure that both antenna cables are untied and there is at least 50cm distance from each antennas. 
+G. Please double check the Ricon Serial number provided by the field technician is correct.
+H. If all above items are checked and confirmed; ask the field technician to press and hold the reset button on the rear side of the Ricon Router with a tiny tool for at least 20 seconds and release the button after 20 seconds. (The Ricon device must be powered on already while performing this action)
+I. Please wait at least 2 minutes and confirm the status LEDs on the front side of the Ricon router are flashing continuously.
+J. Repeat the activation task on RiconApps. 
+K. If the installation returns with an error second time, please contact with your supervisor.</value>
+  </data>
+  <data name="L231" xml:space="preserve">
+    <value>linkbackup Sent Succesfully</value>
+  </data>
+  <data name="L232" xml:space="preserve">
+    <value>reboot UNDELIVERED 
+Installation can not be performed due to an abnormal situation. Please check and confirm the following items carefully with the site technician:
+A. Make sure the device is powered-on and the status LEDs are flashing in orange. 
+B. Check the 2 Data antennas connectors if connected to the correct SMA connectors:
+Antenna 1 (The Antenna with 2.5mt. cable) must be connected to Port 4G-1
+Antenna 2 (The Antenna with 2.5mt. cable) must be connected to Port 4G-2
+C. Please check the TIM SIM Card is installed on SIM1 Tray
+D. Please check the WINDTre SIM Card is installed on SIM2 Tray
+E. Please check if the RF Status LED in front of the Ricon Router is flashing or fixed
+F. Please ensure that both antenna cables are untied and there is at least 50cm distance from each antennas. 
+G. Please double check the Ricon Serial number provided by the field technician is correct.
+H. If all above items are checked and confirmed; ask the field technician to press and hold the reset button on the rear side of the Ricon Router with a tiny tool for at least 20 seconds and release the button after 20 seconds. (The Ricon device must be powered on already while performing this action)
+I. Please wait at least 2 minutes and confirm the status LEDs on the front side of the Ricon router are flashing continuously.
+J. Repeat the activation task on RiconApps. 
+K. If the installation returns with an error second time, please contact with your supervisor.</value>
+  </data>
+  <data name="L233" xml:space="preserve">
+    <value>reboot Sent Succesfully</value>
+  </data>
+  <data name="L234" xml:space="preserve">
+    <value>An unexpected error has occurred.Please restart the system.</value>
+  </data>
+  <data name="L235" xml:space="preserve">
+    <value>Ipsec Phase11 ikev1 Sent Succesfully</value>
+  </data>
+  <data name="L236" xml:space="preserve">
+    <value>No signal detected. Please check antennas and reboot the device and try activation again.</value>
+  </data>
+  <data name="L237" xml:space="preserve">
+    <value>Ipsec Phase21 ikev1 Sent Succesfully</value>
+  </data>
+  <data name="L238" xml:space="preserve">
+    <value>Ipsec Phase21 ikev1  UNDELIVERED 
+Installation can not be performed due to an abnormal situation. Please check and confirm the following items carefully with the site technician:
+A. Make sure the device is powered-on and the status LEDs are flashing in orange. 
+B. Check the 2 Data antennas connectors if connected to the correct SMA connectors:
+Antenna 1 (The Antenna with 2.5mt. cable) must be connected to Port 4G-1
+Antenna 2 (The Antenna with 2.5mt. cable) must be connected to Port 4G-2
+C. Please check the TIM SIM Card is installed on SIM1 Tray
+D. Please check the WINDTre SIM Card is installed on SIM2 Tray
+E. Please check if the RF Status LED in front of the Ricon Router is flashing or fixed
+F. Please ensure that both antenna cables are untied and there is at least 50cm distance from each antennas. 
+G. Please double check the Ricon Serial number provided by the field technician is correct.
+H. If all above items are checked and confirmed; ask the field technician to press and hold the reset button on the rear side of the Ricon Router with a tiny tool for at least 20 seconds and release the button after 20 seconds. (The Ricon device must be powered on already while performing this action)
+I. Please wait at least 2 minutes and confirm the status LEDs on the front side of the Ricon router are flashing continuously.
+J. Repeat the activation task on RiconApps. 
+K. If the installation returns with an error second time, please contact with your supervisor.</value>
+  </data>
+  <data name="L239" xml:space="preserve">
+    <value>We are starting the installation, Do you confirm?</value>
+  </data>
+  <data name="L240" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="L241" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="L242" xml:space="preserve">
+    <value>SIM Management</value>
+  </data>
+  <data name="L243" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="L244" xml:space="preserve">
+    <value>Pages</value>
+  </data>
+  <data name="L245" xml:space="preserve">
+    <value>Bulk Import ( SITE )</value>
+  </data>
+  <data name="L246" xml:space="preserve">
+    <value>Edit Orange Data</value>
+  </data>
+  <data name="L247" xml:space="preserve">
+    <value>Deploy Management</value>
+  </data>
+  <data name="L248" xml:space="preserve">
+    <value>Authentication</value>
+  </data>
+  <data name="L249" xml:space="preserve">
+    <value>Edit Table</value>
+  </data>
+  <data name="L250" xml:space="preserve">
+    <value>Sites</value>
+  </data>
+  <data name="L251" xml:space="preserve">
+    <value>Submenu Items</value>
+  </data>
+  <data name="L252" xml:space="preserve">
+    <value>Edit Location</value>
+  </data>
+  <data name="L253" xml:space="preserve">
+    <value>Bulk Import (Orange&amp;Inwi)</value>
+  </data>
+  <data name="L254" xml:space="preserve">
+    <value>Sign Out</value>
+  </data>
+  <data name="L255" xml:space="preserve">
+    <value>RICONAPPS ZERO TOUCH PROVISIONING</value>
+  </data>
+  <data name="L256" xml:space="preserve">
+    <value>Choose Country</value>
+  </data>
+  <data name="L257" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="L258" xml:space="preserve">
+    <value>Terms</value>
+  </data>
+  <data name="L259" xml:space="preserve">
+    <value>About Us</value>
+  </data>
+  <data name="L260" xml:space="preserve">
+    <value>Add New File</value>
+  </data>
+  <data name="L261" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="L262" xml:space="preserve">
+    <value>Drag and drop your file here on</value>
+  </data>
+  <data name="L263" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="L264" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="L265" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="L266" xml:space="preserve">
+    <value>Upload is Succesfully</value>
+  </data>
+  <data name="L267" xml:space="preserve">
+    <value>Upload is not Succesfully</value>
+  </data>
+  <data name="L268" xml:space="preserve">
+    <value>An error occurred while uploading the file:</value>
+  </data>
+  <data name="L269" xml:space="preserve">
+    <value>Router Activation Form</value>
+  </data>
+  <data name="L270" xml:space="preserve">
+    <value>Router Edit Form</value>
+  </data>
+  <data name="L271" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="L272" xml:space="preserve">
+    <value>Login with Azure.</value>
+  </data>
+  <data name="L273" xml:space="preserve">
+    <value>Social Media</value>
+  </data>
+  <data name="L274" xml:space="preserve">
+    <value>Select Site Name</value>
+  </data>
+  <data name="L275" xml:space="preserve">
+    <value>Completed Installation</value>
+  </data>
+  <data name="L276" xml:space="preserve">
+    <value>Project Total Router</value>
+  </data>
+  <data name="L277" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="L278" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="L279" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="L280" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="L281" xml:space="preserve">
+    <value>Please select a file.</value>
+  </data>
+  <data name="L282" xml:space="preserve">
+    <value>Upload is Successful</value>
+  </data>
+  <data name="L283" xml:space="preserve">
+    <value>Uploaded File:</value>
+  </data>
+  <data name="L284" xml:space="preserve">
+    <value>Upload is not Successful</value>
+  </data>
+  <data name="L285" xml:space="preserve">
+    <value>An error occurred while uploading the file:</value>
+  </data>
+  <data name="L286" xml:space="preserve">
+    <value>Error found in rows:</value>
+  </data>
+  <data name="L287" xml:space="preserve">
+    <value>Rows Not Loaded:</value>
+  </data>
+  <data name="L289" xml:space="preserve">
+    <value>Are you sure you want to start the activation process?</value>
+  </data>
+  <data name="L290" xml:space="preserve">
+    <value>Installation Process Confirmation</value>
+  </data>
+  <data name="L291" xml:space="preserve">
+    <value>The activation process has been started, please do not close this page until it is finished.</value>
+  </data>
+  <data name="L292" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="L293" xml:space="preserve">
+    <value>Location information will be deleted. Do you confirm?</value>
+  </data>
+  <data name="L294" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="L295" xml:space="preserve">
+    <value>New Location Name:</value>
+  </data>
+  <data name="L296" xml:space="preserve">
+    <value>Adding a New Location</value>
+  </data>
+  <data name="L297" xml:space="preserve">
+    <value>The new location has been successfully saved.</value>
+  </data>
+  <data name="L298" xml:space="preserve">
+    <value>The location has been successfully deleted.</value>
+  </data>
+  <data name="L299" xml:space="preserve">
+    <value>Transaction Successful</value>
+  </data>
+  <data name="L300" xml:space="preserve">
+    <value>Bulk Addition (Serial Number)</value>
+  </data>
+  <data name="L301" xml:space="preserve">
+    <value>Edit Serial Number</value>
+  </data>
+  <data name="L302" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="L303" xml:space="preserve">
+    <value>SELECT GSM NO..</value>
+  </data>
+  <data name="L304" xml:space="preserve">
+    <value>View Data</value>
+  </data>
+  <data name="L305" xml:space="preserve">
+    <value>Live Project Status</value>
+  </data>
+  <data name="L306" xml:space="preserve">
+    <value>Add New Sim</value>
+  </data>
+  <data name="L307" xml:space="preserve">
+    <value>Sim data will be deleted. Do you approve?</value>
+  </data>
+  <data name="L308" xml:space="preserve">
+    <value>The serial number information is deleted. Do you agree?</value>
+  </data>
+  <data name="L309" xml:space="preserve">
+    <value>Sim information has been successfully deleted.</value>
+  </data>
+  <data name="L310" xml:space="preserve">
+    <value>Sim information has been successfully saved.</value>
+  </data>
+  <data name="L311" xml:space="preserve">
+    <value>Add New Serial Number</value>
+  </data>
+  <data name="L312" xml:space="preserve">
+    <value>The new serial number was successfully registered.</value>
+  </data>
+  <data name="L313" xml:space="preserve">
+    <value>Serial number deleted successfully.</value>
+  </data>
+  <data name="L314" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
+  <data name="L315" xml:space="preserve">
+    <value>Please select GSM NO</value>
+  </data>
+  <data name="L316" xml:space="preserve">
+    <value>Select Gsm No</value>
+  </data>
+  <data name="L317" xml:space="preserve">
+    <value>Manage Accounts</value>
+  </data>
+  <data name="L318" xml:space="preserve">
+    <value>Manage Azure AD</value>
+  </data>
+  <data name="L319" xml:space="preserve">
+    <value>Manage Accounts</value>
+  </data>
+  <data name="L320" xml:space="preserve">
+    <value>Add New Record</value>
+  </data>
+  <data name="L321" xml:space="preserve">
+    <value>Add New Orange Data</value>
+  </data>
+  <data name="L322" xml:space="preserve">
+    <value>Do you agree that Orange Data Information will be deleted?</value>
+  </data>
+  <data name="L323" xml:space="preserve">
+    <value>Add New Inwi Data</value>
+  </data>
+  <data name="L324" xml:space="preserve">
+    <value>Do you agree that Inwi Data Information will be deleted?</value>
+  </data>
+  <data name="L325" xml:space="preserve">
+    <value>Orange Data Edit Form</value>
+  </data>
+  <data name="L326" xml:space="preserve">
+    <value>Inwi Data Edit Form</value>
+  </data>
+  <data name="L327" xml:space="preserve">
+    <value>Serial Number Edit Form</value>
+  </data>
+  <data name="L328" xml:space="preserve">
+    <value>Location Edit Form</value>
+  </data>
+  <data name="L329" xml:space="preserve">
+    <value>Orange Data has been successfully deleted.</value>
+  </data>
+  <data name="L330" xml:space="preserve">
+    <value>Orange Data has been successfully saved.</value>
+  </data>
+  <data name="L331" xml:space="preserve">
+    <value>Inwi Data has been successfully deleted.</value>
+  </data>
+  <data name="L332" xml:space="preserve">
+    <value>Inwi Data has been successfully saved.</value>
+  </data>
+  <data name="L333" xml:space="preserve">
+    <value>Do you confirm that the selected user information will be deleted?</value>
+  </data>
+  <data name="L334" xml:space="preserve">
+    <value>New record added successfully.</value>
+  </data>
+  <data name="L335" xml:space="preserve">
+    <value>The selected user information was successfully deleted.</value>
+  </data>
+  <data name="L336" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="L337" xml:space="preserve">
+    <value>Edit Inwi Data</value>
+  </data>
+  <data name="L338" xml:space="preserve">
+    <value>Does not comply with password security requirements. The password must contain a minimum of 8 characters, at least one uppercase letter, one symbol and one number.</value>
+  </data>
+  <data name="L339" xml:space="preserve">
+    <value>Activated with.</value>
+  </data>
+  <data name="L340" xml:space="preserve">
+    <value>Please select only one file type (Inwi or Orange).</value>
+  </data>
+  <data name="L341" xml:space="preserve">
+    <value>File not selected.</value>
+  </data>
+  <data name="L342" xml:space="preserve">
+    <value>Bulk Import (User)</value>
+  </data>
+  <data name="L343" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="L344" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="L345" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="L346" xml:space="preserve">
+    <value>Creator</value>
+  </data>
+  <data name="L347" xml:space="preserve">
+    <value>Create DateTime</value>
+  </data>
+  <data name="L348" xml:space="preserve">
+    <value>Export Data</value>
+  </data>
+  <data name="L349" xml:space="preserve">
+    <value>An error occurred during Excel file creation:</value>
+  </data>
+  <data name="L350" xml:space="preserve">
+    <value>Orange Data Detail</value>
+  </data>
+  <data name="L351" xml:space="preserve">
+    <value>Inwi Data Detail</value>
+  </data>
+  <data name="L352" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="L353" xml:space="preserve">
+    <value>The selected GSM Number is missing in either Orange or Inwi templates. Please contact your supervisor.</value>
+  </data>
+  <data name="L354" xml:space="preserve">
+    <value>New registration failed.
+The Gsm Number you entered already exists in the Inwi Table.</value>
+  </data>
+  <data name="L355" xml:space="preserve">
+    <value>New registration failed.
+The Gsm Number you entered already exists in the Orange Table.</value>
+  </data>
+</root>

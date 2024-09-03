@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KurulumWeb", "KurulumWeb\KurulumWeb.csproj", "{08CCE32C-386A-4E6D-81B8-BED0E208F8F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNMPDB", "SNMPDB\SNMPDB.csproj", "{45A3DE7B-C689-4F0B-8635-87ECA9C15680}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JetSMSBasic", "..\JetSMSBasic\JetSMSBasic\JetSMSBasic.csproj", "{BB05304A-5B6F-45F8-AE98-CE8B0E22A827}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08CCE32C-386A-4E6D-81B8-BED0E208F8F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08CCE32C-386A-4E6D-81B8-BED0E208F8F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08CCE32C-386A-4E6D-81B8-BED0E208F8F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08CCE32C-386A-4E6D-81B8-BED0E208F8F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45A3DE7B-C689-4F0B-8635-87ECA9C15680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45A3DE7B-C689-4F0B-8635-87ECA9C15680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45A3DE7B-C689-4F0B-8635-87ECA9C15680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45A3DE7B-C689-4F0B-8635-87ECA9C15680}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB05304A-5B6F-45F8-AE98-CE8B0E22A827}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB05304A-5B6F-45F8-AE98-CE8B0E22A827}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB05304A-5B6F-45F8-AE98-CE8B0E22A827}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB05304A-5B6F-45F8-AE98-CE8B0E22A827}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

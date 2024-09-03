@@ -1,0 +1,117 @@
+﻿@using KurulumWeb.Resources
+@model KurulumWeb.Models.AllModel
+@{
+    ViewBag.Title = "EditAzure";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<style>
+    .form-group {
+        margin-bottom: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-group .btn {
+            margin-top: 20px;
+        }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('#SiteName').change(function () {
+            var selectedSiteName = $(this).val();
+            var selectedSite_Name = $(this).find('option:selected').text();
+            if (selectedSite_Name === "@Resources.L274") {
+                selectedSite_Name = "";
+            }
+            else {
+                $('#Site_Name').val(selectedSite_Name);
+                populateAutoconfData(selectedSiteName);  // Değişiklik burada
+            }
+        });
+
+        function populateAutoconfData(siteName) {
+            $.ajax({
+                url: '@Url.Action("GetSiteData", "Home")',
+                type: 'GET',
+                data: { SiteName: siteName },  // Değişiklik burada
+                success: function (data) {
+                    $('#Site_Name').val(data.Site_Name);
+                    $('#Company_ID').val(data.Company_ID);
+                    // Diğer alanlar buraya eklenmeli
+                },
+                error: function () {
+                    console.log('Veri alınırken hata oluştu.');
+                }
+            });
+        }
+    });
+</script>
+<!--#region Gövde-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+            </div>
+            <!-- PAGE-HEADER END -->
+            <!-- ROW-2 -->
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title text-center text-blue" style="font-size:22px">@Resources.L269</h3>
+                        </div>
+                        <div class="card-header">
+                            <img style="transform:scale(0.4)" src="~/assets/images/brand/Sisal-S9922M22.png" />
+                        </div>
+                        <div class="card-body">
+                            @using (Html.BeginForm("EditRicon", "Home", FormMethod.Post))
+                            {
+                                {
+                                    @Html.ValidationSummary(true)
+                                    @Html.HiddenFor(m => m.ID)
+                                    <div class="form-group">
+                                        <label for="SiteName">SITE NAME:</label>
+                                        @Html.DropDownListFor(model => model.SiteName, ViewData["SiteName"] as SelectList, @Resources.L274, new { @class = " dropdown form-control select2", id = "SiteName" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Site_Name">Site Name:</label>
+                                        @Html.TextBoxFor(model => model.Site_Name, new { @class = "form-control", id = "Site_Name" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Company_ID">Company ID:</label>
+                                        @Html.TextBoxFor(model => model.Company_ID, new { @class = "form-control", Value = Model.Company_ID, id = "Company_ID", @readonly = "readonly" })
+                                    </div>
+
+                                    <button type="submit" class="btn btn-outline-success">@Resources.L271</button>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ROW-2 END -->
+        </div>
+        <!-- CONTAINER END -->
+    </div>
+</div>
+<!--#endregion-->

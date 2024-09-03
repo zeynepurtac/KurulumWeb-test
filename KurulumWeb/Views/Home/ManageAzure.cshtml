@@ -1,0 +1,155 @@
+﻿@model KurulumWeb.Models.GroupsViewModel
+@using KurulumWeb.Resources
+@{
+    ViewBag.Title = "ManageAzure";
+    Layout = "~/Views/Shared/ManageAzureLayout.cshtml";
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Row -->
+<div class="main-content app-content mt-0">
+    <div class="side-app ">
+        <!-- CONTAINER -->
+        <div class="main-container justify-content-center container-fluid">
+            <div class="page-header"></div>
+            <div class="row justify-content-center">
+                <!-- Row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Hesapları Düzenle</h3>
+                            </div>
+                            <div class="card-body">
+                                <button id="table2-new-row-button" style="float:right" class="btn btn-primary mb-4">Add New</button>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered border text-nowrap mb-0" id="new-edit">
+                                        <thead>
+                                            <tr>
+                                                <th>Group Name</th>
+                                                <th>Role</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var group in Model.AzureGroup)
+                                            {
+                                                <tr>
+                                                    <td>@group.Name</td>
+                                                    <td>@group.Role</td>
+                                                    @*<td>
+                                                            @{
+                                                                string role = "User"; // Varsayılan rolü "User" olarak ayarlayın.
+
+                                                                if (group.IsAdmin == true)
+                                                                {
+                                                                    role = "Admin";
+                                                                }
+                                                                else if (group.IsAdmin == false)
+                                                                {
+                                                                    role = "User";
+                                                                }
+
+                                                                @role
+                                                            }
+                                                        </td>*@
+                                                    <td>
+                                                        <!-- Edit düğmesi -->
+                                                        <button class="btn btn-sm btn-primary edit-button" id="edit">
+                                                            <i class="fas fa-edit"></i> <!-- Edit ikonu -->
+                                                        </button>
+                                                        <!-- Kaydet düğmesi (başlangıçta gizli) -->
+                                                        <button class="btn btn-sm btn-success save-button" style="display: none;">
+                                                            <i class="fas fa-check"></i> <!-- Kaydet ikonu -->
+                                                        </button>
+                                                        <!-- İptal düğmesi (başlangıçta gizli) -->
+                                                        <button class="btn btn-sm btn-danger cancel-button" style="display: none;">
+                                                            <i class="fas fa-times"></i> <!-- İptal ikonu -->
+                                                        </button>
+                                                        <!-- Delete düğmesi -->
+                                                        <button class="btn btn-sm btn-danger delete-button">
+                                                            <i class="fas fa-trash"></i> <!-- Delete ikonu -->
+                                                        </button>
+                                                        <input type="hidden" class="Id" value="@group.Id" />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Row -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row -->
+<!-- BACK-TO-TOP -->
+<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+<!-- JQUERY JS -->
+<script>
+    $(document).ready(function () {
+        // Edit düğmesine tıklandığında
+        $(".edit-button").click(function () {
+            var row = $(this).closest("tr");
+
+            // Düzenlenen satırı düzenleme moduna geçir
+            row.find(".edit-button").hide();
+            row.find(".save-button, .cancel-button").show();
+            row.find("td:not(:last-child)").attr("contenteditable", "true").addClass("edit-mode");
+        });
+
+        // Save düğmesine tıklandığında
+        $(".save-button").click(function () {
+            var row = $(this).closest("tr");
+
+            // Değişiklikleri kaydet
+            var groupId = row.find(".Id").val();
+            var name = row.find("td:eq(0)").text();
+            var role = row.find("td:eq(1)").text();
+
+            // Bu bilgileri sunucuya göndermek için bir AJAX isteği kullanabilirsiniz.
+            // AJAX ile sunucuya gönderme işlemi burada açıklamanın dışındadır.
+            $.ajax({
+                url: "/Home/EditAzureGroup", // EditUser işleminin bulunduğu controller ve action'ın yolu
+                type: "POST", // HTTP isteği türü (POST)
+                data: {
+                    Id: groupId,
+                    Name: name,
+                    Role: role,
+
+                },
+                success: function (result) {
+                    // Sunucudan başarılı bir yanıt aldığınızda bu bölüm çalışır
+                    // result ile sunucudan dönen verilere erişebilirsiniz
+                    alert(result); // Örnek: Sunucudan dönen mesajı alert ile göster
+
+                    // Değişiklikleri kaydettikten sonra gereken işlemleri burada yapabilirsiniz
+                },
+                error: function (error) {
+                    // Sunucu tarafında bir hata oluştuğunda bu bölüm çalışır
+                    alert("Hata oluştu: " + error.statusText);
+                }
+            });
+            // Düzenleme modunu kapat
+            row.find(".save-button, .cancel-button").hide();
+            row.find(".edit-button").show();
+            row.find("td:not(:last-child)").attr("contenteditable", "false").removeClass("edit-mode");
+        });
+
+        // Cancel düğmesine tıklandığında
+        $(".cancel-button").click(function () {
+            var row = $(this).closest("tr");
+
+            // Değişiklikleri iptal et
+            // Önceki verileri geri yüklemek için sunucu tarafı işlemi kullanmalısınız.
+
+            // Düzenleme modunu kapat
+            row.find(".save-button, .cancel-button").hide();
+            row.find(".edit-button").show();
+            row.find("td:not(:last-child)").attr("contenteditable", "false").removeClass("edit-mode");
+        });
+    });
+</script>

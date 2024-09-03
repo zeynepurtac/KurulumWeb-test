@@ -1,0 +1,803 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="L100" xml:space="preserve">
+    <value>Kullanıcı adı</value>
+  </data>
+  <data name="L101" xml:space="preserve">
+    <value>Şifre</value>
+  </data>
+  <data name="L102" xml:space="preserve">
+    <value>Giriş yap</value>
+  </data>
+  <data name="L103" xml:space="preserve">
+    <value>Lütfen kullanıcı adınız ve şifreniz ile giriş yapınız.</value>
+  </data>
+  <data name="L104" xml:space="preserve">
+    <value>SIM1</value>
+  </data>
+  <data name="L105" xml:space="preserve">
+    <value>SIM2</value>
+  </data>
+  <data name="L106" xml:space="preserve">
+    <value>Ricon S/N</value>
+  </data>
+  <data name="L107" xml:space="preserve">
+    <value>POS ID</value>
+  </data>
+  <data name="L108" xml:space="preserve">
+    <value>POS ID Seçiniz</value>
+  </data>
+  <data name="L109" xml:space="preserve">
+    <value>Terminal ID/SN</value>
+  </data>
+  <data name="L110" xml:space="preserve">
+    <value>Başlat</value>
+  </data>
+  <data name="L111" xml:space="preserve">
+    <value>GSM Numarası 1'i seçin</value>
+  </data>
+  <data name="L112" xml:space="preserve">
+    <value>GSM Numarası 2'yi seçin</value>
+  </data>
+  <data name="L113" xml:space="preserve">
+    <value>Ricon Seri Numarasını Seçin</value>
+  </data>
+  <data name="L114" xml:space="preserve">
+    <value>Terminal ID Seçin</value>
+  </data>
+  <data name="L115" xml:space="preserve">
+    <value>Lütfen gerekli tüm alanları doldurun ve "Başlat" düğmesini tıklayın</value>
+  </data>
+  <data name="L116" xml:space="preserve">
+    <value>Kullanıcı adı ya da parola yanlış</value>
+  </data>
+  <data name="L117" xml:space="preserve">
+    <value>Lütfen Gsm Numarası 1'i seçiniz.</value>
+  </data>
+  <data name="L118" xml:space="preserve">
+    <value>Lütfen GSM Numarası 2'yi seçiniz.</value>
+  </data>
+  <data name="L119" xml:space="preserve">
+    <value>Lütfen Site ID seçin</value>
+  </data>
+  <data name="L120" xml:space="preserve">
+    <value>Lütfen Ricon S/N'yi seçin</value>
+  </data>
+  <data name="L121" xml:space="preserve">
+    <value>Lütfen Terminal ID seçin</value>
+  </data>
+  <data name="L122" xml:space="preserve">
+    <value>Lütfen tüm bilgileri listeden seçin</value>
+  </data>
+  <data name="L123" xml:space="preserve">
+    <value>Uyarı!!!Seçmiş olduğunuz GSM numarası ile kurulum işlemi yapılmıştır.</value>
+  </data>
+  <data name="L124" xml:space="preserve">
+    <value>Kurulum işlemi başarıyla tamamlandı, cihazınız yeniden başlatılıyor. Lütfen cihazın led göstergelerini kontrol ediniz. Yeniden başlattıktan sonra testlerinizi yapabilirsiniz.</value>
+  </data>
+  <data name="L125" xml:space="preserve">
+    <value>Kurulum işlemi tamamlanmadı.</value>
+  </data>
+  <data name="L126" xml:space="preserve">
+    <value>Verileri Görüntüle</value>
+  </data>
+  <data name="L127" xml:space="preserve">
+    <value>Cihaz durumu</value>
+  </data>
+  <data name="L128" xml:space="preserve">
+    <value>Kurulum Durumu</value>
+  </data>
+  <data name="L129" xml:space="preserve">
+    <value>Kurulum Tarihi</value>
+  </data>
+  <data name="L130" xml:space="preserve">
+    <value>Ricon Seri Numarası</value>
+  </data>
+  <data name="L131" xml:space="preserve">
+    <value>Mühendis</value>
+  </data>
+  <data name="L132" xml:space="preserve">
+    <value>Site adı</value>
+  </data>
+  <data name="L133" xml:space="preserve">
+    <value>Terminal Seri Numarası</value>
+  </data>
+  <data name="L134" xml:space="preserve">
+    <value>Kurulmuş</value>
+  </data>
+  <data name="L135" xml:space="preserve">
+    <value>Yüklü değil</value>
+  </data>
+  <data name="L136" xml:space="preserve">
+    <value>Ricon Cihazları</value>
+  </data>
+  <data name="L137" xml:space="preserve">
+    <value>Yüklü Cihaz</value>
+  </data>
+  <data name="L138" xml:space="preserve">
+    <value>Kalan Cihaz</value>
+  </data>
+  <data name="L139" xml:space="preserve">
+    <value>Değer</value>
+  </data>
+  <data name="L140" xml:space="preserve">
+    <value>GSM No1</value>
+  </data>
+  <data name="L141" xml:space="preserve">
+    <value>GSM No2</value>
+  </data>
+  <data name="L142" xml:space="preserve">
+    <value>Alan</value>
+  </data>
+  <data name="L143" xml:space="preserve">
+    <value>Tabloyu yazdır</value>
+  </data>
+  <data name="L144" xml:space="preserve">
+    <value>PDF belgesini indir</value>
+  </data>
+  <data name="L145" xml:space="preserve">
+    <value>PNG belgesini indir</value>
+  </data>
+  <data name="L200" xml:space="preserve">
+    <value>Hata!</value>
+  </data>
+  <data name="L201" xml:space="preserve">
+    <value>Uyarı!</value>
+  </data>
+  <data name="L203" xml:space="preserve">
+    <value>Onayla</value>
+  </data>
+  <data name="L204" xml:space="preserve">
+    <value>İptal Et</value>
+  </data>
+  <data name="L205" xml:space="preserve">
+    <value>SIM 2'yi seçtiniz</value>
+  </data>
+  <data name="L210" xml:space="preserve">
+    <value>Etkinleştirmek üzere olduğunuz Ricon yönlendirici daha önce başka bir sitede kullanılıyor. Eski site adı ve parametreleri silinecek/yeni mevcut site ayarlarıyla güncellenecektir. Lütfen onaylayın?</value>
+  </data>
+  <data name="L211" xml:space="preserve">
+    <value>Şu anda seçili olan Ricon Seri Numarası ve POS ID, kurulum veri tabanında ayrı ayrı mevcuttur. Seçilen parametreler doğru değil.
+Öncelikle saha mühendisi ile Ricon S/N ve POS ID'nin olduğundan emin olun. Değişiklik yoksa, lütfen amiriniz ile iletişime geçin veya devam etmek için Ricon cihazını farklı bir Seri Numarası ile değiştirin.
+RMA amaçları için lütfen Ricon cihazını depoya iade edin. Bu cihazı başka herhangi bir kurulum için kullanmayın.</value>
+  </data>
+  <data name="L212" xml:space="preserve">
+    <value>Şu anda aktif hale getirmekte olduğunuz bu site daha önce başka bir Ricon cihazı ile aktif hale getirildi. Bu POS kimliğiyle ilişkili Ricon seri numarası, değiştirme ile güncellenecektir. Onaylamak için? Not: RMSC'de oturum açın ve Backup Discovery cihaz durumunu şu şekilde güncelleyin: Değiştirildi / Başarısız</value>
+  </data>
+  <data name="L220" xml:space="preserve">
+    <value>Ipsec Phase12 Politikası TESLİM EDİLMİYOR
+Anormal bir durum nedeniyle kurulum gerçekleştirilemiyor. Lütfen aşağıdaki öğeleri site teknisyeniyle dikkatlice kontrol edin ve onaylayın:
+A. Cihazın açık olduğundan ve durum LED'lerinin turuncu renkte yanıp söndüğünden emin olun.
+B. Doğru SMA konektörlerine bağlıysa 2 Veri anteni konektörünü kontrol edin:
+Anten 1 (2,5mt. kablolu Anten) Port 4G-1'e bağlanmalıdır.
+Anten 2 (2,5mt kablolu Anten) Port 4G-2'ye bağlanmalıdır.
+C. Lütfen TIM SIM Kartın SIM1 Tepsisine takılı olup olmadığını kontrol edin.
+D. Lütfen WINDTre SIM Kartın SIM2 Tepsisine takılı olup olmadığını kontrol edin.
+E. Lütfen Ricon Router'ın önündeki RF Durum LED'inin yanıp söndüğünü veya sabitlendiğini kontrol edin.
+F. Lütfen her iki anten kablosunun çözülmüş olduğundan ve antenler arasında en az 50 cm mesafe olduğundan emin olun.
+G. Lütfen saha teknisyeni tarafından sağlanan Ricon Seri numarasının doğruluğunu tekrar kontrol edin.
+H. Yukarıdaki tüm maddeler kontrol edilir ve onaylanırsa; saha teknisyeninden Ricon Router'ın arka tarafındaki sıfırlama düğmesine küçük bir aletle en az 20 saniye basılı tutmasını ve 20 saniye sonra düğmeyi bırakmasını isteyin. (Bu eylemi gerçekleştirirken Ricon cihazı açık olmalıdır)
+I. Lütfen en az 2 dakika bekleyin ve Ricon yönlendiricinin ön tarafındaki durum LED'lerinin sürekli yanıp söndüğünü onaylayın.
+J. RiconApps'ta aktivasyon görevini tekrarlayın.
+K. Kurulum ikinci kez bir hatayla dönerse, lütfen amirinizle iletişime geçin.</value>
+  </data>
+  <data name="L221" xml:space="preserve">
+    <value>Ipsec Aşama 12 Politikası Başarıyla Gönderildi</value>
+  </data>
+  <data name="L222" xml:space="preserve">
+    <value>Ipsec Phase22 Politikası TESLİM EDİLMİYOR
+Anormal bir durum nedeniyle kurulum gerçekleştirilemiyor. Lütfen aşağıdaki öğeleri site teknisyeniyle dikkatlice kontrol edin ve onaylayın:
+A. Cihazın açık olduğundan ve durum LED'lerinin turuncu renkte yanıp söndüğünden emin olun.
+B. Doğru SMA konektörlerine bağlıysa 2 Veri anteni konektörünü kontrol edin:
+Anten 1 (2,5mt. kablolu Anten) Port 4G-1'e bağlanmalıdır.
+Anten 2 (2,5mt kablolu Anten) Port 4G-2'ye bağlanmalıdır.
+C. Lütfen TIM SIM Kartın SIM1 Tepsisine takılı olup olmadığını kontrol edin.
+D. Lütfen WINDTre SIM Kartın SIM2 Tepsisine takılı olup olmadığını kontrol edin.
+E. Lütfen Ricon Router'ın önündeki RF Durum LED'inin yanıp söndüğünü veya sabitlendiğini kontrol edin.
+F. Lütfen her iki anten kablosunun çözülmüş olduğundan ve antenler arasında en az 50 cm mesafe olduğundan emin olun.
+G. Lütfen saha teknisyeni tarafından sağlanan Ricon Seri numarasının doğruluğunu tekrar kontrol edin.
+H. Yukarıdaki tüm maddeler kontrol edilir ve onaylanırsa; saha teknisyeninden Ricon Router'ın arka tarafındaki sıfırlama düğmesine küçük bir aletle en az 20 saniye basılı tutmasını ve 20 saniye sonra düğmeyi bırakmasını isteyin. (Bu eylemi gerçekleştirirken Ricon cihazı açık olmalıdır)
+I. Lütfen en az 2 dakika bekleyin ve Ricon yönlendiricinin ön tarafındaki durum LED'lerinin sürekli yanıp söndüğünü onaylayın.
+J. RiconApps'ta aktivasyon görevini tekrarlayın.
+K. Kurulum ikinci kez bir hatayla dönerse, lütfen amirinizle iletişime geçin.</value>
+  </data>
+  <data name="L223" xml:space="preserve">
+    <value>Ipsec Aşama 22 Politikası Başarıyla Gönderildi</value>
+  </data>
+  <data name="L224" xml:space="preserve">
+    <value>Lan Ayarları GÖNDERİLMEDİ
+Anormal bir durum nedeniyle kurulum gerçekleştirilemiyor. Lütfen aşağıdaki öğeleri site teknisyeniyle dikkatlice kontrol edin ve onaylayın:
+A. Cihazın açık olduğundan ve durum LED'lerinin turuncu renkte yanıp söndüğünden emin olun.
+B. Doğru SMA konektörlerine bağlıysa 2 Veri anteni konektörünü kontrol edin:
+Anten 1 (2,5mt. kablolu Anten) Port 4G-1'e bağlanmalıdır.
+Anten 2 (2,5mt kablolu Anten) Port 4G-2'ye bağlanmalıdır.
+C. Lütfen TIM SIM Kartın SIM1 Tepsisine takılı olup olmadığını kontrol edin.
+D. Lütfen WINDTre SIM Kartın SIM2 Tepsisine takılı olup olmadığını kontrol edin.
+E. Lütfen Ricon Router'ın önündeki RF Durum LED'inin yanıp söndüğünü veya sabitlendiğini kontrol edin.
+F. Lütfen her iki anten kablosunun çözülmüş olduğundan ve antenler arasında en az 50 cm mesafe olduğundan emin olun.
+G. Lütfen saha teknisyeni tarafından sağlanan Ricon Seri numarasının doğruluğunu tekrar kontrol edin.
+H. Yukarıdaki tüm maddeler kontrol edilir ve onaylanırsa; saha teknisyeninden Ricon Router'ın arka tarafındaki sıfırlama düğmesine küçük bir aletle en az 20 saniye basılı tutmasını ve 20 saniye sonra düğmeyi bırakmasını isteyin. (Bu eylemi gerçekleştirirken Ricon cihazı açık olmalıdır)
+I. Lütfen en az 2 dakika bekleyin ve Ricon yönlendiricinin ön tarafındaki durum LED'lerinin sürekli yanıp söndüğünü onaylayın.
+J. RiconApps'ta aktivasyon görevini tekrarlayın.
+K. Kurulum ikinci kez bir hatayla dönerse, lütfen amirinizle iletişime geçin.</value>
+  </data>
+  <data name="L225" xml:space="preserve">
+    <value>Lan Ayarları Başarıyla Gönderildi</value>
+  </data>
+  <data name="L226" xml:space="preserve">
+    <value>SIM1 TESLİM EDİLMEDİ
+Anormal bir durum nedeniyle kurulum gerçekleştirilemiyor. Lütfen aşağıdaki öğeleri site teknisyeniyle dikkatlice kontrol edin ve onaylayın:
+A. Cihazın açık olduğundan ve durum LED'lerinin turuncu renkte yanıp söndüğünden emin olun.
+B. Doğru SMA konektörlerine bağlıysa 2 Veri anteni konektörünü kontrol edin:
+Anten 1 (2,5mt. kablolu Anten) Port 4G-1'e bağlanmalıdır.
+Anten 2 (2,5mt kablolu Anten) Port 4G-2'ye bağlanmalıdır.
+C. Lütfen TIM SIM Kartın SIM1 Tepsisine takılı olup olmadığını kontrol edin.
+D. Lütfen WINDTre SIM Kartın SIM2 Tepsisine takılı olup olmadığını kontrol edin.
+E. Lütfen Ricon Router'ın önündeki RF Durum LED'inin yanıp söndüğünü veya sabitlendiğini kontrol edin.
+F. Lütfen her iki anten kablosunun çözülmüş olduğundan ve antenler arasında en az 50 cm mesafe olduğundan emin olun.
+G. Lütfen saha teknisyeni tarafından sağlanan Ricon Seri numarasının doğruluğunu tekrar kontrol edin.
+H. Yukarıdaki tüm maddeler kontrol edilir ve onaylanırsa; saha teknisyeninden Ricon Router'ın arka tarafındaki sıfırlama düğmesine küçük bir aletle en az 20 saniye basılı tutmasını ve 20 saniye sonra düğmeyi bırakmasını isteyin. (Bu eylemi gerçekleştirirken Ricon cihazı açık olmalıdır)
+I. Lütfen en az 2 dakika bekleyin ve Ricon yönlendiricinin ön tarafındaki durum LED'lerinin sürekli yanıp söndüğünü onaylayın.
+J. RiconApps'ta aktivasyon görevini tekrarlayın.
+K. Kurulum ikinci kez bir hatayla dönerse, lütfen amirinizle iletişime geçin.</value>
+  </data>
+  <data name="L227" xml:space="preserve">
+    <value>SIM 1 Başarıyla Gönderildi</value>
+  </data>
+  <data name="L228" xml:space="preserve">
+    <value>SIM2 TESLİM EDİLMEDİ
+Anormal bir durum nedeniyle kurulum gerçekleştirilemiyor. Lütfen aşağıdaki öğeleri site teknisyeniyle dikkatlice kontrol edin ve onaylayın:
+A. Cihazın açık olduğundan ve durum LED'lerinin turuncu renkte yanıp söndüğünden emin olun.
+B. Doğru SMA konektörlerine bağlıysa 2 Veri anteni konektörünü kontrol edin:
+Anten 1 (2,5mt. kablolu Anten) Port 4G-1'e bağlanmalıdır.
+Anten 2 (2,5mt kablolu Anten) Port 4G-2'ye bağlanmalıdır.
+C. Lütfen TIM SIM Kartın SIM1 Tepsisine takılı olup olmadığını kontrol edin.
+D. Lütfen WINDTre SIM Kartın SIM2 Tepsisine takılı olup olmadığını kontrol edin.
+E. Lütfen Ricon Router'ın önündeki RF Durum LED'inin yanıp söndüğünü veya sabitlendiğini kontrol edin.
+F. Lütfen her iki anten kablosunun çözülmüş olduğundan ve antenler arasında en az 50 cm mesafe olduğundan emin olun.
+G. Lütfen saha teknisyeni tarafından sağlanan Ricon Seri numarasının doğruluğunu tekrar kontrol edin.
+H. Yukarıdaki tüm maddeler kontrol edilir ve onaylanırsa; saha teknisyeninden Ricon Router'ın arka tarafındaki sıfırlama düğmesine küçük bir aletle en az 20 saniye basılı tutmasını ve 20 saniye sonra düğmeyi bırakmasını isteyin. (Bu eylemi gerçekleştirirken Ricon cihazı açık olmalıdır)
+I. Lütfen en az 2 dakika bekleyin ve Ricon yönlendiricinin ön tarafındaki durum LED'lerinin sürekli yanıp söndüğünü onaylayın.
+J. RiconApps'ta aktivasyon görevini tekrarlayın.
+K. Kurulum ikinci kez bir hatayla dönerse, lütfen amirinizle iletişime geçin.</value>
+  </data>
+  <data name="L229" xml:space="preserve">
+    <value>SIM2 Başarıyla Gönderildi</value>
+  </data>
+  <data name="L230" xml:space="preserve">
+    <value>linkbackup TESLİM EDİLMEDİ
+Anormal bir durum nedeniyle kurulum gerçekleştirilemiyor. Lütfen aşağıdaki öğeleri site teknisyeniyle dikkatlice kontrol edin ve onaylayın:
+A. Cihazın açık olduğundan ve durum LED'lerinin turuncu renkte yanıp söndüğünden emin olun.
+B. Doğru SMA konektörlerine bağlıysa 2 Veri anteni konektörünü kontrol edin:
+Anten 1 (2,5mt. kablolu Anten) Port 4G-1'e bağlanmalıdır.
+Anten 2 (2,5mt kablolu Anten) Port 4G-2'ye bağlanmalıdır.
+C. Lütfen TIM SIM Kartın SIM1 Tepsisine takılı olup olmadığını kontrol edin.
+D. Lütfen WINDTre SIM Kartın SIM2 Tepsisine takılı olup olmadığını kontrol edin.
+E. Lütfen Ricon Router'ın önündeki RF Durum LED'inin yanıp söndüğünü veya sabitlendiğini kontrol edin.
+F. Lütfen her iki anten kablosunun çözülmüş olduğundan ve antenler arasında en az 50 cm mesafe olduğundan emin olun.
+G. Lütfen saha teknisyeni tarafından sağlanan Ricon Seri numarasının doğruluğunu tekrar kontrol edin.
+H. Yukarıdaki tüm maddeler kontrol edilir ve onaylanırsa; saha teknisyeninden Ricon Router'ın arka tarafındaki sıfırlama düğmesine küçük bir aletle en az 20 saniye basılı tutmasını ve 20 saniye sonra düğmeyi bırakmasını isteyin. (Bu eylemi gerçekleştirirken Ricon cihazı açık olmalıdır)
+I. Lütfen en az 2 dakika bekleyin ve Ricon yönlendiricinin ön tarafındaki durum LED'lerinin sürekli yanıp söndüğünü onaylayın.
+J. RiconApps'ta aktivasyon görevini tekrarlayın.
+K. Kurulum ikinci kez bir hatayla dönerse, lütfen amirinizle iletişime geçin.</value>
+  </data>
+  <data name="L231" xml:space="preserve">
+    <value>linkbackup Başarıyla Gönderildi</value>
+  </data>
+  <data name="L232" xml:space="preserve">
+    <value>Teslim Edilmemiş
+Anormal bir durum nedeniyle kurulum gerçekleştirilemiyor. Lütfen aşağıdaki öğeleri site teknisyeniyle dikkatlice kontrol edin ve onaylayın:
+A. Cihazın açık olduğundan ve durum LED'lerinin turuncu renkte yanıp söndüğünden emin olun.
+B. Doğru SMA konektörlerine bağlıysa 2 Veri anteni konektörünü kontrol edin:
+Anten 1 (2,5mt. kablolu Anten) Port 4G-1'e bağlanmalıdır.
+Anten 2 (2,5mt kablolu Anten) Port 4G-2'ye bağlanmalıdır.
+C. Lütfen TIM SIM Kartın SIM1 Tepsisine takılı olup olmadığını kontrol edin.
+D. Lütfen WINDTre SIM Kartın SIM2 Tepsisine takılı olup olmadığını kontrol edin.
+E. Lütfen Ricon Router'ın önündeki RF Durum LED'inin yanıp söndüğünü veya sabitlendiğini kontrol edin.
+F. Lütfen her iki anten kablosunun çözülmüş olduğundan ve antenler arasında en az 50 cm mesafe olduğundan emin olun.
+G. Lütfen saha teknisyeni tarafından sağlanan Ricon Seri numarasının doğruluğunu tekrar kontrol edin.
+H. Yukarıdaki tüm maddeler kontrol edilir ve onaylanırsa; saha teknisyeninden Ricon Router'ın arka tarafındaki sıfırlama düğmesine küçük bir aletle en az 20 saniye basılı tutmasını ve 20 saniye sonra düğmeyi bırakmasını isteyin. (Bu eylemi gerçekleştirirken Ricon cihazı açık olmalıdır)
+I. Lütfen en az 2 dakika bekleyin ve Ricon yönlendiricinin ön tarafındaki durum LED'lerinin sürekli yanıp söndüğünü onaylayın.
+J. RiconApps'ta aktivasyon görevini tekrarlayın.
+K. Kurulum ikinci kez bir hatayla dönerse, lütfen amirinizle iletişime geçin.</value>
+  </data>
+  <data name="L233" xml:space="preserve">
+    <value>Başarıyla Gönderildi</value>
+  </data>
+  <data name="L234" xml:space="preserve">
+    <value>Beklenmeyen bir hata oluştu. Lütfen sistemi yeniden başlatın.</value>
+  </data>
+  <data name="L235" xml:space="preserve">
+    <value>Ipsec Aşama 11 ikev1 Başarıyla Gönderildi</value>
+  </data>
+  <data name="L236" xml:space="preserve">
+    <value>Sinyal algılanmadı. Lütfen antenleri kontrol edin ve cihazı yeniden başlatıp etkinleştirmeyi tekrar deneyin.</value>
+  </data>
+  <data name="L237" xml:space="preserve">
+    <value>Ipsec Aşama 21 ikev1 Başarıyla Gönderildi</value>
+  </data>
+  <data name="L238" xml:space="preserve">
+    <value>Ipsec Phase21 ikev1 TESLİM EDİLMEDİ
+Anormal bir durum nedeniyle kurulum gerçekleştirilemiyor. Lütfen aşağıdaki öğeleri site teknisyeniyle dikkatlice kontrol edin ve onaylayın:
+A. Cihazın açık olduğundan ve durum LED'lerinin turuncu renkte yanıp söndüğünden emin olun.
+B. Doğru SMA konektörlerine bağlıysa 2 Veri anteni konektörünü kontrol edin:
+Anten 1 (2,5mt. kablolu Anten) Port 4G-1'e bağlanmalıdır.
+Anten 2 (2,5mt kablolu Anten) Port 4G-2'ye bağlanmalıdır.
+C. Lütfen TIM SIM Kartın SIM1 Tepsisine takılı olup olmadığını kontrol edin.
+D. Lütfen WINDTre SIM Kartın SIM2 Tepsisine takılı olup olmadığını kontrol edin.
+E. Lütfen Ricon Router'ın önündeki RF Durum LED'inin yanıp söndüğünü veya sabitlendiğini kontrol edin.
+F. Lütfen her iki anten kablosunun çözülmüş olduğundan ve antenler arasında en az 50 cm mesafe olduğundan emin olun.
+G. Lütfen saha teknisyeni tarafından sağlanan Ricon Seri numarasının doğruluğunu tekrar kontrol edin.
+H. Yukarıdaki tüm maddeler kontrol edilir ve onaylanırsa; saha teknisyeninden Ricon Router'ın arka tarafındaki sıfırlama düğmesine küçük bir aletle en az 20 saniye basılı tutmasını ve 20 saniye sonra düğmeyi bırakmasını isteyin. (Bu eylemi gerçekleştirirken Ricon cihazı açık olmalıdır)
+I. Lütfen en az 2 dakika bekleyin ve Ricon yönlendiricinin ön tarafındaki durum LED'lerinin sürekli yanıp söndüğünü onaylayın.
+J. RiconApps'ta aktivasyon görevini tekrarlayın.
+K. Kurulum ikinci kez bir hatayla dönerse, lütfen amirinizle iletişime geçin.</value>
+  </data>
+  <data name="L239" xml:space="preserve">
+    <value>Kuruluma başlıyoruz, onaylıyor musunuz?</value>
+  </data>
+  <data name="L240" xml:space="preserve">
+    <value>Yükle</value>
+  </data>
+  <data name="L241" xml:space="preserve">
+    <value>Ana Sayfa</value>
+  </data>
+  <data name="L242" xml:space="preserve">
+    <value>SIM Yönetimi</value>
+  </data>
+  <data name="L243" xml:space="preserve">
+    <value>Sohbet</value>
+  </data>
+  <data name="L244" xml:space="preserve">
+    <value>Sayfalar</value>
+  </data>
+  <data name="L245" xml:space="preserve">
+    <value>Toplu Ekleme ( Lokasyon)</value>
+  </data>
+  <data name="L246" xml:space="preserve">
+    <value>Orange Data Düzenle</value>
+  </data>
+  <data name="L247" xml:space="preserve">
+    <value>Dağıtım Yönetimi</value>
+  </data>
+  <data name="L248" xml:space="preserve">
+    <value>Kimlik Doğrulama</value>
+  </data>
+  <data name="L249" xml:space="preserve">
+    <value>Tabloyu Düzenle</value>
+  </data>
+  <data name="L250" xml:space="preserve">
+    <value>Lokasyon</value>
+  </data>
+  <data name="L251" xml:space="preserve">
+    <value>Alt menü Öğeleri</value>
+  </data>
+  <data name="L252" xml:space="preserve">
+    <value>Lokasyon Düzenle</value>
+  </data>
+  <data name="L253" xml:space="preserve">
+    <value>Toplu Ekleme (Orange&amp;Inwi)</value>
+  </data>
+  <data name="L254" xml:space="preserve">
+    <value>Oturumu Kapat</value>
+  </data>
+  <data name="L255" xml:space="preserve">
+    <value>RICONAPPS ZERO TOUCH PROVISIONING</value>
+  </data>
+  <data name="L256" xml:space="preserve">
+    <value>Ülke Seçiniz</value>
+  </data>
+  <data name="L257" xml:space="preserve">
+    <value>Gizlilik</value>
+  </data>
+  <data name="L258" xml:space="preserve">
+    <value>Şartlar</value>
+  </data>
+  <data name="L259" xml:space="preserve">
+    <value>Hakkımızda</value>
+  </data>
+  <data name="L260" xml:space="preserve">
+    <value>Yeni Dosya Ekle</value>
+  </data>
+  <data name="L261" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="L262" xml:space="preserve">
+    <value>Dosyanızı buraya sürükleyip bırakın</value>
+  </data>
+  <data name="L263" xml:space="preserve">
+    <value>Yükle</value>
+  </data>
+  <data name="L264" xml:space="preserve">
+    <value>İptal Et</value>
+  </data>
+  <data name="L265" xml:space="preserve">
+    <value>Araştır</value>
+  </data>
+  <data name="L266" xml:space="preserve">
+    <value>Yükleme başarıyla tamamlandı</value>
+  </data>
+  <data name="L267" xml:space="preserve">
+    <value>Yükleme Başarılı Değil</value>
+  </data>
+  <data name="L268" xml:space="preserve">
+    <value>Dosya yüklenirken bir hata oluştu:</value>
+  </data>
+  <data name="L269" xml:space="preserve">
+    <value>Router Aktivasyon Formu</value>
+  </data>
+  <data name="L270" xml:space="preserve">
+    <value>Router Düzenleme Formu</value>
+  </data>
+  <data name="L271" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="L272" xml:space="preserve">
+    <value>Azure ile oturum açın.</value>
+  </data>
+  <data name="L273" xml:space="preserve">
+    <value>Sosyal Medya</value>
+  </data>
+  <data name="L274" xml:space="preserve">
+    <value>Site Name SEÇİNİZ..</value>
+  </data>
+  <data name="L275" xml:space="preserve">
+    <value>Tamamlanan Kurulum</value>
+  </data>
+  <data name="L276" xml:space="preserve">
+    <value>Proje Toplam Router</value>
+  </data>
+  <data name="L277" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="L278" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="L279" xml:space="preserve">
+    <value>Evet</value>
+  </data>
+  <data name="L280" xml:space="preserve">
+    <value>Hayır</value>
+  </data>
+  <data name="L281" xml:space="preserve">
+    <value>Lütfen bir dosya seçin.</value>
+  </data>
+  <data name="L282" xml:space="preserve">
+    <value>Yükleme Başarılı</value>
+  </data>
+  <data name="L283" xml:space="preserve">
+    <value>Yüklenen Dosya:</value>
+  </data>
+  <data name="L284" xml:space="preserve">
+    <value>Yükleme Başarılı Değil</value>
+  </data>
+  <data name="L285" xml:space="preserve">
+    <value>Dosya yüklenirken bir hata oluştu:</value>
+  </data>
+  <data name="L286" xml:space="preserve">
+    <value>Satırlarda hata bulundu:</value>
+  </data>
+  <data name="L287" xml:space="preserve">
+    <value>Yüklenmeyen Satırlar:</value>
+  </data>
+  <data name="L289" xml:space="preserve">
+    <value>Aktivasyon işlemini başlatmak istediğinizden emin misiniz?</value>
+  </data>
+  <data name="L290" xml:space="preserve">
+    <value>Kurulum İşlemi Onayı</value>
+  </data>
+  <data name="L291" xml:space="preserve">
+    <value>Aktivasyon işlemi başlatıldı, lütfen bitene kadar bu sayfayı kapatmayın.</value>
+  </data>
+  <data name="L292" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="L293" xml:space="preserve">
+    <value>Lokasyon bilgileri silinecek. Onaylıyor musunuz?</value>
+  </data>
+  <data name="L294" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="L295" xml:space="preserve">
+    <value>Yeni Lokasyon Adı:</value>
+  </data>
+  <data name="L296" xml:space="preserve">
+    <value>Yeni Lokasyon Ekleme</value>
+  </data>
+  <data name="L297" xml:space="preserve">
+    <value>Yeni lokasyon başarıyla kaydedildi.</value>
+  </data>
+  <data name="L298" xml:space="preserve">
+    <value>Lokasyon başarıyla silindi.</value>
+  </data>
+  <data name="L299" xml:space="preserve">
+    <value>İşlem Başarılı</value>
+  </data>
+  <data name="L300" xml:space="preserve">
+    <value>Toplu Ekleme (Seri Numarası)</value>
+  </data>
+  <data name="L301" xml:space="preserve">
+    <value>Seri Numarası Düzenle</value>
+  </data>
+  <data name="L302" xml:space="preserve">
+    <value>Şablon</value>
+  </data>
+  <data name="L303" xml:space="preserve">
+    <value>GSM NO SEÇİNİZ..</value>
+  </data>
+  <data name="L304" xml:space="preserve">
+    <value>Verileri Görüntüle</value>
+  </data>
+  <data name="L305" xml:space="preserve">
+    <value>Canlı Proje Durumu</value>
+  </data>
+  <data name="L306" xml:space="preserve">
+    <value>Yeni Sim Ekleme</value>
+  </data>
+  <data name="L307" xml:space="preserve">
+    <value>Sim bilgileri silinecek. Onaylıyor musunuz?</value>
+  </data>
+  <data name="L308" xml:space="preserve">
+    <value>Seri Numarası bilgisi silinecek. Onaylıyor musunuz?</value>
+  </data>
+  <data name="L309" xml:space="preserve">
+    <value>q@</value>
+  </data>
+  <data name="L310" xml:space="preserve">
+    <value>Sim bilgileri başarıyla kaydedildi.</value>
+  </data>
+  <data name="L311" xml:space="preserve">
+    <value>Yeni Seri Numarası Ekleme</value>
+  </data>
+  <data name="L312" xml:space="preserve">
+    <value>Yeni seri numarası başarıyla kaydedildi.</value>
+  </data>
+  <data name="L313" xml:space="preserve">
+    <value>Seri numarası başarıyla silindi.</value>
+  </data>
+  <data name="L314" xml:space="preserve">
+    <value>Hesaplar</value>
+  </data>
+  <data name="L315" xml:space="preserve">
+    <value>Lütfen GSM NO seçin</value>
+  </data>
+  <data name="L316" xml:space="preserve">
+    <value>Gsm No Seç</value>
+  </data>
+  <data name="L317" xml:space="preserve">
+    <value>Hesapları Yönet</value>
+  </data>
+  <data name="L318" xml:space="preserve">
+    <value>Azure AD Yönet</value>
+  </data>
+  <data name="L319" xml:space="preserve">
+    <value>Hesapları Düzenle</value>
+  </data>
+  <data name="L320" xml:space="preserve">
+    <value>Yeni Kayıt Ekle</value>
+  </data>
+  <data name="L321" xml:space="preserve">
+    <value>Yeni Orange Data Ekle</value>
+  </data>
+  <data name="L322" xml:space="preserve">
+    <value>Orange Data Bilgileri Silinecek Onaylıyor musunuz?</value>
+  </data>
+  <data name="L323" xml:space="preserve">
+    <value>Yeni Inwi Data Ekle</value>
+  </data>
+  <data name="L324" xml:space="preserve">
+    <value>Inwi Data Bilgileri Silinecek Onaylıyor musunuz?</value>
+  </data>
+  <data name="L325" xml:space="preserve">
+    <value>Orange Data Düzenleme Formu</value>
+  </data>
+  <data name="L326" xml:space="preserve">
+    <value>Inwi Data Düzenleme Formu</value>
+  </data>
+  <data name="L327" xml:space="preserve">
+    <value>Seri Numarası Düzenleme Formu</value>
+  </data>
+  <data name="L328" xml:space="preserve">
+    <value>Lokasyon Düzenleme Formu</value>
+  </data>
+  <data name="L329" xml:space="preserve">
+    <value>Orange Data başarıyla silindi.</value>
+  </data>
+  <data name="L330" xml:space="preserve">
+    <value>Orange Data başarıyla kaydedildi.</value>
+  </data>
+  <data name="L331" xml:space="preserve">
+    <value>Inwi Data başarıyla silindi.</value>
+  </data>
+  <data name="L332" xml:space="preserve">
+    <value>Inwi Data başarıyla kaydedildi.</value>
+  </data>
+  <data name="L333" xml:space="preserve">
+    <value>Seçili kullanıcı bilgileri silinecek onaylıyor musunuz? </value>
+  </data>
+  <data name="L334" xml:space="preserve">
+    <value>Yeni kayıt başarıyla eklendi.</value>
+  </data>
+  <data name="L335" xml:space="preserve">
+    <value>Seçili kullanıcı bilgileri başarıyla silindi.</value>
+  </data>
+  <data name="L336" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
+  <data name="L337" xml:space="preserve">
+    <value>Inwi Data Düzenle</value>
+  </data>
+  <data name="L338" xml:space="preserve">
+    <value>Şifre güvenliği gereksinimlerine uymuyor. Şifre minimum 8 karakter, en az bir büyük harf, bir sembol ve bir rakam içermelidir.</value>
+  </data>
+  <data name="L339" xml:space="preserve">
+    <value>ile etkinleştirildi.</value>
+  </data>
+  <data name="L340" xml:space="preserve">
+    <value>Lütfen yalnızca bir dosya türü seçin (Inwi veya Orange).</value>
+  </data>
+  <data name="L341" xml:space="preserve">
+    <value>Dosya Seçilmedi</value>
+  </data>
+  <data name="L342" xml:space="preserve">
+    <value>Toplu Ekleme (Kullanıcı)</value>
+  </data>
+  <data name="L343" xml:space="preserve">
+    <value>Kullanıcı Adı</value>
+  </data>
+  <data name="L344" xml:space="preserve">
+    <value>Parola</value>
+  </data>
+  <data name="L345" xml:space="preserve">
+    <value>Rol</value>
+  </data>
+  <data name="L346" xml:space="preserve">
+    <value>Oluşturucu</value>
+  </data>
+  <data name="L347" xml:space="preserve">
+    <value>Oluşturulan Tarih</value>
+  </data>
+  <data name="L348" xml:space="preserve">
+    <value>Verileri Dışa Aktar</value>
+  </data>
+  <data name="L349" xml:space="preserve">
+    <value>Excel dosyası oluşturma sırasında bir hata oluştu:</value>
+  </data>
+  <data name="L350" xml:space="preserve">
+    <value>Orange Veri Detayı</value>
+  </data>
+  <data name="L351" xml:space="preserve">
+    <value>Inwi Veri Detayı</value>
+  </data>
+  <data name="L352" xml:space="preserve">
+    <value>Tamam</value>
+  </data>
+  <data name="L353" xml:space="preserve">
+    <value>Seçilen GSM Numarası Orange veya Inwi şablonlarında eksik. Lütfen yöneticiniz ile iletişime geçin.</value>
+  </data>
+  <data name="L354" xml:space="preserve">
+    <value>Yeni kayıt işlemi başarısız.
+Girmiş olduğunuz Gsm Numarası Inwi Tablosunda zaten mevcut.</value>
+  </data>
+  <data name="L355" xml:space="preserve">
+    <value>Yeni kayıt işlemi başarısız.
+Girmiş olduğunuz Gsm Numarası OrangeTablosunda zaten mevcut.</value>
+  </data>
+</root>

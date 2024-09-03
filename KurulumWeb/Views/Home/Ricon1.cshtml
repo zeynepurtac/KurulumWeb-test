@@ -1,0 +1,305 @@
+﻿@model KurulumWeb.Models.KurulumViewModel
+@using KurulumWeb.Resources
+@{
+    ViewBag.Title = "Ricon";
+    Layout = "~/Views/Shared/Ricon1LayoutPage.cshtml";
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery ve Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<style>
+    .popup {
+        display: none;
+    }
+</style>
+
+
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+            </div>
+            <div class="row">
+                <!-- PAGE-HEADER END -->
+                <!-- ROW-2 -->
+                <div class="row justify-content-center">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title text-center text-blue" style="font-size:22px">@Resources.L269</h3>
+                                <img style="margin-top: -59px;margin-bottom: -61px;transform:scale(0.4);" src="/assets/images/brand/Sisal-S9922M22.png">
+
+                                <div class="card-body">
+                                    @using (Html.BeginForm("Ricon1", "Home", FormMethod.Post, new { id = "myForm" }))
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label">@Resources.L106</label>
+                                            @Html.DropDownListFor(x => x.SelectedSeriNoID, ViewBag.SeriNo as SelectList, @Resources.L113, htmlAttributes: new { @class = "dropdown form-control select2", id = "SeriNo" })
+                                            <br />
+
+                                            <label class="control-label">@Resources.L107</label>
+                                            @Html.DropDownListFor(x => x.SelectedLocationID, ViewBag.Location as SelectList, @Resources.L108, htmlAttributes: new { @class = "dropdown form-control select2", id = "Location" })
+                                            <br />
+                                        </div>
+                                        <div>
+                                            <label class="control-label">
+                                                @Html.CheckBoxFor(m => m.chechedGms1, new Dictionary<string, object>{
+                                                {"id", "chkgsm1"},
+                                                {"onclick","validate('chkgsm1')"} })
+                                                <span>@Resources.L104</span>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label class="control-label">
+                                                @Html.CheckBoxFor(m => m.chechedGms2, new Dictionary<string, object>{
+                                                {"id", "chkgsm2"},
+                                                {"onclick","validate('chkgsm2')"} })
+                                                <span>@Resources.L105</span>
+                                            </label>
+                                        </div>
+                                        <button type="button" id="btn_start" class="btn btn-primary mb-5">@Resources.L110</button>
+                                        <div>
+                                            <label id="l1" onload="checkResultMessage()">@ViewBag.Sonuc</label>
+
+                                        </div>
+                                    }
+                                    <div id="confirmationModal" class="modal" tabindex="-1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">@Resources.L290</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>@Resources.L289</p>
+                                                </div>
+                                                <div class="modal-footer">
+
+                                                    <button type="button" class="btn btn-primary" id="confirmActivation">@Resources.L279</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Resources.L280</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="loadingModal" class="modal" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-body text-center">
+                                                    <p>@Resources.L291</p>
+                                                    <div class="lds-ring" id="loaderAnim">
+                                                        <div></div>
+                                                        <div></div>
+                                                        <div></div>
+                                                        <div></div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Resources.L264</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- COL END -->
+                    <!--GRAFIK -->
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-3">
+                        <div class="card overflow-hidden">
+                            <div class="card-body ">
+                                <div>
+                                    <h3 class="card-title text-white" style=" position: inherit;">Recent Orders</h3>
+                                    <div class="chartjs-wrapper-demo">
+                                        <canvas id="recentorders" class="text-white chart-dropshadow" style=" display: block;box-sizing: border-box;height: 348px ;dth: 170px; width:177px"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex mb-4 mt-3">
+                                    <div class="avatar avatar-md bg-secondary- text-secondary bradius me-3">
+                                        <i class="fe fe-check"></i>
+                                    </div>
+                                    <div class="">
+                                        <h6 class="mb-1 fw-semibold">@Resources.L275 </h6>
+                                        <p class="fw-normal fs-12">
+                                            <span class="text-success" id="installCountSpan"></span>
+                                        </p>
+                                    </div>
+                                    <div class=" ms-auto my-auto">
+                                        <p class="fw-bold fs-20 text-success" id="ratioSpan">  % </p>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="avatar  avatar-md bg-pink-transparent text-pink bradius me-3">
+                                        <i class="fe fe-activity"></i>
+                                    </div>
+                                    <div class="">
+                                        <h6 class="mb-1 fw-semibold">@Resources.L276</h6>
+                                        <p class="fw-normal fs-12">
+                                            <span class="text-success" id="simCardCountSpan"></span>
+                                        </p>
+                                    </div>
+                                    <div class=" ms-auto my-auto">
+                                        <p class="fw-bold fs-20"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- COL END -->
+                </div>
+                <!-- ROW-2 END -->
+
+            </div>
+            <!-- CONTAINER END -->
+        </div>
+    </div>
+</div>
+
+<!--app-content close-->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // SeriNo dropdown'ını etkinleştir
+        $('#SeriNo').select2({
+         
+            minimumInputLength: 3,
+            ajax: {
+                url: "/Home/GetFilteredSeriNoList",
+                dataType: "JSON",
+                quietMillis: 100,
+                data: function (params) {
+                    return {
+                        selectedValue: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    // Verileri seçeneklere dönüştür
+                    var options = [];
+                    if (data) {
+                        $.each(data, function (index, item) {
+                            options.push({
+                                id: item.Value,
+                                text: item.Text
+                            });
+                        });
+                    }
+
+                    return {
+                        results: options
+                    };
+                }
+            }
+        }).on('select2:select', function (e) {
+            var selectedValue = e.params.data.id;
+
+        });
+
+        // Location dropdown'ını etkinleştir
+        $('#Location').select2({
+          
+            minimumInputLength: 3,
+            ajax: {
+                url: "/Home/GetFilteredLocationList",
+                dataType: "JSON",
+                quietMillis: 100,
+                data: function (params) {
+                    return {
+                        selectedValue: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    // Verileri seçeneklere dönüştür
+                    var options = [];
+                    if (data) {
+                        $.each(data, function (index, item) {
+                            options.push({
+                                id: item.Value,
+                                text: item.Text
+                            });
+                        });
+                    }
+
+                    return {
+                        results: options
+                    };
+                }
+            }
+        })
+            .on('select2:select', function (e) {
+                var selectedValue = e.params.data.id;
+
+            });
+    });
+
+</script>
+<script>
+    // Animasyonun başlangıcını ve durdurulmasını yöneten değişken
+    var animationInterval;
+
+    // Animasyonu başlatan fonksiyon
+    function startLoaderAnimation() {
+        $('#loaderAnim').removeClass('start-animation'); // Sınıfı kaldır
+        setTimeout(function () {
+            $('#loaderAnim').addClass('start-animation'); // Sınıfı yeniden ekle
+        }, 0);
+
+        // Önceki animasyonun süresini beklemeden, yeni animasyonu başlat
+        clearTimeout(animationInterval);
+        animationInterval = setTimeout(function () {
+            $('#loaderAnim').removeClass('start-animation'); // Sınıfı kaldır
+        }, 1000); // 1 saniye sonra animasyonu durdur
+    }
+
+    // Animasyonu durduran fonksiyon
+    function stopLoaderAnimation() {
+        $('#loaderAnim').removeClass('start-animation'); // 'start-animation' adındaki CSS sınıfını kaldır
+    }
+
+    // Sonuç mesajının geldiği zamanı kontrol etmek için bir işlev tanımlayın
+    function checkResultMessage() {
+        var resultMessage = $("#l1").text().trim();
+
+        if (resultMessage !== "") {
+            // Sonuç mesajı var, loader animasyonunu gizle
+            stopLoaderAnimation();
+        } else {
+            // Sonuç mesajı henüz yok, belirli bir süre sonra tekrar kontrol et
+            setTimeout(checkResultMessage, 500); // Her 500 ms'de bir kontrol et
+        }
+    }
+
+    document.getElementById("btn_start").addEventListener("click", function () {
+        $('#confirmationModal').modal('show');
+        startLoaderAnimation(); // Her tıklamada animasyonu başlat
+    });
+
+    document.getElementById("confirmActivation").addEventListener("click", function () {
+        $('#confirmationModal').modal('hide');
+        $('#loadingModal').modal('show');
+
+        startLoaderAnimation(); // 'Evet' düğmesine tıklandığında animasyonu başlat
+
+        // Formun sunucuya gönderilmesi işlemi burada değil, formun submit işlemine bağlı olarak yapılıyor.
+        document.getElementById("myForm").submit();
+    });
+
+    // İşlem tamamlandığında sonuç mesajını kontrol etmek için checkResultMessage işlemini çağırın
+    checkResultMessage();
+</script>

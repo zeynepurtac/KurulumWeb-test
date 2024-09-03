@@ -1,0 +1,926 @@
+﻿@using KurulumWeb.Resources
+@model KurulumWeb.Models.InwiDataModel
+@{
+    ViewBag.Title = "EditInwi";
+    Layout = "~/Views/Shared/RiconAdminLayoutPage.cshtml";
+    //  Layout = "~/Views/Shared/EditRiconInwiLayout.cshtml";
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<style>
+    .table td {
+        padding: 0em;
+    }
+
+    .edit-icon {
+        font-size: 18px;
+        color: #007bff; /* Düzenleme ikonunun rengini özelleştirebilirsiniz */
+        cursor: pointer; /* İkona tıklanabilir bir imleç ekler */
+    }
+
+    #responsive-datatable tbody tr:hover {
+        font-weight: bold; /* Satırın üzerine gelindiğinde yazıları kalın yapın */
+    }
+
+    #dataTableModalInwi .modal-dialog {
+        max-width: none;
+        width: 100%;
+        height: 86%;
+    }
+
+    #dataTableModalInwi .modal-content {
+        height: 96%;
+    }
+
+    #dataTableModalInwi .modal-body {
+        max-height: 100%;
+        overflow-y: auto;
+        color: #000000;
+    }
+
+     
+    #responsive-datatable_wrapper {
+        /* DataTable'ın genel konteynerını hedefle */
+        font-size: 12px; /* Punto boyutunu ayarlayın */
+    }
+
+    #responsive-datatable {
+        /* DataTable'ın içerik konteynerını hedefle */
+        line-height: 1.5; /* Satır yüksekliğini ayarlayın */
+    }
+
+        #responsive-datatable tbody td {
+            /* DataTable satır hücrelerini hedefle */
+            padding: 1px 5px; /* Hücre içi padding değerlerini ayarlayın */
+        }
+
+        /* DataTable içindeki çift sıra numaralarını beyaz, tek sıra numaralarını gri yap */
+        #responsive-datatable tbody tr:nth-child(even) {
+            background-color: white;
+        }
+
+        #responsive-datatable tbody tr:nth-child(odd) {
+            background-color: lightgrey;
+        }
+
+        /* DataTable içindeki satırlara hover özelliği ekleyin */
+        #responsive-datatable thead th {
+            padding: 1px; /* Başlık hücreleri içi padding değerini ayarlayın */
+        }
+
+        /* DataTable içindeki sütun başlıklarını daha sıkı bir hizalamaya sahip yapın */
+        #responsive-datatable thead th {
+            white-space: nowrap; /* Başlıkların fazla boşluk kullanmasını önleyin */
+        }
+
+        /* DataTable içindeki sütun başlıklarını birbirine yakınlaştırın */
+        #responsive-datatable thead th {
+            padding: 8px; /* Başlık hücreleri içi padding değerini ayarlayın */
+            text-align: left; /* Başlık metnini ortala */
+        }
+
+    .btn-sm {
+        padding: 1px 1px;
+        font-size: 10px;
+    }
+
+    .page-header {
+        margin: -3rem -15rem 1.5rem;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Gsmno').select2({
+
+            minimumInputLength: 3,
+            ajax: {
+                url: "/Home/GetFilteredGSMInwi",
+                dataType: "JSON",
+                quietMillis: 100,
+                data: function (params) {
+                    return {
+                        selectedValue: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    // Verileri seçeneklere dönüştür
+                    var options = [];
+                    if (data) {
+                        $.each(data, function (index, item) {
+                            options.push({
+                                id: item.Value,
+                                text: item.Text
+                            });
+                        });
+                    }
+
+                    return {
+                        results: options
+                    };
+                }
+            }
+        })
+            .on('select2:select', function (e) {
+            var selectedValue = e.params.data.id;
+            getAndFillOrangeData(selectedValue);
+        });
+
+        // Seçilen GSM numarasına ait verileri almak için bu fonksiyonu kullanın
+        function getAndFillOrangeData(gsmNo) {
+            $.ajax({
+                url: '/Home/GetInwiData',
+                type: 'GET',
+                data: {Gsmno: gsmNo },
+                dataType: 'json',
+                success: function (data) {
+                    $('#GSM_No2').val(data.GSM_No2);
+                    $('#i_Ricon_SN').val(data.i_Ricon_SN);
+                    $('#APN2_Name').val(data.APN2_Name);
+                    $('#APN2_Username').val(data.APN2_Username);
+                    $('#APN2_Password').val(data.APN2_Password);
+                    $('#i_WAN_ip').val(data.WAN_ip);
+                    $('#i_vlanid_TG').val(data.vlanid_TG);
+                    $('#i_lan_ip_TG').val(data.lan_ip_TG);
+                    $('#i_lan_subnet_TG').val(data.lan_subnet_TG);
+                    $('#i_lan_subnetmask_TG').val(data.lan_subnetmask_TG);
+                    $('#i_vlanid_Servizi').val(data.vlanid_Servizi);
+                    $('#i_lan_ip_Servizi').val(data.lan_ip_Servizi);
+                    $('#i_lan_subnet_Servizi').val(data.lan_subnet_Servizi);
+                    $('#i_lan_subnetmask_Servizi').val(data.lan_subnetmask_Servizi);
+                    $('#i_Tg_dhcp_start').val(data.i_Tg_dhcp_start);
+                    $('#i_Tg_dhcp_end').val(data.i_Tg_dhcp_end);
+                    $('#i_Ser_dhcp_start').val(data.i_Ser_dhcp_start);
+                    $('#i_Ser_dhcp_end').val(data.i_Ser_dhcp_end);
+                    //$('#Company_ID').val(data.Company_ID);
+                },
+                error: function () {
+                    console.log('Veri alınırken hata oluştu.');
+                }
+            });
+        }
+        $('#btnAdd').click(function () {
+            // Modal açıldığında hata etiketlerini ve input değerlerini temizle
+            $('.modal-body .Error').text('');
+            $('.modal-body input[type="text"]').val('');
+            $('#addModal').modal('show');
+        });
+
+        $('#closeAddModal').click(function () {
+            // Modal kapatıldığında hata etiketlerini ve input değerlerini temizle
+            $('.modal-body .Error').text('');
+            $('.modal-body input[type="text"]').val('');
+            $('#addModal').modal('hide');
+        });
+        $('#addModal').on('hidden.bs.modal', function () {
+            // Modal kapatıldığında input alanlarını temizle
+            $('.modal-body input[type="text"]').val('');
+        });
+
+      // btnSave düğmesine tıklanınca yeni veriyi kaydet
+        $('#btnSaveInwi').click(function () {
+            // Hata etiketlerini temizle
+            $('.modal-body .Error').text('');
+
+            // Boş alan kontrolü
+            var firstEmptyField;
+
+            $('.modal-body input[type="text"]').each(function () {
+                var input = $(this);
+                var inputValue = input.val().trim();
+                var errorLabel = input.siblings('.Error');
+                // Skip validation for RiconSn when it's empty
+                if (input.attr('id') === 'newi_RiconSn' && inputValue === '') {
+                    return;
+                }
+
+                if (inputValue === '') {
+                    // Boş alan bulundu
+                    errorLabel.text('Bu alan boş olamaz.');
+                    if (!firstEmptyField) {
+                        firstEmptyField = input;
+                    }
+                }
+            });
+
+            if (firstEmptyField) {
+                // İlk boş alan varsa işlemi durdur
+                $('#addModal').animate({
+                    scrollTop: firstEmptyField.offset().top - $('#addModal .modal-content').offset().top
+                }, 1000); // 1000 milliseconds (1 second) animation time, adjust as needed
+
+                return;
+            }
+            // Buraya kadar geldiyse işlemi devam ettir, modalı kapatabilirsiniz
+            var closeModalButton = $('#closeModal');
+            closeModalButton.click();
+
+
+            var newGsmNo2 = $('#newGsmNo2').val();
+            var newRiconSn = $('#newi_RiconSn').val();
+            var newApn2Name = $('#newApn2Name').val();
+            var newApn2UserName = $('#newApn2UserName').val();
+            var newApn2Password = $('#newApn2Password').val();
+            var newi_WAN_ip = $('#newi_WAN_ip').val();         
+            var newi_vlanid_TG = $('#newi_vlanid_TG').val();
+            var newi_lan_ip_TG = $('#newi_lan_ip_TG').val();
+            var newi_lan_subnet_TG = $('#newi_lan_subnet_TG').val();
+            var newi_lan_subnetmask_TG = $('#newi_lan_subnetmask_TG').val();
+            var newi_vlanid_Servizi = $('#newi_vlanid_Servizi').val();
+            var newi_lan_ip_Servizi = $('#newi_lan_ip_Servizi').val();
+            var newi_lan_subnet_Servizi = $('#newi_lan_subnet_Servizi').val();
+            var newi_lan_subnetmask_Servizi = $('#newi_lan_subnetmask_Servizi').val();
+            var newi_Tg_dhcp_start = $('#newi_Tg_dhcp_start').val();
+            var newi_Tg_dhcp_end = $('#newi_Tg_dhcp_end').val();
+            var newi_Ser_dhcp_start = $('#newi_Ser_dhcp_start').val();
+            var newi_Ser_dhcp_end = $('#newi_Ser_dhcp_end').val();
+
+    $.ajax({
+        url: '@Url.Action("SaveNewInwi", "Home")', // Formun verilerini işleyecek eylem URL'sini buraya ekleyin
+        type: 'POST',
+        data: {
+            GsmNo2: newGsmNo2,
+            RiconSn: newRiconSn,
+            Apn2Name: newApn2Name,
+            Apn2UserName: newApn2UserName,
+            Apn2Password: newApn2Password,
+            i_WAN_ip: newi_WAN_ip,
+            i_vlanid_TG: newi_vlanid_TG,
+            i_lan_ip_TG: newi_lan_ip_TG,
+            i_lan_subnet_TG: newi_lan_subnet_TG,
+            i_lan_subnetmask_TG: newi_lan_subnetmask_TG,
+            i_vlanid_Servizi: newi_vlanid_Servizi,
+            i_lan_ip_Servizi: newi_lan_ip_Servizi,
+            i_lan_subnet_Servizi: newi_lan_subnet_Servizi,
+            i_lan_subnetmask_Servizi: newi_lan_subnetmask_Servizi,
+            i_Tg_dhcp_start: newi_Tg_dhcp_start,
+            i_Tg_dhcp_end: newi_Tg_dhcp_end,
+            i_Ser_dhcp_start: newi_Ser_dhcp_start,
+            i_Ser_dhcp_end: newi_Ser_dhcp_end,
+
+        },
+        success: function (data) {
+            if (data.success) {
+                showModal('@Resources.L299', data.message);
+            } else {
+                showModal('Hata', data.message);
+            }
+        },
+        error: function () {
+            console.log('Yeni veri kaydedilirken hata oluştu.');
+        }
+    });
+
+    // Modal'ı kapat
+    $('#addModal').modal('hide');
+});
+
+    $('#btnDelete').click(function () {
+        var selectedGsmNo = $('#Gsmno').val();
+        if (selectedGsmNo) {
+            $('#deleteConfirmationModal').modal('show');
+        }
+    });
+
+    $('#btnConfirmDelete').click(function () {
+        var selectedGsmNo = $('#Gsmno').val();
+        if (selectedGsmNo) {
+            $.ajax({
+                url: '@Url.Action("DeleteInwi", "Home")',
+                type: 'POST',
+                data: { Gsmno: selectedGsmNo },
+                success: function (data) {
+                    if (data.success) {
+                        showModal('@Resources.L299', data.message);
+                    } else {
+                        showModal('Hata', data.message);
+                    }
+                },
+                error: function () {
+                    console.log('Silme işleminde hata oluştu.');
+                }
+            });
+        }
+        $('#deleteConfirmationModal').modal('hide');
+    });
+
+    function showModal(title, message) {
+        var modal = $('#customModal');
+        modal.find('.modal-title').text(title);
+        modal.find('.modal-body').text(message);
+        modal.modal('show');
+
+        modal.on('hidden.bs.modal', function () {
+            location.reload();
+        });
+    }
+    function showModal(title, message) {
+        var modal = $('#customModal1');
+        modal.find('.modal-title').text(title);
+        modal.find('.modal-body').text(message);
+        modal.modal('show');
+
+        modal.on('hidden.bs.modal', function () {
+            location.reload();
+        });
+    }
+    });
+    $(document).ready(function () {
+        var table; // DataTable referansı
+
+        // Modal'ı açma işlevi
+        $("#openinwi").click(function () {
+            // Modal'ı aç
+            $("#dataTableModalInwi").modal("show");
+
+            if (!table) {
+                // DataTable'ı yalnızca bir kez başlatın
+                table = $('#responsive-datatable').DataTable({
+                    // DataTable yapılandırma seçenekleri burada
+                    columns: [
+                        /*{ data: "Inwi_ID" },*/
+                        { data: "Inwi_ID", visible: false, orderable: true },
+                        { data: "Ricon_SN" },
+                        { data: "GSM_No2"},
+                        { data: "APN2_Name" },
+                        { data: "APN2_Username" },
+                        { data: "APN2_Password" },
+                        { data: "i_WAN_ip" },
+                        { data: "i_vlanid_TG" },
+                        { data: "i_lan_ip_TG" },
+                        { data: "i_lan_subnet_TG" },
+                        { data: "i_lan_subnetmask_TG" },
+                        { data: "i_vlanid_Servizi" },
+                        { data: "i_lan_ip_Servizi" },
+                        { data: "i_lan_subnet_Servizi" },
+                        { data: "i_lan_subnetmask_Servizi" },
+                        { data: "i_Tg_dhcp_start" },
+                        { data: "i_Tg_dhcp_end" },
+                        { data: "i_Ser_dhcp_start" },
+                        { data: "i_Ser_dhcp_end" },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                // Düğmeleri oluşturun
+                                var editButton = '<button class="btn btn-sm btn-primary edit-button" data-row-id="' + row.Inwi_ID + '"><i class="fas fa-edit"></i></button>';
+                                var saveButton = '<button class="btn btn-sm btn-success save-button" style="display: none;" data-row-id="' + row.Inwi_ID + '"><i class="fas fa-check"></i></button>';
+                                var cancelButton = '<button class="btn btn-sm btn-danger cancel-button" style="display: none;" data-row-id="' + row.Inwi_ID + '"><i class="fas fa-times"></i></button>';
+                                var deleteButton = '<button class="btn btn-sm btn-danger delete-button" data-row-id="' + row.Inwi_ID + '"><i class="fas fa-trash"></i></button>';
+
+                                // Tüm düğmeleri birleştirin
+                                var buttons = editButton + " " + saveButton + " " + cancelButton + " " + deleteButton;
+
+                                return buttons;
+                            }
+                        }
+
+                    ],
+                    pageLength: 20, // Sayfa uzunluğunu 20 olarak ayarlayın
+                    lengthMenu: [20, 25, 50, 100],
+                    rowCallback: function (row, data, index) {
+                        // Sıra numarasına göre arka plan rengini ayarlayın
+                        if (index % 2 === 0) {
+                            $(row).css('background-color', 'white'); // Çift sıra numaraları için beyaz arka plan
+                        } else {
+                            $(row).css('background-color', 'lightgrey'); // Tek sıra numaraları için gri arka plan
+                        }
+                    },
+                    order: [[0, 'desc']] // ID'ye göre azalan sıralama
+                });
+
+                $("#dataTableModalInwi").on('shown.bs.modal', function () {
+                    // DataTable içindeki arama input'unun değerini temizle
+                    $('#responsive-datatable_filter input').val('');
+
+                    // DataTable filtresini temizle
+                    table.search('').draw();
+                    table.order([]).draw();
+                });
+            }
+
+            $.ajax({
+                url: "/Home/DeviceInwiData",
+                method: "GET",
+                success: function (data) {
+                    table.clear().rows.add(data).draw();
+                },
+                error: function (error) {
+
+                }
+            });
+        });
+        // Edit düğmesine tıklanınca
+        $('#responsive-datatable').on('click', '.edit-button', function () {
+            var row = $(this).closest('tr');
+
+            // Düzenlenen satırı düzenleme moduna geçir
+            row.find(".edit-button").hide();
+            row.find(".save-button, .cancel-button").show();
+            row.find("td:not(:last-child)").attr("contenteditable", "true").addClass("edit-mode");
+
+            // Orijinal değerleri sakla
+            row.find("td:not(:last-child)").each(function () {
+                var originalValue = $(this).text();
+                $(this).data('original-value', originalValue);
+            });
+        });
+
+        // Save düğmesine tıklanınca
+        $('#responsive-datatable').on('click', '.save-button', function () {
+            var row = $(this).closest('tr');
+            var inwiID = $(this).data('row-id');
+
+            // Verileri topla
+            var riconSN = row.find("td:eq(0)").text();
+            var gsmNo2 = row.find("td:eq(1)").text();
+            var apn2Name = row.find("td:eq(2)").text();
+            var apn2Username = row.find("td:eq(3)").text();
+            var apn2Password = row.find("td:eq(4)").text();
+            var iwanIP = row.find("td:eq(5)").text();
+            var ivlanidTG = row.find("td:eq(6)").text();
+            var ilanIPTG = row.find("td:eq(7)").text();
+            var ilanSubnetTG = row.find("td:eq(8)").text();
+            var ilanSubnetMaskTG = row.find("td:eq(9)").text();
+            var ivlanidServizi = row.find("td:eq(10)").text();
+            var ilanIPServizi = row.find("td:eq(11)").text();
+            var ilanSubnetServizi = row.find("td:eq(12)").text();
+            var ilanSubnetMaskServizi = row.find("td:eq(13)").text();
+            var itgDhcpStart = row.find("td:eq(14)").text();
+            var itgDhcpEnd = row.find("td:eq(15)").text();
+            var iserDhcpStart = row.find("td:eq(16)").text();
+            var iserDhcpEnd = row.find("td:eq(17)").text();
+
+            // AJAX isteği gönder
+            $.ajax({
+                url: "/Home/SaveInwi",
+                type: "POST",
+                data: {
+                    Inwi_ID: inwiID,
+                    Ricon_SN: riconSN,
+                    GSM_No2: gsmNo2,
+                    APN2_Name: apn2Name,
+                    APN2_Username: apn2Username,
+                    APN2_Password: apn2Password,
+                    i_WAN_ip: iwanIP,
+                    i_vlanid_TG: ivlanidTG,
+                    i_lan_ip_TG: ilanIPTG,
+                    i_lan_subnet_TG: ilanSubnetTG,
+                    i_lan_subnetmask_TG: ilanSubnetMaskTG,
+                    i_vlanid_Servizi: ivlanidServizi,
+                    i_lan_ip_Servizi: ilanIPServizi,
+                    i_lan_subnet_Servizi: ilanSubnetServizi,
+                    i_lan_subnetmask_Servizi: ilanSubnetMaskServizi,
+                    i_Tg_dhcp_start: itgDhcpStart,
+                    i_Tg_dhcp_end: itgDhcpEnd,
+                    i_Ser_dhcp_start: iserDhcpStart,
+                    i_Ser_dhcp_end: iserDhcpEnd,
+
+                },
+                success: function (result) {
+                    // Başarılı bir yanıt aldığınızda burada işlemler yapabilirsiniz
+
+                    // Düzenleme modunu kapat
+                    row.find(".save-button, .cancel-button").hide();
+                    row.find(".edit-button").show();
+                    row.find("td:not(:last-child)").attr("contenteditable", "false").removeClass("edit-mode");
+
+                    // Başarılı kaydetme modalını aç
+                    $('#customModal2').modal('show');
+                },
+                error: function (error) {
+                    // Hata işleme kodu burada
+                }
+            });
+        });
+
+        // Cancel düğmesine tıklanınca
+        $('#responsive-datatable').on('click', '.cancel-button', function () {
+            var row = $(this).closest('tr');
+
+            // Değişiklikleri iptal et
+            row.find("td:not(:last-child)").each(function () {
+                var originalValue = $(this).data('original-value');
+                $(this).text(originalValue);
+            });
+
+            // Düzenleme modunu kapat
+            row.find(".save-button, .cancel-button").hide();
+            row.find(".edit-button").show();
+            row.find("td:not(:last-child)").attr("contenteditable", "false").removeClass("edit-mode");
+        });
+
+        var inwiID; // orangeID değişkenini burada tanımlayın
+        var row; // row değişkenini burada tanımlayın
+
+        // Delete düğmesine tıklanınca
+        $('#responsive-datatable').on('click', '.delete-button', function () {
+            row = $(this).closest('tr');
+            inwiID = $(this).data('row-id');
+            $('#deleteConfirmationModal').modal('show');
+        });
+
+        // Onayla düğmesine tıklanınca
+        $('#btnConfirmDelete').click(function () {
+            $.ajax({
+                url: "/Home/DelInwi", // DelOrange işleminin bulunduğu controller ve action'ın yolu
+                type: "POST", // HTTP isteği türü (POST)
+                data: { Inwi_ID: inwiID },
+                success: function (result) {
+                    row.remove();
+                    $('#deleteConfirmationModal').modal('hide');
+
+                    // Başarılı silme modalını aç
+                    $('#deleteSuccessModal').modal('show');
+                },
+                error: function () {
+                    console.log('Silme işleminde hata oluştu.');
+                    $('#deleteConfirmationModal').modal('hide');
+                }
+            });
+        });
+
+        // Başarılı silme modalını kapatma kodu
+        $('#closeDeleteSuccessModalButton').click(function () {
+            $('#deleteSuccessModal').modal('hide');
+        });
+    });
+</script>
+<div class="modal fade" id="dataTableModalInwi" tabindex="-1" role="dialog" aria-labelledby="dataTableModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataTableModalLabel">@Resources.L351</h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red"> <i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body modal-fullscreen-xl-down">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap border-bottom" id="responsive-datatable">
+                        <thead>
+                            <tr>
+                                @*<th>Inwi ID</th>*@
+                                <th data-orderable="false">Inwi ID</th>
+                                <th>Ricon SN</th>
+                                <th>GSM No2</th>
+                                <th>APN2 Name</th>
+                                <th>APN2 Username</th>
+                                <th>APN2 Password</th>
+                                <th>WAN ip</th>
+                                <th>vlanid TG</th>
+                                <th>lan ip TG</th>
+                                <th>lan subnet TG</th>
+                                <th>lan subnetmask TG</th>
+                                <th>vlanid Servizi</th>
+                                <th>lan ip Servizi</th>
+                                <th>lan subnet Servizi</th>
+                                <th>lan subnetmask Servizi</th>
+                                <th>Tg dhcp start</th>
+                                <th>Tg dhcp end</th>
+                                <th>Ser dhcp start</th>
+                                <th>Ser dhcp end</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- DataTable satırları burada doldurulacak -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                @*<input type="file" id="fileInput" style="display: none;">
+                    <button type="button" class="btn btn-primary" id="downloadButton1">@Resources.L348</button>*@
+                @*<button type="button" class="btn btn-primary" style="display:none;" id="downloadButton1">@Resources.L348</button>*@
+                <button type="button" class="btn close-button btn-secondary" data-bs-dismiss="modal">@Resources.L261</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addModal" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">@Resources.L323</h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red">   <i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <label for="newGsmNo2">GSM NO2:</label>
+                <input type="text" id="newGsmNo2" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newi_RiconSn">Ricon SN:</label>
+                <input type="text" id="newi_RiconSn" class="form-control">
+            </div>
+            <div class="modal-body">
+                <label for="newApn2Name">APN2 Name:</label>
+                <input type="text" id="newApn2Name" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newApn2UserName">APN2 Username:</label>
+                <input type="text" id="newApn2UserName" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newApn2Password">APN2 Password:</label>
+                <input type="text" id="newApn2Password" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newi_WAN_ip">WAN IP:</label>
+                <input type="text" id="newi_WAN_ip" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newi_vlanid_TG">vLan ID TG:</label>
+                <input type="text" id="newi_vlanid_TG" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newi_lan_ip_TG">Lan IP TG:</label>
+                <input type="text" id="newi_lan_ip_TG" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newi_lan_subnet_TG">Lan Subnet TG:</label>
+                <input type="text" id="newi_lan_subnet_TG" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newi_lan_subnetmask_TG">Lan SubnetMask TG:</label>
+                <input type="text" id="newi_lan_subnetmask_TG" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newi_vlanid_Servizi">vLan ID Servizi:</label>
+                <input type="text" id="newi_vlanid_Servizi" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newi_lan_ip_Servizi">Lan IP Servizi:</label>
+                <input type="text" id="newi_lan_ip_Servizi" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newi_lan_subnet_Servizi">Lan Subnet Servizi:</label>
+                <input type="text" id="newi_lan_subnet_Servizi" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+
+            <div class="modal-body">
+                <label for="newi_lan_subnetmask_Servizi">Lan SubnetMask Servizi:</label>
+                <input type="text" id="newi_lan_subnetmask_Servizi" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+
+            <div class="modal-body">
+                <label for="newi_Tg_dhcp_start">Tg DHCP Start:</label>
+                <input type="text" id="newi_Tg_dhcp_start" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newi_Tg_dhcp_end">Tg DHCP End:</label>
+                <input type="text" id="newi_Tg_dhcp_end" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newi_Ser_dhcp_start">Ser DHCP Start:</label>
+                <input type="text" id="newi_Ser_dhcp_start" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+            <div class="modal-body">
+                <label for="newi_Ser_dhcp_end">Ser DHCP End:</label>
+                <input type="text" id="newi_Ser_dhcp_end" class="form-control">
+                <label class="Error" style="color: red;"></label>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveInwi">@Resources.L294</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeAddModal">@Resources.L264</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">@Resources.L292</h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red">   <i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                @Resources.L324
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnConfirmDelete">@Resources.L279</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeDeleteModal">@Resources.L280</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="customModal2" tabindex="-1" role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customModalLabel">@Resources.L336</h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red">   <i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">@Resources.L332</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCustomModal2">@Resources.L261</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="customModal" tabindex="-1" role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customModalLabel"></h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red">   <i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCustomModal">@Resources.L261</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="customModal1" tabindex="-1" role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customModalLabel"></h5>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red">   <i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCustomModal1">@Resources.L261</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="deleteSuccessModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">@Resources.L336</h4>
+                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeDeleteSuccessModal" style="color:red"><i class="fas fa-times"></i></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                @Resources.L331
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn close-button btn-secondary" data-bs-dismiss="modal">@Resources.L261</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--#region Gövde-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+            </div>
+            <!-- PAGE-HEADER END -->
+            <!-- ROW-2 -->
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title text-center text-blue" style="font-size:22px">@Resources.L326</h3>
+                        </div>
+                        <div class="card-header" style="border:none;margin-block-end:-5em;">
+                            <img style="transform:scale(0.4);margin-block-start:-7em;" src="~/Content/Sisal-S9922M44.png" />
+                        </div>
+                        <span>
+                            <input id="openinwi" style="margin-bottom: 10px; margin-inline-start: 4%" class="text-white btn btn-open-modal btn-primary  btn info" type="button" value="@Resources.L304">
+                        </span>
+                        <div class="card-body">
+                            @using (Html.BeginForm("EditInwi", "Home", FormMethod.Post))
+                            {
+
+                                @Html.ValidationSummary(true)
+                                @Html.HiddenFor(m => m.Inwi_ID)
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="Gsmno">GSM NO:</label>
+                                    @Html.DropDownListFor(model => model.Gsmno, ViewBag.Gsmno as SelectList, Resources.L316, new { @class = "dropdown form-control select2", id = "Gsmno" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="GSM_No2">Gsm No2:</label>
+                                    @Html.TextBoxFor(model => model.GSM_No2, new { @class = "form-control", id = "GSM_No2" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="i_Ricon_SN">Ricon SN:</label>
+                                    @Html.TextBoxFor(model => model.i_Ricon_SN, new { @class = "form-control", Value = Model.i_Ricon_SN, id = "i_Ricon_SN" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="APN2_Name">APN2 Name:</label>
+                                    @Html.TextBoxFor(model => model.APN2_Name, new { @class = "form-control", id = "APN2_Name" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="APN2_Username">APN2 Username:</label>
+                                    @Html.TextBoxFor(model => model.APN2_Username, new { @class = "form-control", id = "APN2_Username" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="APN2_Password">APN2 Password:</label>
+                                    @Html.TextBoxFor(model => model.APN2_Password, new { @class = "form-control", id = "APN2_Password" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="i_WAN_ip">Wan IP:</label>
+                                    @Html.TextBoxFor(model => model.i_WAN_ip, new { @class = "form-control", id = "i_WAN_ip" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="i_vlanid_TG">vLan ID TG:</label>
+                                    @Html.TextBoxFor(model => model.i_vlanid_TG, new { @class = "form-control", id = "i_vlanid_TG" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="i_lan_ip_TG">Lan IP TG:</label>
+                                    @Html.TextBoxFor(model => model.i_lan_ip_TG, new { @class = "form-control", id = "i_lan_ip_TG" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="i_lan_subnet_TG">Lan Subnet TG:</label>
+                                    @Html.TextBoxFor(model => model.i_lan_subnet_TG, new { @class = "form-control", id = "i_lan_subnet_TG" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="Lan SubnetMask TG">Lan SubnetMask TG:</label>
+                                    @Html.TextBoxFor(model => model.i_lan_subnetmask_TG, new { @class = "form-control", id = "i_lan_subnetmask_TG" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="vLan i_vlanid_Servizi">vLan ID Servizi:</label>
+                                    @Html.TextBoxFor(model => model.i_vlanid_Servizi, new { @class = "form-control", id = "i_vlanid_Servizi" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="i_lan_ip_Servizi">Lan IP Servizi:</label>
+                                    @Html.TextBoxFor(model => model.i_lan_ip_Servizi, new { @class = "form-control", id = "i_lan_ip_Servizi" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="i_lan_subnet_Servizi">Lan Subnet Servizi:</label>
+                                    @Html.TextBoxFor(model => model.i_lan_subnet_Servizi, new { @class = "form-control", id = "i_lan_subnet_Servizi" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="i_lan_subnetmask_Servizi">Lan SubnetMask Servizi:</label>
+                                    @Html.TextBoxFor(model => model.i_lan_subnetmask_Servizi, new { @class = "form-control", id = "i_lan_subnetmask_Servizi" })
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="i_Tg_dhcp_start">Tg DHCP Start:</label>
+                                    @Html.TextBoxFor(model => model.i_Tg_dhcp_start, new { @class = "form-control", id = "i_Tg_dhcp_start" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="i_Tg_dhcp_end">Tg DHCP End:</label>
+                                    @Html.TextBoxFor(model => model.i_Tg_dhcp_end, new { @class = "form-control", id = "i_Tg_dhcp_end" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="i_Ser_dhcp_start">Ser DHCP Start:</label>
+                                    @Html.TextBoxFor(model => model.i_Ser_dhcp_start, new { @class = "form-control", id = "i_Ser_dhcp_start" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color: #6BD7C7" for="i_Ser_dhcp_end">Ser Tg DHCP End</label>
+                                    @Html.TextBoxFor(model => model.i_Ser_dhcp_end, new { @class = "form-control", id = "i_Ser_dhcp_end" })
+                                </div>
+
+                                <button type="submit" class="btn btn-outline-success">@Resources.L271</button>
+                                <button type="button" class="btn btn-outline-primary" id="btnAdd">@Resources.L277</button>
+                                <button type="button" class="btn btn-outline-danger" id="btnDelete">@Resources.L278</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- ROW-2 END -->
+            </div>
+            <!-- CONTAINER END -->
+        </div>
+    </div>
+</div>
+
+<!--#endregion-->
+<script>
+    document.getElementById("closeAddModal").addEventListener("click", function () {
+        $('#addModal').modal('hide');
+    });
+
+    document.getElementById("closeDeleteModal").addEventListener("click", function () {
+        $('#deleteConfirmationModal').modal('hide');
+    });
+
+    document.getElementById("closeCustomModal").addEventListener("click", function () {
+        $('#customModal').modal('hide');
+    });
+    document.getElementById("closeCustomModal1").addEventListener("click", function () {
+        $('#customModal1').modal('hide');
+    });
+    document.getElementById("closeCustomModal2").addEventListener("click", function () {
+        $('#customModal2').modal('hide');
+    });
+</script>

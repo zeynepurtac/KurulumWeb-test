@@ -1,0 +1,561 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+	<!-- EF Runtime content -->
+	<edmx:Runtime>
+		<!-- SSDL content -->
+		<edmx:StorageModels>
+		<Schema Namespace="RiconAppsDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="RiconAppsDBModelStoreContainer">
+    <EntitySet Name="Groups" EntityType="RiconAppsDBModel.Store.Groups" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="RiconAppsDBModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Table" EntityType="RiconAppsDBModel.Store.Table" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Company" EntityType="RiconAppsDBModel.Store.Company" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Device" EntityType="RiconAppsDBModel.Store.Device" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Install" EntityType="RiconAppsDBModel.Store.Install" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Operator" EntityType="RiconAppsDBModel.Store.Operator" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ReConfig" EntityType="RiconAppsDBModel.Store.ReConfig" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RMSC" EntityType="RiconAppsDBModel.Store.RMSC" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SIMCards2" EntityType="RiconAppsDBModel.Store.SIMCards2" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Sites" EntityType="RiconAppsDBModel.Store.Sites" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserLogin" EntityType="RiconAppsDBModel.Store.UserLogin" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SIMCards3" EntityType="RiconAppsDBModel.Store.SIMCards3" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Groups">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Role" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Status" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" Nullable="true" />
+    <Property Name="definition" Type="varbinary(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Table">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="Company_ID" />
+      <PropertyRef Name="Company_Name" />
+    </Key>
+    <Property Name="Company_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Company_Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Device">
+    <Key>
+      <PropertyRef Name="Device_ID" />
+    </Key>
+    <Property Name="Device_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Device_Type_ID" Type="int" Nullable="true" />
+    <Property Name="Ricon_SN" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Company_ID" Type="int" Nullable="true" />
+    <Property Name="Status" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Install">
+    <Key>
+      <PropertyRef Name="Install_ID" />
+    </Key>
+    <Property Name="Install_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ricon_SN" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="GSM_No1" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="GSM_No2" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Site_Name" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Username" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Company_ID" Type="int" Nullable="true" />
+    <Property Name="Date_Time" Type="datetime" Nullable="true" />
+    <Property Name="Default_GSMNo" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Operator">
+    <Key>
+      <PropertyRef Name="Operator_ID" />
+    </Key>
+    <Property Name="Operator_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Operator_Name" Type="nvarchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ReConfig">
+    <Key>
+      <PropertyRef Name="RC_ID" />
+    </Key>
+    <Property Name="RC_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GSM_No" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Company_ID" Type="int" Nullable="true" />
+    <Property Name="Site_Name" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="DateTime" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="RMSC">
+    <Key>
+      <PropertyRef Name="RMS_ID" />
+    </Key>
+    <Property Name="RMS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Device_Type_ID" Type="int" Nullable="true" />
+    <Property Name="RMS_IP" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="RMS_Port" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Company_ID" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="SIMCards2">
+    <Key>
+      <PropertyRef Name="SIM_ID" />
+    </Key>
+    <Property Name="SIM_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GSM_No1" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="APN1_Name" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="APN1_Username" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="APN1_Password" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="GSM_No2" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="APN2_Name" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="APN2_Username" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="APN2_Password" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Lan1_IP" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Lan1_SubnetMask" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Lan_Subnet" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Company_ID" Type="int" Nullable="true" />
+    <Property Name="Ricon_SN" Type="nvarchar" Nullable="true" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Sites">
+    <Key>
+      <PropertyRef Name="Site_ID" />
+    </Key>
+    <Property Name="Site_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Site_Name" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Company_ID" Type="int" Nullable="true" />
+    <Property Name="Status" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="UserLogin">
+    <Key>
+      <PropertyRef Name="User_ID" />
+    </Key>
+    <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Company_ID" Type="int" Nullable="true" />
+    <Property Name="IsAdmin" Type="bit" Nullable="true" />
+    <Property Name="Creator" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Status" Type="int" Nullable="true" />
+    <Property Name="Create_DateTime" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="SIMCards3">
+    <Key>
+      <PropertyRef Name="SIM_ID" />
+    </Key>
+    <Property Name="SIM_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GSM_No1" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="APN1_Name" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="APN1_Username" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="APN1_Password" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="GSM_No2" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="APN2_Name" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="APN2_Username" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="APN2_Password" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Lan1_IP" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Lan1_SubnetMask" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Lan_Subnet" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Company_ID" Type="int" Nullable="true" />
+    <Property Name="Ricon_SN" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Status" Type="int" Nullable="true" />
+  </EntityType>
+</Schema></edmx:StorageModels>
+		<!-- CSDL content -->
+		<edmx:ConceptualModels>
+			<Schema Namespace="RiconAppsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+				<EntityType Name="Groups">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="Int32" Nullable="false" />
+					<Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+				</EntityType>
+				<EntityType Name="sysdiagrams">
+					<Key>
+						<PropertyRef Name="diagram_id" />
+					</Key>
+					<Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+					<Property Name="principal_id" Type="Int32" Nullable="false" />
+					<Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="version" Type="Int32" />
+					<Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+				</EntityType>
+				<EntityType Name="Table">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="Int32" Nullable="false" />
+					<Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+				</EntityType>
+				<EntityType Name="Company">
+					<Key>
+						<PropertyRef Name="Company_ID" />
+						<PropertyRef Name="Company_Name" />
+					</Key>
+					<Property Name="Company_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="Company_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+				</EntityType>
+				<EntityType Name="Device">
+					<Key>
+						<PropertyRef Name="Device_ID" />
+					</Key>
+					<Property Name="Device_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="Device_Type_ID" Type="Int32" />
+					<Property Name="Ricon_SN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Name="Company_ID" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+				</EntityType>
+				<EntityType Name="Install">
+					<Key>
+						<PropertyRef Name="Install_ID" />
+					</Key>
+					<Property Name="Install_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="Ricon_SN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Name="GSM_No1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Name="GSM_No2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Name="Site_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Name="Company_ID" Type="Int32" />
+					<Property Name="Date_Time" Type="DateTime" Precision="3" />
+					<Property Name="Default_GSMNo" Type="Int32" />
+				</EntityType>
+				<EntityType Name="Operator">
+					<Key>
+						<PropertyRef Name="Operator_ID" />
+					</Key>
+					<Property Name="Operator_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="Operator_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+				</EntityType>
+				<EntityType Name="ReConfig">
+					<Key>
+						<PropertyRef Name="RC_ID" />
+					</Key>
+					<Property Name="RC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="GSM_No" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Name="Company_ID" Type="Int32" />
+					<Property Name="Site_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Name="DateTime" Type="DateTime" Precision="3" />
+				</EntityType>
+				<EntityType Name="RMSC">
+					<Key>
+						<PropertyRef Name="RMS_ID" />
+					</Key>
+					<Property Name="RMS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="Device_Type_ID" Type="Int32" />
+					<Property Name="RMS_IP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Name="RMS_Port" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Name="Company_ID" Type="Int32" />
+				</EntityType>
+				<EntityType Name="SIMCards2">
+					<Key>
+						<PropertyRef Name="SIM_ID" />
+					</Key>
+					<Property Name="SIM_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="GSM_No1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+					<Property Name="APN1_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+					<Property Name="APN1_Username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+					<Property Name="APN1_Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+					<Property Name="GSM_No2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+					<Property Name="APN2_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+					<Property Name="APN2_Username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+					<Property Name="APN2_Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+					<Property Name="Lan1_IP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+					<Property Name="Lan1_SubnetMask" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+					<Property Name="Lan_Subnet" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+					<Property Name="Company_ID" Type="Int32" />
+					<Property Name="Ricon_SN" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+				</EntityType>
+				<EntityType Name="Sites">
+					<Key>
+						<PropertyRef Name="Site_ID" />
+					</Key>
+					<Property Name="Site_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="Site_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+					<Property Name="Company_ID" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+				</EntityType>
+				<EntityType Name="UserLogin">
+					<Key>
+						<PropertyRef Name="User_ID" />
+					</Key>
+					<Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Name="Company_ID" Type="Int32" />
+					<Property Name="IsAdmin" Type="Boolean" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Create_DateTime" Type="DateTime" Precision="3" />
+				</EntityType>
+				<EntityContainer Name="RiconAppsDBEntities2" annotation:LazyLoadingEnabled="true">
+					<EntitySet Name="Groups" EntityType="Self.Groups" />
+					<EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+					<EntitySet Name="Table" EntityType="Self.Table" />
+					<EntitySet Name="Company" EntityType="Self.Company" />
+					<EntitySet Name="Device" EntityType="Self.Device" />
+					<EntitySet Name="Install" EntityType="Self.Install" />
+					<EntitySet Name="Operator" EntityType="Self.Operator" />
+					<EntitySet Name="ReConfig" EntityType="Self.ReConfig" />
+					<EntitySet Name="RMSC" EntityType="Self.RMSC" />
+					<EntitySet Name="SIMCards2" EntityType="Self.SIMCards2" />
+					<EntitySet Name="Sites" EntityType="Self.Sites" />
+					<EntitySet Name="UserLogin" EntityType="Self.UserLogin" />
+					<FunctionImport Name="sp_alterdiagram">
+						<Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+					<FunctionImport Name="sp_creatediagram">
+						<Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+					<FunctionImport Name="sp_dropdiagram">
+						<Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+					<FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(RiconAppsDBModel.sp_helpdiagramdefinition_Result)">
+						<Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+					<FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(RiconAppsDBModel.sp_helpdiagrams_Result)">
+						<Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+					<FunctionImport Name="sp_renamediagram">
+						<Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+					<FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="SIMCards3" EntityType="RiconAppsDBModel.SIMCards3" />
+				</EntityContainer>
+				<ComplexType Name="sp_helpdiagramdefinition_Result">
+					<Property Type="Int32" Name="version" Nullable="true" />
+					<Property Type="Binary" Name="definition" Nullable="true" />
+				</ComplexType>
+				<ComplexType Name="sp_helpdiagrams_Result">
+					<Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+					<Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+					<Property Type="Int32" Name="ID" Nullable="false" />
+					<Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+					<Property Type="Int32" Name="OwnerID" Nullable="false" />
+				</ComplexType>
+        <EntityType Name="SIMCards3">
+          <Key>
+            <PropertyRef Name="SIM_ID" />
+          </Key>
+          <Property Name="SIM_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GSM_No1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="APN1_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="APN1_Username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="APN1_Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GSM_No2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="APN2_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="APN2_Username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="APN2_Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Lan1_IP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Lan1_SubnetMask" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Lan_Subnet" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Company_ID" Type="Int32" />
+          <Property Name="Ricon_SN" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+			</Schema>
+		</edmx:ConceptualModels>
+		<!-- C-S mapping content -->
+		<edmx:Mappings>
+		<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RiconAppsDBModelStoreContainer" CdmEntityContainer="RiconAppsDBEntities2">
+    <EntitySetMapping Name="Groups">
+      <EntityTypeMapping TypeName="IsTypeOf(RiconAppsDBModel.Groups)">
+        <MappingFragment StoreEntitySet="Groups">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="IsTypeOf(RiconAppsDBModel.sysdiagrams)">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Table">
+      <EntityTypeMapping TypeName="IsTypeOf(RiconAppsDBModel.Table)">
+        <MappingFragment StoreEntitySet="Table">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Company">
+      <EntityTypeMapping TypeName="IsTypeOf(RiconAppsDBModel.Company)">
+        <MappingFragment StoreEntitySet="Company">
+          <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
+          <ScalarProperty Name="Company_Name" ColumnName="Company_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Device">
+      <EntityTypeMapping TypeName="IsTypeOf(RiconAppsDBModel.Device)">
+        <MappingFragment StoreEntitySet="Device">
+          <ScalarProperty Name="Device_ID" ColumnName="Device_ID" />
+          <ScalarProperty Name="Device_Type_ID" ColumnName="Device_Type_ID" />
+          <ScalarProperty Name="Ricon_SN" ColumnName="Ricon_SN" />
+          <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Install">
+      <EntityTypeMapping TypeName="IsTypeOf(RiconAppsDBModel.Install)">
+        <MappingFragment StoreEntitySet="Install">
+          <ScalarProperty Name="Install_ID" ColumnName="Install_ID" />
+          <ScalarProperty Name="Ricon_SN" ColumnName="Ricon_SN" />
+          <ScalarProperty Name="GSM_No1" ColumnName="GSM_No1" />
+          <ScalarProperty Name="GSM_No2" ColumnName="GSM_No2" />
+          <ScalarProperty Name="Site_Name" ColumnName="Site_Name" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
+          <ScalarProperty Name="Date_Time" ColumnName="Date_Time" />
+          <ScalarProperty Name="Default_GSMNo" ColumnName="Default_GSMNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Operator">
+      <EntityTypeMapping TypeName="IsTypeOf(RiconAppsDBModel.Operator)">
+        <MappingFragment StoreEntitySet="Operator">
+          <ScalarProperty Name="Operator_ID" ColumnName="Operator_ID" />
+          <ScalarProperty Name="Operator_Name" ColumnName="Operator_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReConfig">
+      <EntityTypeMapping TypeName="IsTypeOf(RiconAppsDBModel.ReConfig)">
+        <MappingFragment StoreEntitySet="ReConfig">
+          <ScalarProperty Name="RC_ID" ColumnName="RC_ID" />
+          <ScalarProperty Name="GSM_No" ColumnName="GSM_No" />
+          <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
+          <ScalarProperty Name="Site_Name" ColumnName="Site_Name" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RMSC">
+      <EntityTypeMapping TypeName="IsTypeOf(RiconAppsDBModel.RMSC)">
+        <MappingFragment StoreEntitySet="RMSC">
+          <ScalarProperty Name="RMS_ID" ColumnName="RMS_ID" />
+          <ScalarProperty Name="Device_Type_ID" ColumnName="Device_Type_ID" />
+          <ScalarProperty Name="RMS_IP" ColumnName="RMS_IP" />
+          <ScalarProperty Name="RMS_Port" ColumnName="RMS_Port" />
+          <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SIMCards2">
+      <EntityTypeMapping TypeName="IsTypeOf(RiconAppsDBModel.SIMCards2)">
+        <MappingFragment StoreEntitySet="SIMCards2">
+          <ScalarProperty Name="SIM_ID" ColumnName="SIM_ID" />
+          <ScalarProperty Name="GSM_No1" ColumnName="GSM_No1" />
+          <ScalarProperty Name="APN1_Name" ColumnName="APN1_Name" />
+          <ScalarProperty Name="APN1_Username" ColumnName="APN1_Username" />
+          <ScalarProperty Name="APN1_Password" ColumnName="APN1_Password" />
+          <ScalarProperty Name="GSM_No2" ColumnName="GSM_No2" />
+          <ScalarProperty Name="APN2_Name" ColumnName="APN2_Name" />
+          <ScalarProperty Name="APN2_Username" ColumnName="APN2_Username" />
+          <ScalarProperty Name="APN2_Password" ColumnName="APN2_Password" />
+          <ScalarProperty Name="Lan1_IP" ColumnName="Lan1_IP" />
+          <ScalarProperty Name="Lan1_SubnetMask" ColumnName="Lan1_SubnetMask" />
+          <ScalarProperty Name="Lan_Subnet" ColumnName="Lan_Subnet" />
+          <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
+          <ScalarProperty Name="Ricon_SN" ColumnName="Ricon_SN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sites">
+      <EntityTypeMapping TypeName="IsTypeOf(RiconAppsDBModel.Sites)">
+        <MappingFragment StoreEntitySet="Sites">
+          <ScalarProperty Name="Site_ID" ColumnName="Site_ID" />
+          <ScalarProperty Name="Site_Name" ColumnName="Site_Name" />
+          <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserLogin">
+      <EntityTypeMapping TypeName="IsTypeOf(RiconAppsDBModel.UserLogin)">
+        <MappingFragment StoreEntitySet="UserLogin">
+          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
+          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Create_DateTime" ColumnName="Create_DateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SIMCards3">
+      <EntityTypeMapping TypeName="IsTypeOf(RiconAppsDBModel.SIMCards3)">
+        <MappingFragment StoreEntitySet="SIMCards3">
+          <ScalarProperty Name="SIM_ID" ColumnName="SIM_ID" />
+          <ScalarProperty Name="GSM_No1" ColumnName="GSM_No1" />
+          <ScalarProperty Name="APN1_Name" ColumnName="APN1_Name" />
+          <ScalarProperty Name="APN1_Username" ColumnName="APN1_Username" />
+          <ScalarProperty Name="APN1_Password" ColumnName="APN1_Password" />
+          <ScalarProperty Name="GSM_No2" ColumnName="GSM_No2" />
+          <ScalarProperty Name="APN2_Name" ColumnName="APN2_Name" />
+          <ScalarProperty Name="APN2_Username" ColumnName="APN2_Username" />
+          <ScalarProperty Name="APN2_Password" ColumnName="APN2_Password" />
+          <ScalarProperty Name="Lan1_IP" ColumnName="Lan1_IP" />
+          <ScalarProperty Name="Lan1_SubnetMask" ColumnName="Lan1_SubnetMask" />
+          <ScalarProperty Name="Lan_Subnet" ColumnName="Lan_Subnet" />
+          <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
+          <ScalarProperty Name="Ricon_SN" ColumnName="Ricon_SN" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+	</edmx:Runtime>
+	<!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+	<Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+		<Connection>
+			<DesignerInfoPropertySet>
+				<DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+			</DesignerInfoPropertySet>
+		</Connection>
+		<Options>
+			<DesignerInfoPropertySet>
+				<DesignerProperty Name="ValidateOnBuild" Value="true" />
+				<DesignerProperty Name="EnablePluralization" Value="True" />
+				<DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+				<DesignerProperty Name="UseLegacyProvider" Value="False" />
+				<DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+			</DesignerInfoPropertySet>
+		</Options>
+		<!-- Diagram content (shape and connector positions) -->
+		<Diagrams></Diagrams>
+	</Designer>
+</edmx:Edmx>

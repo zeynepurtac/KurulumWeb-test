@@ -1,0 +1,565 @@
+﻿@model KurulumWeb.Models.UserViewModel
+@using KurulumWeb.Resources
+@{
+    ViewBag.Title = "ManageAzure";
+    Layout = "~/Views/Shared/RiconAdminLayoutPage.cshtml";
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<head>
+    <style>
+        td.edit-mode {
+            background-color: #f3f3f3; /* Özel bir arka plan rengi */
+            color: #333; /* Özel bir metin rengi */
+            font-weight: bold; /* Kalın metin */
+            border: 1px solid #ccc; /* Kenarlık ekleyin */
+            padding: 4px; /* İç boşluğu ayarlayın */
+        }
+
+            /* Düzenleme modunda olan hücrelerin içindeki input alanlarının stilini belirle */
+            td.edit-mode input.edit-password {
+                border: 1px solid #999; /* Kenarlık ekleyin */
+                padding: 2px; /* İç boşluğu ayarlayın */
+            }
+
+        /* Kaydet ve İptal düğmelerinin stili */
+        button.save-button,
+        button.cancel-button {
+            display: none; /* Başlangıçta gizli olsun */
+            /* Diğer stil kuralları ekleyebilirsiniz */
+        }
+    </style>
+</head>
+<!-- Row -->
+<div class="main-content app-content mt-0">
+    <div class="side-app ">
+        <!-- CONTAINER -->
+        <div class="main-container justify-content-center container-fluid">
+            <div class="page-header"></div>
+            <div class="row justify-content-center">
+                <!-- Row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card" style="margin-block-start:6.99em;">
+                            <div class="card-header">
+                                <h3 class="card-title">@Resources.L319</h3>
+                            </div>
+                            <div class="card-body">
+                                <button id="table2-new-row-button" style="float:right" class="btn btn-primary mb-4"> @Resources.L320</button>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createfileAccount">
+                                    @Resources.L342
+                                </button>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered border text-nowrap mb-0" id="new-edit">
+                                        <thead>
+                                            <tr>
+                                                <th>@Resources.L343</th>
+                                                <th>@Resources.L344</th>
+                                                <th>@Resources.L345</th>
+                                                <th>@Resources.L346</th>
+                                                <th>@Resources.L347</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var user in Model.Users)
+                                            {
+                                                <tr>
+                                                    <td>@user.Username</td>
+                                                    <td>
+                                                        <span class="password-masked">**********</span> <!-- Parola maskeli olarak başlar -->
+                                                        <input type="hidden" class="original-password" value="@user.Password">
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            string role = "User"; // Varsayılan rolü "User" olarak ayarlayın.
+
+                                                            if (user.IsAdmin == true)
+                                                            {
+                                                                role = "Admin";
+                                                            }
+                                                            else if (user.IsAdmin == false)
+                                                            {
+                                                                role = "User";
+                                                            }
+
+                                                            @role
+                                                        }
+                                                    </td>
+                                                    <td>@user.Creator</td>
+                                                    <td>@user.Create_DateTime</td>
+                                                    <td>
+                                                        <!-- Edit düğmesi -->
+                                                        <button class="btn btn-sm btn-primary edit-button" id="edit">
+                                                            <i class="fas fa-edit"></i> <!-- Edit ikonu -->
+                                                        </button>
+                                                        <!-- Kaydet düğmesi (başlangıçta gizli) -->
+                                                        <button class="btn btn-sm btn-success save-button" style="display: none;">
+                                                            <i class="fas fa-check"></i> <!-- Kaydet ikonu -->
+                                                        </button>
+                                                        <!-- İptal düğmesi (başlangıçta gizli) -->
+                                                        <button class="btn btn-sm btn-danger cancel-button" style="display: none;">
+                                                            <i class="fas fa-times"></i> <!-- İptal ikonu -->
+                                                        </button>
+                                                        <!-- Delete düğmesi -->
+                                                        <button class="btn btn-sm btn-danger delete-button">
+                                                            <i class="fas fa-trash"></i> <!-- Delete ikonu -->
+                                                        </button>
+                                                        <input type="hidden" class="user-id" value="@user.User_ID" />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Row -->
+                <div class="modal fade" id="newRecordModal" tabindex="-1" role="dialog" aria-labelledby="newRecordModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="newRecordModalLabel">@Resources.L320</h5>
+                                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Username, Password, Type, Creator, Create Date Time alanları -->
+                                <div class="form-group">
+                                    <label for="username">@Resources.L343</label>
+                                    <input type="text" class="form-control" id="username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">@Resources.L344</label>
+                                    <input type="text" class="form-control" id="password">
+                                </div>
+                                <div class="form-group">
+                                    <div class="error-message" style="color: red;"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="type">@Resources.L345 &nbsp; &nbsp;</label>
+                                    <div class="btn-group" id="typeButtons" role="group">
+                                        <button type="button" class="btn btn-light" data-type="User">User</button>
+                                        <button type="button" class="btn btn-light" data-type="Admin">Admin</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-creator">@Resources.L346:</label>
+                                    <input type="text" class="form-control" id="new-creator" placeholder="Creator" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-create-date">@Resources.L347:</label>
+                                    <input type="text" class="form-control" id="new-create-date" placeholder="Create Date Time" readonly>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-primary" id="save-new-record">@Resources.L294</button>
+                                <button type="button" class="btn close-button btn-secondary" data-bs-dismiss="modal">@Resources.L261</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="customModal" tabindex="-1" role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="customModalLabel"></h5>
+                            </div>
+                            <div class="modal-body"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCustomModal">@Resources.L261</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteConfirmationModalLabel">@Resources.L292</h5>
+                                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="modal-body">
+                                @Resources.L333
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" id="btnConfirmDelete">@Resources.L279</button>
+                                <button type="button" class="btn close-button btn-secondary" data-bs-dismiss="modal">@Resources.L280</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="customModal1" tabindex="-1" role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="customModalLabel"></h5>
+                            </div>
+                            <div class="modal-body"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCustomModal">@Resources.L261</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal" id="successModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">@Resources.L336</h4> <!--L336-->
+                                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red"><i class="fas fa-times"></i></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                @Resources.L334
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCustomModal22">@Resources.L261</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal" id="deleteSuccessModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">@Resources.L336</h4>
+                                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeDeleteSuccessModal" style="color:red"><i class="fas fa-times"></i></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                @Resources.L335
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn close-button btn-secondary" data-bs-dismiss="modal">@Resources.L261</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--#region Modal Account -->
+                <div class="modal" id="createfileAccount">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content modal-content-demo">
+                            <div class="modal-header">
+                                <h6 class="modal-title">@Resources.L260</h6>
+                                &nbsp;
+                                <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal2" style="color:red">   <i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="file-drop-areaAcc" style="border: 3px dashed #ccc; text-align: center; position: relative; ">
+                                    <br />
+                                    <p>
+                                        <i style='font-size: 83px; color: #717570' class='fas'>&#xf382;</i>
+                                        <br />
+                                        <br />
+                                        @Resources.L262
+                                    </p>
+                                    <button id="btnBrowseAcc" class="btn ripple btn-primary" type="button">
+                                        <i class="fas fa-folder-open"></i> @Resources.L265
+                                    </button>
+                                    <br />
+                                    <br />
+                                    <input type="file" id="fileAcc" name="file" accept=".xlsx, .xls" style="display: none;">
+                                </div>
+                            </div>
+                            <div id="alertmessageAcc" class="modal-dialog" style="display:none;">
+                            </div>
+                            <a href="~/content/Template_User.xlsx" download="Template_User.xlsx"><button style="margin-inline-start:11rem" class="btn btn-primary-light"><i class="fas fa-download"></i> @Resources.L302</button></a>
+
+                            <div class="modal-footer">
+                                <span class="uploaded-file-nameA" id="uploadedFileNameAcc" style="font-size: 22px; position: absolute; bottom: 17px; left: 10px; font-size: 12px; background-color: #717570; padding: 5px; border-radius: 7px; color: #fff; "></span>
+                                <button id="btnUploadAcc" class="btn ripple btn-primary" type="button">
+                                    <i class="fas fa-upload"></i> @Resources.L263
+                                </button>
+                                <button class="btn ripple btn-danger" id="btnCancelAcc" data-bs-dismiss="modal" type="button">
+                                    <i class="fas fa-times"></i> @Resources.L264
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--#endregion-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row -->
+<!-- BACK-TO-TOP -->
+<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+<!-- JQUERY JS -->
+<!-- ... -->
+<script>
+    // Butonlara tıklama olaylarını dinle
+    document.querySelectorAll("#typeButtons button").forEach(function (button) {
+        button.addEventListener("click", function () {
+            // Tüm butonlardan "btn-primary" sınıfını kaldır
+            document.querySelectorAll("#typeButtons button").forEach(function (btn) {
+                btn.classList.remove("btn-primary");
+            });
+
+            // Tıklanan butona "btn-primary" sınıfını ekle
+            this.classList.add("btn-primary");
+        });
+    });
+</script>
+<script>
+
+    function showModal(title, message) {
+        var modal = $('#customModal');
+        modal.find('.modal-title').text(title);
+        modal.find('.modal-body').text(message);
+        modal.modal('show');
+
+        modal.on('hidden.bs.modal', function () {
+            location.reload();
+        });
+    }
+    function showModal(title, message) {
+        var modal = $('#customModal1');
+        modal.find('.modal-title').text(title);
+        modal.find('.modal-body').text(message);
+        modal.modal('show');
+
+        modal.on('hidden.bs.modal', function () {
+            location.reload();
+        });
+    }
+    function showModal(title, message) {
+        var modal = $('#customModal22');
+        modal.find('.modal-title').text(title);
+        modal.find('.modal-body').text(message);
+        modal.modal('show');
+
+        modal.on('hidden.bs.modal', function () {
+            location.reload();
+        });
+    }
+    document.getElementById("closeCustomModal22").addEventListener("click", function () {
+        $('#successModal').modal('hide');
+    });
+</script>
+
+<script>
+    // Başlangıçta User tipini seçili hale getirin
+    document.querySelector("#typeButtons button[data-type='User']").classList.add("active");
+
+    // Type butonlarına tıklama dinleyici ekleyin
+    document.querySelectorAll("#typeButtons button").forEach(function (button) {
+        button.addEventListener("click", function () {
+            // Tüm butonlardan "active" sınıfını kaldırın
+            document.querySelectorAll("#typeButtons button").forEach(function (btn) {
+                btn.classList.remove("active");
+            });
+            // Seçilen butona "active" sınıfını ekleyin
+            this.classList.add("active");
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        // Edit düğmesine tıklandığında
+        $(".edit-button").click(function () {
+            var row = $(this).closest("tr");
+            row.find("td:not(:last-child)").addClass("edit-mode");
+
+            var passwordField = row.find(".password-masked"); // Parola alanını seç
+            var originalPasswordField = row.find(".original-password"); // Orijinal parolayı saklayan alanı seç
+
+            // Orijinal parolayı al
+            var originalPassword = originalPasswordField.val();
+
+            // Parolayı maskelemeyi kaldır ve orijinal değeri göster
+            passwordField.html('<input type="text" class="edit-password" value="' + originalPassword + '">');
+
+            // Düzenlenen satırı düzenleme moduna geçir
+            row.find(".edit-button").hide();
+            row.find(".save-button, .cancel-button").show();
+            row.find("td:not(:last-child)").attr("contenteditable", "true").addClass("edit-mode");
+        });
+
+        // Save düğmesine tıklandığında
+        $(".save-button").click(function () {
+            var row = $(this).closest("tr");
+
+            // Değişiklikleri kaydet
+            var userId = row.find(".user-id").val();
+            var username = row.find("td:eq(0)").text();
+         /*   var password = row.find("td:eq(1)").text();*/
+            var type = row.find("td:eq(2)").text();
+            var isAdmin = type.trim().toLowerCase() === "admin";
+
+            var passwordField = row.find(".password-masked"); // Parola alanını seç
+            var editPasswordField = row.find(".edit-password"); // Düzenleme modundaki parola alanını seç
+            var originalPasswordField = row.find(".original-password"); // Orijinal parolayı saklayan alanı seç
+
+            // Değişiklikleri kaydet
+            var newPassword = editPasswordField.val();
+
+            // Orijinal parolayı güncelle
+            originalPasswordField.val(newPassword);
+
+            // Parolayı maskelemeyi kaldır ve yeni parolayı göster
+            passwordField.text(newPassword);
+
+            // Bu bilgileri sunucuya göndermek için bir AJAX isteği kullanabilirsiniz.
+            // AJAX ile sunucuya gönderme işlemi burada açıklamanın dışındadır.
+            $.ajax({
+                url: "/Home/EditUser", // EditUser işleminin bulunduğu controller ve action'ın yolu
+                type: "POST", // HTTP isteği türü (POST)
+                data: {
+                    User_ID: userId,
+                    Username: username,
+                    Password: newPassword,
+                    IsAdmin: isAdmin
+                },
+                success: function (result) {
+                    // Sunucudan başarılı bir yanıt aldığınızda bu bölüm çalışır
+                    // result ile sunucudan dönen verilere erişebilirsiniz
+
+                    // Değişiklikleri kaydettikten sonra gereken işlemleri burada yapabilirsiniz
+                },
+                error: function (error) {
+                    // Sunucu tarafında bir hata oluştuğunda bu bölüm çalışır
+                    alert("Hata oluştu: " + error.statusText);
+                }
+            });
+            // Düzenleme modunu kapat
+
+            row.find(".save-button, .cancel-button").hide();
+            row.find(".edit-button").show();
+            row.find("td:not(:last-child)").attr("contenteditable", "false").removeClass("edit-mode");
+
+            passwordField.text('**********');
+        });
+
+        // Cancel düğmesine tıklandığında
+        $(".cancel-button").click(function () {
+            var row = $(this).closest("tr");
+
+            // Değişiklikleri iptal et
+            // Önceki verileri geri yüklemek için sunucu tarafı işlemi kullanmalısınız.
+            var passwordField = row.find(".password-masked"); // Parola alanını seç
+            var editPasswordField = row.find(".edit-password"); // Düzenleme modundaki parola alanını seç
+            var originalPasswordField = row.find(".original-password"); // Orijinal parolayı saklayan alanı seç
+
+            // Düzenleme modundaki parolayı orijinal değerle güncelle
+            editPasswordField.val(originalPasswordField.val());
+
+            // Parolayı maskelenmiş hale getir
+            passwordField.text('**********');
+
+            // Düzenleme modunu kapat
+            row.find(".save-button, .cancel-button").hide();
+            row.find(".edit-button").show();
+            row.find("td:not(:last-child)").attr("contenteditable", "false").removeClass("edit-mode");
+        });
+
+        var userId; // userId değişkenini burada tanımlayın
+        var row; // row değişkenini burada tanımlayın
+
+        $(".delete-button").click(function () {
+            row = $(this).closest("tr");
+            userId = row.find(".user-id").val();
+            $('#deleteConfirmationModal').modal('show');
+        });
+
+        $('#btnConfirmDelete').click(function () {
+            $.ajax({
+                url: "/Home/DeleteUser", // DeleteUser işleminin bulunduğu controller ve action'ın yolu
+                type: "POST", // HTTP isteği türü (POST)
+                data: { User_ID: userId },
+                success: function (result) {
+                    row.remove();
+                    $('#deleteConfirmationModal').modal('hide');
+
+                    // Başarılı silme modalını aç
+                    $('#deleteSuccessModal').modal('show');
+                },
+                error: function () {
+                    console.log('Silme işleminde hata oluştu.');
+                    $('#deleteConfirmationModal').modal('hide');
+                }
+            });
+        });
+
+        // Başarılı silme modalını kapatma kodu
+        $('#closeDeleteSuccessModalButton').click(function () {
+            $('#deleteSuccessModal').modal('hide');
+        });
+
+            // Kullanıcıyı silmek istediğinizden emin misiniz?
+
+        // Add New düğmesine tıklandığında modalı göster
+        $("#table2-new-row-button").click(function () {
+            // Modalı göster
+
+            $("#username").val("");
+            $("#password").val("");
+            var creator = "@Session["UserName"]"; // Buradaki değeri sunucudan gelecek olan kullanıcı adı verisine göre ayarlayın
+
+            // Tarih/saat bilgisini otomatik olarak al
+            var currentDateTime = new Date();
+            var formattedDateTime = currentDateTime.toLocaleString(); // Tarih/saat bilgisini istediğiniz formatta alabilirsiniz
+
+            // Modal içindeki alanlara değerleri yerleştir
+            $("#new-creator").val(creator).prop('readonly', true);
+            $("#new-create-date").val(formattedDateTime).prop('readonly', true);
+            $("#newRecordModal").modal("show");
+        });
+
+        $("#save-new-record").click(function () {
+            var newUsername = $("#username").val();
+            var newPassword = $("#password").val();
+            var newType = $("#typeButtons button.active").data("type"); // Seçili olan butonun veri tipini al
+            var newCreator = $("#new-creator").val();
+            var newCreateDate = $("#new-create-date").val();
+
+            // Verileri sunucuya gönderme işlemi (AJAX ile)
+            $.ajax({
+                url: "/Home/AddUser", // Controller action'ının URL'si
+                type: "POST", // HTTP isteği türü (POST)
+                data: {
+                    Username: newUsername,
+                    Password: newPassword,
+                    Type: newType, // Seçili tipi gönder
+                    Creator: newCreator,
+                    CreateDate: newCreateDate
+                },
+                success: function (result) {
+                    if (result.success) {
+                        // Başarılı kayıt eklendiğinde modalı kapatma
+                        $("#newRecordModal").modal("hide");
+                        // Başarılı mesajını gösterme
+                        $('#successModal').modal('show');
+                        // Modal kapatıldığında sayfayı yenileme
+                        $('#successModal').on('hidden.bs.modal', function () {
+                            location.reload();
+                        });
+                    } else {
+                        // Başarısız durumda hata mesajını gösterme
+                        $(".error-message").text(result.message);
+                    }
+                },
+                error: function (error) {
+                    // Sunucu tarafında bir hata oluştuğunda bu bölüm çalışır
+                    $(".error-message").text("@Resources.L338");
+                    alert("Hata oluştu: " + error.statusText);
+                    // Modalı kapat
+                    $("#newRecordModal").modal("hide");
+                }
+            });
+        });
+
+    });
+</script>

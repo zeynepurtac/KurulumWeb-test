@@ -1,0 +1,1025 @@
+﻿@model KurulumWeb.Models.KurulumViewModel
+@using KurulumWeb.Resources
+@{
+    ViewBag.Title = "Ricon";
+    Layout = "~/Views/Shared/RiconLayoutPage.cshtml";
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+<head>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+    #span {
+        display: block;
+    }
+
+    .popup {
+        display: none;
+    }
+
+    #dataTableModal .modal-dialog {
+        max-width: none;
+        width: 100%; /* Modal'ın ekranın yarısını kaplamasını sağlar */
+        height: 80%;
+    }
+
+    #dataTableModal .modal-content {
+        height: 100%;
+    }
+
+    #dataTableModal .modal-body {
+        max-height: 100%; /* Modal içeriğinin ekranın yarısını kaplamasını sağlar */
+        overflow-y: auto;
+        color: #000000;
+    }
+</style>
+
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+        <!-- CONTAINER -->
+        <div class="main-container justify-content-center container-fluid">
+            <div class="page-header"></div>
+            <div class="row justify-content-center">
+                <!-- ROW-2 -->
+                <div class="row justify-content-center">
+
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title text-center text-blue" style="font-size:22px">@Resources.L269</h3>
+                                <img style="margin-top: -123px;margin-bottom: -157px;transform:scale(0.4);" src="~/Content/Sisal-S9922M44.png">
+
+                                <div></div>
+                                <div class="card-body">
+                                    @using (Html.BeginForm("Ricon", "Home", FormMethod.Post, new { id = "myForm" }))
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label">@Resources.L106</label>
+                                            @Html.DropDownListFor(x => x.SelectedSeriNoID, ViewBag.SeriNo as SelectList, @Resources.L113, htmlAttributes: new { @class = "dropdown form-control select2", id = "SeriNo" })
+                                            <label class="col-md-offset-1 error-label" style="color:red;" id="SeriNoID">@ViewBag.SeriNoID</label>
+                                            <br />
+                                            <label class="control-label">GSM NO</label>
+                                            @Html.DropDownListFor(x => x.SelectedGsmNoID, ViewBag.GsmNo as SelectList, Resources.L316, htmlAttributes: new { @class = "dropdown form-control select2", id = "GsmNo" })
+                                            <label class="col-md-offset-1 error-label" style="color:red;" id="GsmNoID">@ViewBag.GsmNoID</label>
+                                            <br />
+                                            <label class="control-label">
+                                                @Resources.L107
+                                            </label><br />
+                                            <label style=" color: black; display: inline-block; vertical-align: middle">
+                                                @Html.CheckBoxFor(m => m.chechMulti2, new Dictionary<string, object>
+                                                {
+                                                    {"id", "chkMulti2"},
+                                                    {"onclick","validatesAndHandle('chkMulti2')"}
+                                                })
+                                                <label style="font-size: 12.5px; vertical-align: middle; margin-block-start: 0.2em ">Multi Router(2)</label>
+                                            </label>
+                                            <label style=" color: black; display: inline-block; vertical-align: middle">
+                                                @Html.CheckBoxFor(m => m.chechMulti3, new Dictionary<string, object>
+                                                {
+                                                    {"id", "chkMulti3"},
+                                                    {"onclick","validatesAndHandle('chkMulti3')"}
+                                                })
+                                                <label style="font-size: 12.5px; vertical-align: middle; margin-block-start: 0.2em ">Multi Router(3)</label>
+                                            </label>
+                                            @Html.DropDownListFor(x => x.SelectedLocationID, ViewBag.Location as SelectList, @Resources.L108,
+                                           htmlAttributes: new { @class = "dropdown form-control select2", id = "Location", onchange = "handleLocationChange()" })
+                                            <label class="col-md-offset-1 error-label" style="color:red;" id="LocationID">@ViewBag.LocationID</label>
+                                            <span style="font-size:13px" id="LocationValue"></span>
+                                            <br />
+                                        </div>
+                                        @*<div>
+                                            <label class="control-label">
+                                                @Html.CheckBoxFor(m => m.chechedOrange, new Dictionary<string, object>
+                                                {
+                                                    {"id", "chkOrange"},
+                                                    {"onclick","validateAndHandle('chkOrange')"}
+                                                })
+                                                <span>Orange</span>
+                                            </label>
+                                            <label class="control-label">
+                                                @Html.CheckBoxFor(m => m.chechedInwi, new Dictionary<string, object>
+                                                {
+                                                    {"id", "chkInwi"},
+                                                    {"onclick","validateAndHandle('chkInwi')"}
+                                                })
+                                                <span>Inwi</span>
+                                            </label>
+                                        </div>*@
+
+                                        <button type="submit" name="action:Ricon" value="Ricon" id="btn_start" class="btn  btn-primary">@Resources.L110</button>
+                                        <div>
+                                            <span style="font-size: 12.5px; vertical-align: middle; margin-block-start: 0.2em">Activation of second or third routers in same PoS Site. Please select correct option above.</span>
+                                        </div>
+                                        <div id="text">
+                                            @if (!string.IsNullOrEmpty(ViewBag.Sonuc))
+                                            {
+                                                var lines = ViewBag.Sonuc.ToString().Split(new[] { "<br />" }, StringSplitOptions.None);
+
+                                                foreach (var line in lines)
+                                                {
+                                                    <span id="span">@Html.Raw(line)</span>
+                                                }
+
+                                            }
+                                        </div>
+                                    }
+                                    <div id="loadingModal" class="modal" tabindex="-1" data-bs-backdrop="static">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-body text-center">
+                                                    <p>@Resources.L291</p>
+                                                    <div class="lds-ring" id="loaderAnim">
+                                                        <div></div>
+                                                        <div></div>
+                                                        <div></div>
+                                                        <div></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- COL END -->
+                    <!--GRAFIK -->
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-3">
+                        <!-- Modal -->
+                        <div class="card overflow-hidden" style="height:96.5%">
+                            <div class="card-body ">
+                                <div>
+                                    <div class="chartjs-wrapper-demo">
+                                        <canvas id="recentorders" class="text-white chart-dropshadow" style=" display: block;box-sizing: border-box;height: 335px ; width:177px"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<span>
+                                    <input id="opener" style="margin-bottom: 10px; margin-inline-start: 6%" class="text-white btn btn-open-modal btn-primary  btn info" type="button" value="@Resources.L304">
+                                </span>*@
+                            <div class="card-body">
+
+                                <div class="d-flex mb-4 mt-3">
+                                    <div class="avatar avatar-md bg-secondary- text-secondary bradius me-3">
+                                        <i class="fe fe-check"></i>
+                                    </div>
+                                    <div class="">
+                                        <h6 class="mb-1 fw-semibold">@Resources.L275 </h6>
+                                        <p class="fw-normal fs-12">
+                                            <span class="text-success" id="installCountSpan"></span>
+                                        </p>
+                                    </div>
+                                    <div class=" ms-auto my-auto">
+                                        <p class="fw-bold fs-20 text-success" id="ratioSpan">  % </p>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="avatar  avatar-md bg-pink-transparent text-pink bradius me-3">
+                                        <i class="fe fe-activity"></i>
+                                    </div>
+                                    <div class="">
+                                        <h6 class="mb-1 fw-semibold">@Resources.L276</h6>
+                                        <p class="fw-normal fs-12">
+                                            <span class="text-success" id="simCardCountSpan"></span>
+                                        </p>
+                                    </div>
+                                    <div class=" ms-auto my-auto">
+                                        <p class="fw-bold fs-20"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- COL END -->
+                </div>
+                <!-- ROW-2 END -->
+            </div>
+            <!-- Row -->
+            <!-- DataTable için Özel Geniş Modal -->
+            <!-- DataTable için   Modal -->
+            <div class="modal fade" id="dataTableModal" tabindex="-1" role="dialog" aria-labelledby="dataTableModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dataTableModalLabel">@Resources.L305</h5>
+                            <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeModal" style="color:red"> <i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-nowrap border-bottom" id="responsive-datatable">
+                                    <thead>
+                                        <tr>
+                                            <th class="wd-15p border-bottom-0">Ricon SN</th>
+                                            <th class="wd-15p border-bottom-0">Site Name</th>
+                                            <th class="wd-20p border-bottom-0">Date Time</th>
+                                            <th class="wd-15p border-bottom-0">Username</th>
+                                            <th class="wd-25p border-bottom-0">Gsm No</th>
+                                            <th class="wd-25p border-bottom-0">Operator</th>
+                                            <th class="wd-25p border-bottom-0">Detail</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- DataTable satırları burada doldurulacak -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="file" id="fileInput" style="display: none;">
+                            <button type="button" class="btn btn-primary" id="downloadButton1">@Resources.L348</button>
+                            <button type="button" class="btn btn-primary" style="display:none;" id="downloadButton1">@Resources.L348</button>
+                            <button type="button" class="btn close-button btn-secondary" data-bs-dismiss="modal">@Resources.L261</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- CONTAINER END -->
+            <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailsModalLabel">@Resources.L336</h5>
+                            <button aria-label="Close" class="btn-close close-button" data-bs-dismiss="modal" type="button" id="closeDetailsModal" style="color:red"> <i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Detay içeriğini burada gösterin -->
+                            <div id="detailsContent"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn close-button btn-secondary" data-bs-dismiss="modal">@Resources.L261</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--app-content close-->
+
+<script>
+    $(document).ready(function () {
+        $("#downloadButton1").click(function () {
+            // Tablo başlıklarını ve verilerini ayırarak JSON formatına dönüştürün
+            var headers = [];
+            var dataRows = [];
+            $("#responsive-datatable thead th").each(function () {
+                headers.push($(this).text());
+            });
+
+            $("#responsive-datatable tbody tr").each(function () {
+                var rowData = [];
+                $(this).find("td").each(function () {
+                    rowData.push($(this).text());
+                });
+                dataRows.push(rowData);
+            });
+
+            // Verileri ve başlıkları içeren JSON nesnelerini oluşturun
+            var jsonData = {
+                Headers: headers,
+                Rows: dataRows
+            };
+
+            // JSON verilerini sunucuya gönderin (AJAX ile)
+            $.ajax({
+                url: '/Home/ExportToExcel',
+                type: 'POST',
+                data: { data: JSON.stringify(jsonData) }, // JSON verilerini gönderin
+                success: function (response) {
+                    if (response.success) {
+                        // Excel dosyası başarıyla oluşturulduğunda indirme işlemi başlat
+
+                        window.location.href = '/Home/DownloadExcel';
+                    } else
+                    {
+                        // Hata mesajını göster
+                        alert("@Resources.L349" + response.error); //342
+                    }
+                },
+                error: function () {
+                    // Hata mesajını göster
+                      alert("@Resources.L349"  + response.error);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+
+    function validateAndHandle(checkboxId) {
+        // İlk olarak validate işlevini çağırabilirsiniz
+        validate(checkboxId);
+
+        // Ardından handleCheckboxChange işlevini çağırabilirsiniz
+        handleCheckboxChange(checkboxId);
+    }
+
+    function handleCheckboxChange(checkboxId) {
+        var orangeCheckbox = document.getElementById("chkOrange");
+        var inwiCheckbox = document.getElementById("chkInwi");
+
+        if (checkboxId === "chkOrange" && orangeCheckbox.checked) {
+            inwiCheckbox.checked = false; // Eğer Orange seçiliyse Inwi'yi işaretleme
+        } else if (checkboxId === "chkInwi" && inwiCheckbox.checked) {
+            orangeCheckbox.checked = false; // Eğer Inwi seçiliyse Orange'ı işaretleme
+        }
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        // Sayfa yüklendiğinde chkOrange checkbox'ını işaretle
+        var orangeCheckbox = document.getElementById("chkOrange");
+        orangeCheckbox.checked = true;
+
+        // chkOrange checkbox'ı değiştiğinde diğerini kontrol etmek için handleCheckboxChange fonksiyonunu çağırın
+        orangeCheckbox.addEventListener("change", function () {
+            handleCheckboxChange("chkOrange");
+        });
+    });
+</script>
+<script>
+
+    function validatesAndHandle(checkboxsId) {
+        // İlk olarak validate işlevini çağırabilirsiniz
+        validates(checkboxId);
+
+        // Ardından handleCheckboxChange işlevini çağırabilirsiniz
+        handlesCheckboxChange(checkboxsId);
+    }
+    function handleLocationChange() {
+
+        var multi2Checkbox = document.getElementById("chkMulti2");
+        var multi3Checkbox = document.getElementById("chkMulti3");
+        var locationDropdown = document.getElementById("Location");
+        var locationValue = document.getElementById("LocationValue");
+
+        if (!multi2Checkbox.checked && !multi3Checkbox.checked && locationDropdown.selectedIndex > 0) {
+            var selectedLocation = locationDropdown.options[locationDropdown.selectedIndex].text;
+            locationValue.innerHTML = "Will be recorded as: <strong>" + selectedLocation + "-1</strong>";
+        } else {
+
+            locationValue.textContent = "";
+        }
+
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var multi2Checkbox = document.getElementById("chkMulti2");
+        var multi3Checkbox = document.getElementById("chkMulti3");
+        var locationDropdown = document.getElementById("Location");
+        var locationValue = document.getElementById("LocationValue");
+
+        // Sayfa yüklendiğinde chkSingle checkbox'ını işaretle
+
+        multi2Checkbox.addEventListener("change", function () {
+            var selectedLocation = locationDropdown.options[locationDropdown.selectedIndex].text;
+            if (multi2Checkbox.checked) {
+
+                multi3Checkbox.checked = false;
+                if (locationDropdown.selectedIndex != 0) {
+                    locationValue.innerHTML = "Will be recorded as: <strong>" + selectedLocation + "-2</strong>";
+                } else {
+                    locationValue.textContent = "";
+                    handleLocationChange();
+
+                }
+            } else {
+                locationValue.textContent = "";
+                handleLocationChange();
+
+            }
+        });
+
+        multi3Checkbox.addEventListener("change", function () {
+            var selectedLocation = locationDropdown.options[locationDropdown.selectedIndex].text;
+            if (multi3Checkbox.checked) {
+
+                multi2Checkbox.checked = false;
+                if (locationDropdown.selectedIndex != 0) {
+                    locationValue.innerHTML = "Will be recorded as: <strong>" + selectedLocation + "-3</strong>";
+                } else {
+                    locationValue.textContent = "";
+                    handleLocationChange();
+
+                }
+            } else {
+                locationValue.textContent = "";
+                handleLocationChange();
+
+            }
+        });
+
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        var table; // DataTable referansı
+
+        // Modal'ı açma işlevi
+        $("#opener").click(function () {
+            // Modal'ı aç
+            $("#dataTableModal").modal("show");
+
+            if (!table) {
+                // DataTable'ı yalnızca bir kez başlatın
+                table = $('#responsive-datatable').DataTable({
+                    // DataTable yapılandırma seçenekleri burada
+                    columns: [
+                        { data: "Ricon_SN" },
+                        { data: "Site_Name" },
+                        {
+                            data: "Date_Time",
+                            render: function (data) {
+                                var aspNetDate = new Date(parseInt(data.substr(6)));
+                                return aspNetDate.toLocaleString();
+                            }
+                        },
+                        { data: "Username" },
+                        { data: "GSM_No" },
+                        { data: "Operator" },
+                        {
+                            // Her satırın son sütununda bulunan göz ikonu
+                            data: null,
+                            defaultContent: '<i class="fa fa-eye details-icon"></i>'
+                        }
+                    ]
+                });
+            }
+
+            $.ajax({
+                url: "/Home/DeviceInstallationData",
+                method: "GET",
+                success: function (data) {
+                    table.clear().rows.add(data).draw();
+                },
+                error: function (error) {
+                    // Hata işleme kodu burada
+                }
+            });
+        });
+
+        // Satırdaki göz ikonlarına tıklanınca detay modalini aç
+        $('#responsive-datatable tbody').on('click', '.details-icon', function () {
+            var rowData = table.row($(this).closest('tr')).data();
+
+            if (rowData) {
+                var operatorName = rowData.Operator;
+                var gsmNo = rowData.GSM_No;
+
+                $.ajax({
+                    url: "/Home/GetOperatorDetails",
+                    method: "GET",
+                    data: { operatorName: operatorName, gsmNo: gsmNo },
+                    success: function (result) {
+                        if (result.success) {
+                            // Detayları modal içeriğine ekleyin
+                            var modalBody = $("#detailsModal").find(".modal-body");
+                            modalBody.empty(); // Önceki içeriği temizle
+
+                            // JSON verilerini satır satır alt alta yazdırın
+                            for (var i = 0; i < result.data.length; i++) {
+                                var jsonData = result.data[i];
+                                for (var key in jsonData) {
+                                    if (jsonData.hasOwnProperty(key)) {
+                                        modalBody.append(key + ": " + jsonData[key] + "<br>");
+                                    }
+                                }
+                                modalBody.append("<br>"); // Her veri öğesinden sonra bir satır boşluk bırakın
+                            }
+
+                            $("#detailsModal").modal("show");
+                        } else {
+                            // Hata işleme kodu burada
+                            alert(result.message);
+                        }
+                    },
+                    error: function (error) {
+                        // Hata işleme kodu burada
+                        alert("Error occurred: " + error.responseText);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<script>
+    function formatUnixTimestamp(unixTimestamp) {
+        // Unix zaman damgasını milisaniyeden saniyeye çevirin
+        var seconds = unixTimestamp / 1000;
+
+        // Unix zaman damgasını JavaScript tarih nesnesine dönüştürün
+        var date = new Date(seconds * 1000);
+
+        // Tarih ve saat formatını özelleştirin (örneğin: "dd/MM/yyyy HH:mm:ss")
+        var formattedDate = date.toLocaleString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        });
+
+        return formattedDate;
+    }
+</script>
+@*selected*@
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // SeriNo dropdown'ını etkinleştir
+        $('#SeriNo').select2({
+
+            minimumInputLength: 3,
+            ajax: {
+                url: "/Home/GetFilteredSeriNoList",
+                dataType: "JSON",
+                quietMillis: 100,
+                data: function (params) {
+                    return {
+                        selectedValue: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    // Verileri seçeneklere dönüştür
+                    var options = [];
+                    if (data) {
+                        $.each(data, function (index, item) {
+                            options.push({
+                                id: item.Value,
+                                text: item.Text
+                            });
+                        });
+                    }
+
+                    return {
+                        results: options
+                    };
+                }
+            }
+        }).on('select2:select', function (e) {
+            var selectedValue = e.params.data.id;
+
+        });
+
+        // Location dropdown'ını etkinleştir
+        $('#Location').select2({
+
+            minimumInputLength: 3,
+            ajax: {
+                url: "/Home/GetFilteredLocationList",
+                dataType: "JSON",
+                quietMillis: 100,
+                data: function (params) {
+                    return {
+                        selectedValue: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    // Verileri seçeneklere dönüştür
+                    var options = [];
+                    if (data) {
+                        $.each(data, function (index, item) {
+                            options.push({
+                                id: item.Value,
+                                text: item.Text
+                            });
+                        });
+                    }
+
+                    return {
+                        results: options
+                    };
+                }
+            }
+        }).on('select2:select', function (e) {
+            var selectedValue = e.params.data.id;
+
+        });
+        // GSM dropdown'ını etkinleştir
+        $('#GsmNo').select2({
+
+            minimumInputLength: 3,
+            ajax: {
+                url: "/Home/GetFilteredGSMNOList",
+                dataType: "JSON",
+                quietMillis: 100,
+                data: function (params) {
+                    return {
+                        selectedValue: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    // Verileri seçeneklere dönüştür
+                    var options = [];
+                    if (data) {
+                        $.each(data, function (index, item) {
+                            options.push({
+                                id: item.Value,
+                                text: item.Text
+                            });
+                        });
+                    }
+
+                    return {
+                        results: options
+                    };
+                }
+            }
+        })
+            .on('select2:select', function (e) {
+                var selectedValue = e.params.data.id;
+
+            });
+
+    });
+</script>
+
+<script>
+    function validate(checkboxId) {
+        var checkbox = document.getElementById(checkboxId);
+        var isChecked = checkbox.checked;
+
+        // Checkbox'ın işaretlenip işaretlenmediğini kontrol et
+        if (isChecked) {
+            // Checkbox işaretlendi, bu bilgiyi sessiona kaydet
+            sessionStorage.setItem(checkboxId, 'checked');
+        } else {
+            // Checkbox işareti kaldırıldı, bu bilgiyi sessiondan kaldır
+            sessionStorage.removeItem(checkboxId);
+        }
+    }
+
+    // Sayfa yüklendiğinde checkbox durumunu geri yükle
+    window.onload = function () {
+        var gsm1Checkbox = document.getElementById('chkOrange');
+        var gsm2Checkbox = document.getElementById('chkInwi');
+
+        if (sessionStorage.getItem('chkOrange') === 'checked') {
+            gsm1Checkbox.checked = true;
+        }
+
+        if (sessionStorage.getItem('chkInwi') === 'checked') {
+            gsm2Checkbox.checked = true;
+        }
+    };
+</script>
+
+<script>
+    function validates(checkboxsId) {
+        var checkboxs = document.getElementById(checkboxsId);
+        var isCheckeds = checkboxs.checked;
+
+        // Checkbox'ın işaretlenip işaretlenmediğini kontrol et
+        if (isCheckeds) {
+            // Checkbox işaretlendi, bu bilgiyi sessiona kaydet
+            sessionStorage.setItem(checkboxsId, 'checked');
+        } else {
+            // Checkbox işareti kaldırıldı, bu bilgiyi sessiondan kaldır
+            sessionStorage.removeItem(checkboxsId);
+        }
+    }
+
+    // Sayfa yüklendiğinde checkbox durumunu geri yükle
+    window.onload = function () {
+        var singleCheckbox = document.getElementById('chkSingle');
+        var multiCheckbox = document.getElementById('chkMulti');
+        var multi2Checkbox = document.getElementById('chkMulti2');
+        var multi3Checkbox = document.getElementById('chkMulti3');
+
+        if (sessionStorage.getItem('chkSingle') === 'checked') {
+            singleCheckbox.checked = true;
+        }
+
+        if (sessionStorage.getItem('chkMulti') === 'checked') {
+            multiCheckbox.checked = true;
+        }
+        if (sessionStorage.getItem('chkMulti2') === 'checked') {
+            multi2Checkbox.checked = true;
+        }
+        if (sessionStorage.getItem('chkMulti3') === 'checked') {
+            multi3Checkbox.checked = true;
+        }
+    };
+</script>
+
+@if (ViewBag.SmsMessage != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                $('#loaderAnim').hide();
+                $("#dialogsms").show({
+                    autoOpen: true,
+                    resizable: true,
+                    height: "auto",
+                    width: 400,
+                    modal: true
+
+                });
+                $("#closeSms").on("click", function () {
+
+               $("#dialogsms").hide();
+
+                window.location = "@Url.Action("Ricon", "Home")";
+                });
+
+            }
+    </script>
+}
+
+@if (ViewBag.CaseMessageOK != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            $('#loaderAnim').hide();
+            $("#dialogcaseOk").show({
+                autoOpen: true,
+                resizable: true,
+                height: "auto",
+                width: 400,
+                modal: true
+            });
+            $("#closeActivation").on("click", function () {
+                // Modal pencereyi kapat
+                $("#dialogcaseOk").hide();
+                window.location = "@Url.Action("Ricon", "Home")";
+
+            });
+
+        }
+    </script>
+}
+
+@if (ViewBag.CaseMessageYesNo != null)
+{
+    <script type="text/javascript">
+    window.onload = function () {
+        $("#dialogcaseConfirm").show({
+            autoOpen: true,
+            resizable: true,
+        });
+        $("#dialogActivation").on("click", function () {
+            // "Onayla" düğmesine tıklanınca
+            $("#dialogcaseConfirm").hide(); // Onaylama penceresini gizle
+            $('#loadingModal').modal('show'); // Yükleniyor penceresini göster
+            document.getElementById('btn_start').setAttribute("disabled", "disabled");
+            $('#loadingModal').modal('show');
+            // AJAX isteğini burada yapabilirsiniz
+            $.ajax({
+                url: '/Home/GetConfirm',
+                type: 'POST',
+                success: function (data) {
+                    console.log(data)
+                    $('#loaderAnim').hide();
+                    document.getElementById('btn_start').removeAttribute("disabled");
+                    $('#loadingModal').hide();
+                    window.location = "@Url.Action("Ricon", "Home")";
+                },
+                error: function (data) {
+                    $('#loaderAnim').hide();
+                    // Hata mesajı işleme
+                }
+            });
+        });
+        $("#cancelActivation").on("click", function () {
+            // Modal pencereyi kapat
+            $("#dialogcaseConfirm").hide();
+            window.location = "@Url.Action("Ricon", "Home")";
+        });
+    };
+    </script>
+}
+
+@if (ViewBag.StartOKMessageUpdate != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            /* $('#loaderAnim').hide();*/
+            $("#dialogStartOkMessageUpdate").show({
+                autoOpen: true,
+                resizable: true,
+            });
+            $("#confirmActivation").on("click", function () {
+                $("#dialogStartOkMessageUpdate").hide();
+                $('#loadingModal').modal('show');
+                document.getElementById('btn_start').setAttribute("disabled", "disabled");
+                $('#loadingModal').modal('show');
+                $.ajax({
+                    url: '/Home/StartOkUpdate',
+                    type: 'POST',
+                    success: function (data) {
+                        $('#loaderAnim').hide();
+                        document.getElementById('btn_start').removeAttribute("disabled");
+                        $('#loadingModal').hide();
+                        window.location = "@Url.Action("Ricon", "Home")";
+                    },
+                    error: function (data) {
+                        $('#loaderAnim').hide();
+                    }
+                });
+            });
+            $("#cancelUpdate").on("click", function () {
+                // Modal pencereyi kapat
+                $("#dialogcaseConfirm").hide();
+                 window.location = "@Url.Action("Ricon", "Home")";
+            });
+        }
+    </script>
+}
+
+@if (ViewBag.StartOKMessage != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            /*$('#loaderAnim').hide();*/
+
+            $("#dialogStartOkMessage").show({
+                autoOpen: true,
+                resizable: true,
+            });
+            $("#startOkActivation").on("click", function () {
+                $("dialogStartOkMessage").hide();
+                $('loadingModal').modal('show');
+                $("#dialogStartOkMessage").hide();
+                document.getElementById('btn_start').setAttribute("disabled", "disabled");
+                $('#loadingModal').modal('show');
+                $.ajax({
+                    url: '/Home/StartOk',
+                    type: 'POST',
+
+                    success: function (data) {
+                        $('#loaderAnim').hide();
+                        document.getElementById('btn_start').removeAttribute("disabled");
+                        $('#loadingModal').hide();
+                        window.location = "@Url.Action("Ricon", "Home")";
+
+                    },
+                    error: function (data) {
+                        $('#loaderAnim').hide();
+                    }
+                });
+            });
+                $("#StartOkCancel").on("click", function () {
+                // Modal pencereyi kapat
+                $("#dialogStartOkMessage").hide();
+                window.location = "@Url.Action("Ricon", "Home")";
+});
+        }
+    </script>
+}
+@if (ViewBag.Operator != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            $('#loaderAnim').hide();
+            $("#Operator").show({
+                autoOpen: true,
+                resizable: true,
+                height: "auto",
+                width: 400,
+                modal: true
+            });
+            $("#closeOperator").on("click", function () {
+                // Modal pencereyi kapat
+                $("#Operator").hide();
+                window.location = "@Url.Action("Ricon", "Home")";
+
+            });
+
+        }
+    </script>
+}
+<script type="text/javascript">
+$(document).ready(function () {
+    var sonucLabel = $("#text");
+    var sonucText = "@Html.Raw(ViewBag.Sonuc)";
+    var lines = sonucText.split(/\r?\n/);
+    sonucLabel.css("font-size", "11px");
+    setTimeout(function () {
+        sonucLabel.fadeOut("slow", function () {
+            sonucLabel.empty(); // İçeriği temizle
+        });
+    }, 10000); // 10 saniye (10000 milisaniye)
+    // Sayfa yüklendiğinde kapat butonunu gizle
+    // Sayfa yüklendiğinde fonksiyonu çağırın
+    window.onload = checkResultMessage;
+});
+</script>
+
+<div id="dialogStartOkMessageUpdate" class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@ViewBag.InfoTitle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>@ViewBag.StartOKMessageUpdate</p>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" id="confirmActivation">@Resources.L279</button>
+                <button type="button" class="btn btn-secondary" id="cancelUpdate" data-bs-dismiss="modal">@Resources.L280</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialogStartOkMessage" class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@ViewBag.InfoTitle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>@ViewBag.StartOKMessage</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="startOkActivation">@Resources.L279</button>
+                <button type="button" class="btn btn-secondary" id="StartOkCancel" data-bs-dismiss="modal">@Resources.L280</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialogcaseConfirm" class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@ViewBag.InfoTitle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>@ViewBag.CaseMessageYesNo</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="dialogActivation">@Resources.L279</button>
+                <button type="button" class="btn btn-secondary" id="cancelActivation" data-bs-dismiss="modal">@Resources.L280</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialogcaseOk" class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@ViewBag.InfoTitle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>@ViewBag.CaseMessageOK</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="closeActivation">@Resources.L279</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialogsms" class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@ViewBag.InfoTitle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>@ViewBag.SmsMessage</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="closeSms">@Resources.L352</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="Operator" class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@ViewBag.InfoTitle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>@ViewBag.Operator</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="closeOperator">@Resources.L352</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="warningdialog" title="@Resources.L201">
+    <p id="checkboxmessage" />
+</div>
