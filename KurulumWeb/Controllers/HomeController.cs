@@ -17,7 +17,6 @@ using System.Diagnostics;
 using System.Web.UI.WebControls;
 using NPOI.SS.Formula.Functions;
 
-
 namespace KurulumWeb.Controllers
 {
     public class HomeController : BaseController
@@ -231,8 +230,6 @@ namespace KurulumWeb.Controllers
                     }
                 }
             }
-
-
             catch (Exception ex)
             {
                 result.Success = false; // Hata olduğunda işlem başarısızdır
@@ -930,9 +927,8 @@ namespace KurulumWeb.Controllers
                                 }
                                 else
                                 {
-                                    secilen_operator="null";
+                                    secilen_operator = "null";
                                 }
-
 
                                 if (model.chechMulti2)
                                 {
@@ -948,7 +944,6 @@ namespace KurulumWeb.Controllers
                                 {
                                     model.SelectedLocationID = model.SelectedLocationID + "-1";
                                 }
-
 
                                 a.selected_riconsn = model.SelectedSeriNoID;
                                 a.selected_operator = secilen_operator;
@@ -966,7 +961,7 @@ namespace KurulumWeb.Controllers
                                 var commonRecords = ctx.Install
                                     .Where(x => x.GSM_No == model.SelectedGsmNoID && x.Ricon_SN == model.SelectedSeriNoID)
                                     .ToList();
-                                if (secilen_operator=="null" && gsmRecords.Count ==0)
+                                if (secilen_operator == "null" && gsmRecords.Count == 0)
                                 {
                                     ViewBag.InfoTitle = CultureHelper.GetResourceKey("L201");
                                     ViewBag.Operator = CultureHelper.GetResourceKey("L353");
@@ -1012,7 +1007,7 @@ namespace KurulumWeb.Controllers
                                 }
                                 else
                                 {
-                                    secilen_operator="null";
+                                    secilen_operator = "null";
                                 }
 
                                 if (model.chechMulti2)
@@ -1047,7 +1042,7 @@ namespace KurulumWeb.Controllers
                                     .Where(x => x.GSM_No == model.SelectedGsmNoID && x.Ricon_SN == model.SelectedSeriNoID)
                                     .ToList();
 
-                                if (secilen_operator=="null" && gsmRecords.Count ==0)
+                                if (secilen_operator == "null" && gsmRecords.Count == 0)
                                 {
                                     ViewBag.InfoTitle = CultureHelper.GetResourceKey("L201");
                                     ViewBag.Operator = CultureHelper.GetResourceKey("L353");
@@ -1248,10 +1243,8 @@ namespace KurulumWeb.Controllers
                                 }
                                 else
                                 {
-                                    secilen_operator="null";
+                                    secilen_operator = "null";
                                 }
-
-
 
                                 if (model.chechMulti2)
                                 {
@@ -1270,7 +1263,7 @@ namespace KurulumWeb.Controllers
                                 a.selected_riconsn = model.SelectedSeriNoID;
                                 a.selected_operator = secilen_operator;
                                 a.selected_gsm = secilen_gsm;
-                                Session["SelectedGMSNO"] = secilen_gsm;                                
+                                Session["SelectedGMSNO"] = secilen_gsm;
                                 Session["SelectedOperator"] = secilen_operator;
                                 Session["SelectedLocation"] = model.SelectedLocationID;
                                 // Seçilen konumun veritabanında kontrolü yapılıyor
@@ -1283,7 +1276,7 @@ namespace KurulumWeb.Controllers
                                 var commonRecords = ctx.Install
                                     .Where(x => x.GSM_No == model.SelectedGsmNoID && x.Ricon_SN == model.SelectedSeriNoID)
                                     .ToList();
-                                if (secilen_operator=="null" && gsmRecords.Count ==0)
+                                if (secilen_operator == "null" && gsmRecords.Count == 0)
                                 {
                                     ViewBag.InfoTitle = CultureHelper.GetResourceKey("L201");
                                     ViewBag.Operator = CultureHelper.GetResourceKey("L353");
@@ -1329,10 +1322,8 @@ namespace KurulumWeb.Controllers
                                 }
                                 else
                                 {
-                                    secilen_operator="null";
+                                    secilen_operator = "null";
                                 }
-
-
 
                                 if (model.chechMulti2)
                                 {
@@ -1355,7 +1346,6 @@ namespace KurulumWeb.Controllers
                                 Session["SelectedOperator"] = secilen_operator;
                                 Session["SelectedLocation"] = model.SelectedLocationID;
 
-
                                 var gsmRecords = ctx.Install.Where(x => x.GSM_No == model.SelectedGsmNoID).ToList();
 
                                 // Seçilen seri numarası ile ilgili kayıtları çek
@@ -1365,7 +1355,7 @@ namespace KurulumWeb.Controllers
                                 var commonRecords = ctx.Install
                                     .Where(x => x.GSM_No == model.SelectedGsmNoID && x.Ricon_SN == model.SelectedSeriNoID)
                                     .ToList();
-                                if (secilen_operator=="null" && gsmRecords.Count ==0)
+                                if (secilen_operator == "null" && gsmRecords.Count == 0)
                                 {
                                     ViewBag.InfoTitle = CultureHelper.GetResourceKey("L201");
                                     ViewBag.Operator = CultureHelper.GetResourceKey("L353");
@@ -1682,7 +1672,6 @@ namespace KurulumWeb.Controllers
         //    UploadResult result = new UploadResult();
         //    try
         //    {
-
         //        Thread.Sleep(10000);
         //        string fullpath = Server.MapPath("/excelfolder/") + filename;
         //        ExcelConnec(fullpath);
@@ -1777,7 +1766,6 @@ namespace KurulumWeb.Controllers
         //{
         //    try
         //    {
-
         //        if (file != null)
         //        {
         //            string filename = Path.GetFileName(file.FileName);
@@ -1835,7 +1823,6 @@ namespace KurulumWeb.Controllers
         //    UploadResult result = new UploadResult();
         //    try
         //    {
-
         //        Thread.Sleep(10000);
         //        string fullpath = Server.MapPath("/excelfolder/") + filename;
         //        ExcelConnecSeri(fullpath);
@@ -1998,7 +1985,6 @@ namespace KurulumWeb.Controllers
 
         //private UploadResult UploadExcelAccount1(string filepath, string filename)
         //{
-
         //    UploadResult result = new UploadResult();
         //    string kullanici = Session["UserName"].ToString();
         //    DateTime islemSaati = DateTime.Now;
@@ -2182,7 +2168,6 @@ namespace KurulumWeb.Controllers
                 var orangeData = ctx.Tbl_Orange.FirstOrDefault(x => x.GSM_No1 == orangemodel.Gsmno);
                 if (orangeData != null)
                 {
-
                     string oldorange = orangeData.GSM_No1;
 
                     orangeData.GSM_No1 = orangemodel.GSM_No1;
@@ -2328,7 +2313,7 @@ namespace KurulumWeb.Controllers
                     && !string.IsNullOrWhiteSpace(Tunnel_dc2_r1) && !string.IsNullOrWhiteSpace(Tunnel_ig_r1) &&
                     !string.IsNullOrWhiteSpace(Tg_dhcp_start) && !string.IsNullOrWhiteSpace(Tg_dhcp_end) &&
                     !string.IsNullOrWhiteSpace(Ser_dhcp_start) && !string.IsNullOrWhiteSpace(Ser_dhcp_end))
-                  {
+                {
                     var existingOrange = ctx.Tbl_Orange.Where(x => x.Status == 1 || (x.Status == 0 && x.GSM_No1 == GSM_No1)).SingleOrDefault(i => i.GSM_No1 == GSM_No1);
 
                     if (existingOrange == null || existingOrange.Status == 0)
@@ -2381,8 +2366,6 @@ namespace KurulumWeb.Controllers
                             ctx.SaveChanges();
                         }
                         return Json(new { success = true, message = Resources.Resources.L330 });
-
-
                     }
                     else
                     {
@@ -2395,7 +2378,6 @@ namespace KurulumWeb.Controllers
                     return Json(new { success = false, message = "Invalid data." });
                 }
             }
-
             catch (Exception ex)
             {
                 return Json(new { success = false, message = "Error occurred: " + ex.Message });
@@ -2520,9 +2502,9 @@ namespace KurulumWeb.Controllers
                             ctx.SaveChanges();
                         }
                     }
-                
-                // Redirect to the Edit page or show a success message
-                return RedirectToAction("EditInwi");
+
+                    // Redirect to the Edit page or show a success message
+                    return RedirectToAction("EditInwi");
                 }
             }
             // If the model is not valid or the data doesn't exist, return to the edit page with the model
@@ -2610,8 +2592,7 @@ namespace KurulumWeb.Controllers
         {
             try
             {
-
-                if (!string.IsNullOrWhiteSpace(GsmNo2)  && !string.IsNullOrWhiteSpace(Apn2Name) &&
+                if (!string.IsNullOrWhiteSpace(GsmNo2) && !string.IsNullOrWhiteSpace(Apn2Name) &&
                     !string.IsNullOrWhiteSpace(Apn2UserName) && !string.IsNullOrWhiteSpace(Apn2Password) &&
                     !string.IsNullOrWhiteSpace(i_WAN_ip) && !string.IsNullOrWhiteSpace(i_vlanid_TG) &&
                     !string.IsNullOrWhiteSpace(i_lan_ip_TG) && !string.IsNullOrWhiteSpace(i_lan_subnet_TG) &&
@@ -2624,7 +2605,6 @@ namespace KurulumWeb.Controllers
 
                     if (existingInwi == null || existingInwi.Status == 0)
                     {
-
                         // Tbl_Inwi tablosunda aynı GSM_No2 yoksa, yeni kaydı ekle
                         var newInwi = new Tbl_Inwi(); // Varsayılan sınıfınıza göre düzenleyin
                         newInwi.GSM_No2 = GsmNo2;
@@ -3415,10 +3395,11 @@ namespace KurulumWeb.Controllers
 
             Install install_query = new Install();
             bool deger = false;
+            bool deger = true;
             deger = a.ConfigAzure(secilen_gsm, secilen_operator, serino, ViewBag); //Seçilen GSM no a göre Config mesajları gönderiliyor.
 
             if (deger == true) //Config metodundan dönen değer true ise yani işlem yapılmış ise
-            
+
             {
                 string wanIP = null;
                 if (secilen_operator.ToLower() == "orange")
@@ -3470,7 +3451,6 @@ namespace KurulumWeb.Controllers
             }
             else
             {
-
                 Session["Sonuc"] = CultureHelper.GetResourceKey("L125");
 
                 ViewBag.Sonuc = CultureHelper.GetResourceKey("L125");
@@ -3512,7 +3492,6 @@ namespace KurulumWeb.Controllers
                         wanIP = orangeRecord.WAN_ip;// Orange için WAN IP'sini alın
                     }
                 }
-
                 else
                 {
                     var inwiRecord = ctx.Tbl_Inwi.FirstOrDefault(x => x.GSM_No2 == secilen_gsm);
